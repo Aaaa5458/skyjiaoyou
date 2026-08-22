@@ -2266,7 +2266,9 @@ async function submitReply(postId){
   const input=$('replyInput-'+postId);const content=input.value.trim();
   if(!content)return;
   const res=await apiCall('/posts/'+postId+'/replies',{method:'POST',body:JSON.stringify({content})});
-  if(res.success){input.value='';toggleReplies(postId);toggleReplies(postId);toast('回复成功');}
+  if(res.success){input.value='';toggleReplies(postId);toggleReplies(postId);toast('回复成功');
+    document.querySelectorAll('.reply-btn[data-id="'+postId+'"]').forEach(el=>{const m=el.textContent.match(/\d+/);if(m)el.textContent='💬 '+(parseInt(m[0])+1);});
+  }
   else{toast(res.error||'回复失败');}
 }
 window.submitReply=submitReply;

@@ -25,8 +25,8 @@
         {id:2, post_id:'post_demo2', user_id:2, content:'弹琴太棒了！', is_anonymous:0, created_at:'2026-08-21 11:00:00'}
       ],
       photos: [
-        {id:'photo_demo1', user_id:2, title:'雨林神庙', description:'雨后的神庙格外宁静', data_url:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzM0OTgzYiIvPjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iNDAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMyIvPjx0ZXh0IHg9IjIwMCIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjI0Ij7pm6blm77npZ7lq5c8L3RleHQ+PC9zdmc+', likes:12, comments:2, status:'approved', created_at:'2026-08-20 18:00:00'},
-        {id:'photo_demo2', user_id:3, title:'霞谷日落', description:'最美的风景在终点', data_url:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNncmFkKSIvPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZjhhMDA7Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojYzAzODNhOyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjx0ZXh0IHg9IjIwMCIgeT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjI0Ij76ZSZr5bCP5pel6JC9PC90ZXh0Pjwvc3ZnPg==', likes:25, comments:4, status:'approved', created_at:'2026-08-21 17:00:00'}
+        {id:'photo_demo1', user_id:2, title:'雨林神庙', description:'雨后的神庙格外宁静', data_url:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzJkNmE0ZiIvPjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iNDAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMyIvPjx0ZXh0IHg9IjIwMCIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjI0Ij7pm6jmnpfnpZ7lupk8L3RleHQ+PC9zdmc+', likes:12, comments:2, status:'approved', created_at:'2026-08-20 18:00:00'},
+        {id:'photo_demo2', user_id:3, title:'霞谷日落', description:'最美的风景在终点', data_url:'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmY4YTAwIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojYzAzODNhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InVybCgjZ3JhZCkiLz48dGV4dCB4PSIyMDAiIHk9IjE2MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSIyNCI+6Zye6LC35pel6JC9PC90ZXh0Pjwvc3ZnPg==', likes:25, comments:4, status:'approved', created_at:'2026-08-21 17:00:00'}
       ],
       photo_likes: [],
       favorites: [],
@@ -55,10 +55,12 @@
       ],
       task_checkins: [],
       achievement_defs: [
-        {id:'first_post', name:'初次发声', desc:'发布第一条留言', icon:'💬'},
-        {id:'first_photo', name:'光影记录者', desc:'上传第一张截图', icon:'📷'},
-        {id:'warm_traveler', name:'温暖旅人', desc:'收到10个赞', icon:'❤️'},
-        {id:'hot_creator', name:'热门创作者', desc:'一条留言获得20赞', icon:'🔥'}
+        {id:'first_post', name:'初次发声', description:'发布第一条留言', icon:'💬'},
+        {id:'first_photo', name:'光影记录者', description:'上传第一张截图', icon:'📷'},
+        {id:'warm_traveler', name:'温暖旅人', description:'收到10个赞', icon:'❤️'},
+        {id:'hot_creator', name:'热门创作者', description:'一条留言获得20赞', icon:'🔥'},
+        {id:'social_butterfly', name:'社交达人', description:'关注5位旅人', icon:'🦋'},
+        {id:'collector', name:'收藏家', description:'收藏3张截图', icon:'⭐'}
       ],
       user_achievements: []
     };
