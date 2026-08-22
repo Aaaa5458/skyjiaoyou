@@ -123,7 +123,7 @@
         const {username,password,email,nickname}=body;
         if(!username||!password)return json({success:false,error:'用户名和密码不能为空'});
         if(username.length<2||username.length>20)return json({success:false,error:'用户名长度2-20字符'});
-        if(password.length<8||!/[a-zA-Z]/.test(password)||!/[0-9]/.test(password))return json({success:false,error:'密码至少8位，包含字母和数字'});
+        if(password.length<6||!/[a-zA-Z]/.test(password)||!/[0-9]/.test(password))return json({success:false,error:'密码至少6位，需包含字母和数字'});
         if(db.users.find(u=>u.username===username))return json({success:false,error:'用户名已存在'});
         const newUser={id:db.users.length+1,username,password:hash(password),email:email||'',nickname:nickname||username,is_admin:0,created_at:new Date().toISOString().replace('T',' ').slice(0,19),avatar_style:{hair:'default',cloak:'#f5a623'},bio:'',constellation:'',resident_map:'',instrument:'',online_time:'',tags:'',run_status:'',run_status_expire:'',watermark:0,watermark_text:'',theme:'light',bindings:{},highlights:'',achievements:'[]',is_new:1,game_duration:'',privacy:{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1}};
         db.users.push(newUser);saveDB(db);

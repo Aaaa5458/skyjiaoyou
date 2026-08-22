@@ -7,15 +7,15 @@
 <meta name="theme-color" content="#f5e6d3">
 <meta name="description" content="光遇交友 - 光遇玩家社交平台，分享游戏截图，加入微信群，结识志同道合的旅人">
 <meta name="keywords" content="光遇,光遇交友,sky光遇,游戏截图,光遇微信群">
-<meta property="og:title" content="光遇交友 - 旅人社交平台">
+<meta property="og:title" content="光遇交友 - 光遇玩家社区">
 <meta property="og:description" content="分享光遇游戏截图，加入微信群，结识志同道合的旅人">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://Aaaa5458.github.io/skyjiaoyou/">
 <meta property="og:image" content="https://Aaaa5458.github.io/skyjiaoyou/favicon.svg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="光遇交友 - 旅人社交平台">
+<meta name="twitter:title" content="光遇交友 - 光遇玩家社区">
 <meta name="twitter:description" content="分享光遇游戏截图，加入微信群，结识志同道合的旅人">
-<title>光遇交友 - 旅人社交平台</title>
+<title>光遇交友 - 光遇玩家社区</title>
 <style>
 :root{transition:background-color .3s,color .3s;
   --bg1:#fdf6ec;--bg2:#f5e6d3;--bg3:#e8d5c4;
@@ -377,7 +377,16 @@ body{
 .profile-save{width:100%;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px}
 
 /* 暗色主题 */
-body.dark{--bg:#0f0c29;--text:#e8e0d0;--text2:#a89f8f;--card-bg:rgba(30,27,50,.85)}
+body.dark{
+  --bg1:#1a1730;--bg2:#15122a;--bg3:#0f0c29;
+  --bg:#0f0c29;
+  --card:rgba(40,37,70,.85);
+  --border:rgba(255,255,255,.1);
+  --text:#e8e0d0;--text2:#a89f8f;--text3:#7a7285;
+  --accent:#e8a84c;--accent2:#f0c070;--accent-light:rgba(232,168,76,.15);
+  --shadow:0 8px 32px rgba(0,0,0,.4);
+  --card-bg:rgba(30,27,50,.85);
+}
 body.dark{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:var(--text)}
 body.dark .card{background:rgba(30,27,50,.7);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px)}
 body.dark .nav-tab{background:rgba(255,255,255,.08);color:var(--text2)}
@@ -587,6 +596,27 @@ body.dark .stat-item:hover{background:rgba(255,255,255,.1)}
 .rank-tab{padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;background:var(--bg);color:var(--text2);border:1px solid var(--border)}
 .rank-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 
+
+body.dark .home-item{background:rgba(255,255,255,.05)}
+body.dark .home-item:hover{background:rgba(255,255,255,.1)}
+body.dark .admin-empty{color:var(--text3)}
+body.dark .skeleton{background:rgba(255,255,255,.08)}
+body.dark .glow-input{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#fff}
+body.dark .glow-input::placeholder{color:rgba(255,255,255,.4)}
+body.dark .fab-btn{box-shadow:0 4px 15px rgba(232,168,76,.4)}
+body.dark .user-btn{background:rgba(40,37,70,.8);border-color:rgba(255,255,255,.1)}
+body.dark .search-box input{background:rgba(40,37,70,.8);border-color:rgba(255,255,255,.1)}
+body.dark .modal-mask{background:rgba(0,0,0,.7)}
+body.dark .admin-btn{background:rgba(255,255,255,.08);color:var(--text);border-color:rgba(255,255,255,.1)}
+body.dark .admin-btn:hover{background:rgba(255,255,255,.15)}
+body.dark .admin-btn.danger{background:rgba(231,76,60,.2);color:#ff6b6b;border-color:rgba(231,76,60,.3)}
+body.dark .admin-btn.view{background:rgba(52,152,219,.2);color:#74b9ff;border-color:rgba(52,152,219,.3)}
+body.dark textarea{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:var(--text)}
+body.dark .upload-area{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.15)}
+body.dark .upload-area:hover{background:rgba(255,255,255,.08)}
+body.dark .qr-placeholder{background:rgba(255,255,255,.05);color:var(--text3)}
+body.dark .guide-dot{background:rgba(255,255,255,.2)}
+body.dark .guide-dot.active{background:var(--accent)}
 </style>
 </head>
 <body>
@@ -1095,6 +1125,21 @@ const API_BASE='/api';
 function getToken(){return localStorage.getItem('gy_token')||sessionStorage.getItem('gy_token')||'';}
 function setToken(t,days){if(t){const store=days&&days>=7?localStorage:sessionStorage;store.setItem('gy_token',t);if(days)localStorage.setItem('gy_token_days',days);}else{localStorage.removeItem('gy_token');sessionStorage.removeItem('gy_token');localStorage.removeItem('gy_token_days');}}
 async function apiCall(path,options={}){const headers={'Content-Type':'application/json',...(options.headers||{})};const token=getToken();if(token)headers['Authorization']='Bearer '+token;const res=await fetch(API_BASE+path,{...options,headers});const data=await res.json().catch(()=>({success:false,error:'网络错误'}));return data;}
+
+// ===== XSS防护：HTML转义工具函数 =====
+function escapeHtml(str){
+  if(str==null||str===undefined)return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+function escAttr(str){
+  return escapeHtml(str);
+}
+
 let currentUser=null;
 let galleryPhotos=[];
 let playlist=Store.get('playlist',null);
@@ -1126,7 +1171,7 @@ function renderUser(){
   const av=$('topAvatar'),nm=$('topName');
   if(currentUser){
     setAvatar(av,currentUser);
-    let name=getDisplayName(currentUser);
+    let name=escapeHtml(getDisplayName(currentUser));
     if(currentUser.is_guest)name+=' <span class="guest-badge">访客</span>';
     if(currentUser.run_status&&(!currentUser.run_status_expire||new Date(currentUser.run_status_expire)>new Date()))name+=' <span class="guest-badge" style="background:#e67e22">🏃</span>';
     nm.innerHTML=name;
@@ -1240,6 +1285,7 @@ $('authSubmit').onclick=async()=>{
   const u=$('authUser').value.trim(),p=$('authPass').value;
   if(!u||!p){toast('请输入用户名和密码');return;}
   const type=document.querySelector('#authModal .modal-tab.active').dataset.auth;
+  if(type==='register'&&(p.length<6||!/[a-zA-Z]/.test(p)||!/[0-9]/.test(p))){toast('密码至少6位，需包含字母和数字');return;}
   const remember=$('authRemember').checked;
   const email=$('authEmail')?$('authEmail').value.trim():'';
   $('authSubmit').textContent='传送中...';$('authSubmit').disabled=true;
@@ -1489,7 +1535,7 @@ async function loadGallery(){
     const uploaderName=p.nickname||p.username||'匿名';
     const a=genAvatar(uploaderName);
     const item=document.createElement('div');item.className='gallery-item';
-    item.innerHTML=(p.title?'<div class="photo-title">'+p.title+'</div>':'')+
+    item.innerHTML=(p.title?'<div class="photo-title">'+escapeHtml(p.title)+'</div>':'')+
       '<img src="'+p.data_url+'" alt="截图" loading="lazy">'+
       '<div class="meta"><span style="display:flex;align-items:center;gap:3px"><span style="width:14px;height:14px;border-radius:50%;background:'+a.color+';display:inline-flex;align-items:center;justify-content:center;font-size:8px">'+a.letter+'</span>'+uploaderName+'</span><span class="like-icon">❤'+(p.likes||0)+'</span></div>';
     item.onclick=()=>{lightboxPhotos=res.photos;openLightbox(i);};g.appendChild(item);
@@ -1575,7 +1621,7 @@ async function renderComments(photoId){
     const item=document.createElement('div');item.className='comment-item';
     const av=document.createElement('div');av.className='avatar avatar-sm';setAvatar(av,c);
     const body=document.createElement('div');body.className='comment-body';
-    body.innerHTML='<div class="comment-user">'+getDisplayName(c)+' <span class="comment-time">'+fmtDate(c.created_at)+'</span></div><div class="comment-text">'+c.content.replace(/</g,'&lt;')+'</div>';
+    body.innerHTML='<div class="comment-user">'+escapeHtml(getDisplayName(c))+' <span class="comment-time">'+fmtDate(c.created_at)+'</span></div><div class="comment-text">'+escapeHtml(c.content)+'</div>';
     item.appendChild(av);item.appendChild(body);cl.appendChild(item);
   });
 }
@@ -1631,9 +1677,9 @@ async function loadAdminPhotos(){
     const st=p.status==='approved'?'已上架':p.status==='removed'?'已下架':'待审核';
     return '<div class="admin-item">'+
       '<img class="thumb" src="'+p.data_url+'" onerror="this.onerror=null;this.style.display=&quot;none&quot;;this.nextElementSibling.style.display=&quot;flex&quot;" style="width:60px;height:60px;object-fit:cover;border-radius:8px"><div style="width:60px;height:60px;border-radius:8px;background:#f0e8dd;display:none;align-items:center;justify-content:center;font-size:10px;color:#999">加载失败</div>'+
-      '<div class="info"><div class="title">'+(p.title||'无标题')+'</div>'+
-      '<div class="meta">'+(p.nickname||p.username)+' · '+fmtDate(p.created_at)+' · <span class="status-badge '+sc+'">'+st+'</span></div>'+
-      (p.description?'<div class="meta" style="margin-top:2px">'+p.description.slice(0,50)+'</div>':'')+'</div>'+
+      '<div class="info"><div class="title">'+escapeHtml(p.title||'无标题')+'</div>'+
+      '<div class="meta">'+escapeHtml(p.nickname||p.username)+' · '+fmtDate(p.created_at)+' · <span class="status-badge '+sc+'">'+st+'</span></div>'+
+      (p.description?'<div class="meta" style="margin-top:2px">'+escapeHtml(p.description.slice(0,50))+'</div>':'')+'</div>'+
       '<div class="actions">'+
       (p.status!=='approved'?'<button class="admin-btn approve" onclick="adminPhotoAction(\''+p.id+'\',\'approved\')">上架</button>':'')+
       (p.status!=='removed'?'<button class="admin-btn remove" onclick="adminPhotoAction(\''+p.id+'\',\'removed\')">下架</button>':'')+
@@ -1657,8 +1703,8 @@ async function loadAdminComments(){
   if(!res.success){c.innerHTML='<div class="admin-empty">加载失败</div>';return;}
   if(res.comments.length===0){c.innerHTML='<div class="admin-empty">暂无评论</div>';return;}
   c.innerHTML='<div class="admin-list">'+res.comments.map(cm=>'<div class="admin-item">'+
-    '<div class="info" style="flex:1"><div class="title">'+cm.content.replace(/</g,'&lt;')+'</div>'+
-    '<div class="meta">'+(cm.nickname||cm.username)+' · '+fmtDate(cm.created_at)+' · 照片：'+(cm.photo_title||'未知')+'</div></div>'+
+    '<div class="info" style="flex:1"><div class="title">'+escapeHtml(cm.content)+'</div>'+
+    '<div class="meta">'+escapeHtml(cm.nickname||cm.username)+' · '+fmtDate(cm.created_at)+' · 照片：'+escapeHtml(cm.photo_title||'未知')+'</div></div>'+
     '<div class="actions"><button class="admin-btn delete" onclick="adminCommentDelete(\''+cm.id+'\')">删除</button></div>'+
     '</div>').join('')+'</div>';
 }
@@ -1683,7 +1729,7 @@ function renderAdminUsers(keyword){
   c.innerHTML=searchBox+'<div style="font-size:12px;color:var(--text3);margin-bottom:8px">共 '+list.length+' 个用户</div><div class="admin-list">'+list.map(u=>'<div class="admin-item">'+
     '<div class="avatar" style="width:36px;height:36px;font-size:14px" id="admAv'+u.id+'"></div>'+
     '<div class="info"><div class="title">'+(u.nickname||u.username)+(u.is_admin?' <span class="status-badge status-approved">管理员</span>':'')+(u.is_banned?' <span class="status-badge status-removed">已封禁</span>':'')+'</div>'+
-    '<div class="meta">@'+u.username+' · 注册于 '+fmtDate(u.created_at)+'</div></div>'+
+    '<div class="meta">@'+escapeHtml(u.username)+' · 注册于 '+fmtDate(u.created_at)+'</div></div>'+
     '<div class="actions">'+
     (u.is_admin?'':'<button class="admin-btn '+(u.is_banned?'approve':'remove')+'" onclick="adminUserBan('+u.id+','+!u.is_banned+')">'+(u.is_banned?'解封':'封禁')+'</button>')+
     '<button class="admin-btn" style="background:#3498db;color:#fff" onclick="adminResetPassword('+u.id+',\''+escAttr(u.nickname||u.username)+'\')">重置密码</button>'+
@@ -1770,8 +1816,8 @@ async function loadAdminPosts(){
   res.posts.forEach(p=>{
     const name=(p.nickname||p.username);
     html+='<div class="admin-item">'+
-      '<div style="font-size:13px;font-weight:600">'+name+' · '+p.tag+' · '+fmtDate(p.created_at)+'</div>'+
-      '<div style="font-size:12px;color:var(--text);margin:4px 0;word-break:break-word">'+p.content.slice(0,100).replace(/</g,'&lt;')+'</div>'+
+      '<div style="font-size:13px;font-weight:600">'+escapeHtml(name)+' · '+escapeHtml(p.tag||'')+' · '+fmtDate(p.created_at)+'</div>'+
+      '<div style="font-size:12px;color:var(--text);margin:4px 0;word-break:break-word">'+escapeHtml(p.content.slice(0,100))+'</div>'+
       '<div style="display:flex;gap:8px"><span style="font-size:11px;color:var(--text3)">❤'+p.like_count+' 💬'+p.reply_count+'</span>'+
       '<button class="admin-btn danger" onclick="adminPostDelete(\''+p.id+'\')">删除</button></div></div>';
   });
@@ -1790,7 +1836,7 @@ async function loadAdminReports(){
   if(!res.success||res.reports.length===0){c.innerHTML=sf+'<div class="admin-empty">暂无待处理举报</div>';return;}
   let html=sf+'<div style="margin-bottom:10px;font-size:13px;color:var(--text2)">共 '+res.reports.length+' 条待处理举报</div>';
   res.reports.forEach(r=>{
-    html+='<div class="admin-item" id="rpt-'+r.id+'"><div style="font-size:13px;font-weight:600">'+(r.type==='photo'?'📷 照片举报':'💬 留言举报')+' · '+escapeHtml(r.nickname||r.username||'匿名')+(r.report_category?' · '+escapeHtml(r.report_category):'')+'</div><div style="font-size:12px;margin:4px 0">原因：'+(r.reason||'无')+'</div><div style="font-size:11px;color:var(--text3)">目标ID：'+r.target_id+' · '+fmtDate(r.created_at)+'</div><textarea id="rpl-'+r.id+'" placeholder="回复举报人（可选）" style="width:100%;margin-top:6px;padding:6px;border:1px solid #e0d5c5;border-radius:6px;font-size:12px;resize:vertical;min-height:36px"></textarea><div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap"><button class="admin-btn danger" onclick="adminProcessReport('+r.id+',\'delete\')">删除内容并处理</button><button class="admin-btn view" onclick="adminProcessReport('+r.id+',\'ignore\')">忽略</button><button class="admin-btn" onclick="adminProcessReport('+r.id+',\'resolve\')">标记已处理</button></div></div>';
+    html+='<div class="admin-item" id="rpt-'+r.id+'"><div style="font-size:13px;font-weight:600">'+(r.type==='photo'?'📷 照片举报':'💬 留言举报')+' · '+escapeHtml(r.nickname||r.username||'匿名')+(r.report_category?' · '+escapeHtml(r.report_category):'')+'</div><div style="font-size:12px;margin:4px 0">原因：'+escapeHtml(r.reason||'无')+'</div><div style="font-size:11px;color:var(--text3)">目标ID：'+r.target_id+' · '+fmtDate(r.created_at)+'</div><textarea id="rpl-'+r.id+'" placeholder="回复举报人（可选）" style="width:100%;margin-top:6px;padding:6px;border:1px solid #e0d5c5;border-radius:6px;font-size:12px;resize:vertical;min-height:36px"></textarea><div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap"><button class="admin-btn danger" onclick="adminProcessReport('+r.id+',\'delete\')">删除内容并处理</button><button class="admin-btn view" onclick="adminProcessReport('+r.id+',\'ignore\')">忽略</button><button class="admin-btn" onclick="adminProcessReport('+r.id+',\'resolve\')">标记已处理</button></div></div>';
   });
   c.innerHTML=html;
 }
@@ -1801,7 +1847,7 @@ window.loadAdminReportsByStatus=async(status)=>{
   if(!res.success||res.reports.length===0){c.innerHTML=sf+'<div class="admin-empty">暂无举报</div>';return;}
   let html=sf+'<div style="margin-bottom:10px;font-size:13px">共 '+res.reports.length+' 条</div>';
   res.reports.forEach(r=>{
-    html+='<div class="admin-item"><div style="font-size:13px;font-weight:600">'+(r.type==='photo'?'📷':'💬')+' '+escapeHtml(r.nickname||r.username||'匿名')+(r.report_category?' · '+escapeHtml(r.report_category):'')+' <span style="font-size:11px;color:'+(r.status==='resolved'?'#2e7d32':'#ff9800')+'">['+r.status+']</span></div><div style="font-size:12px;margin:4px 0">原因：'+(r.reason||'无')+'</div>'+(r.admin_reply?'<div style="font-size:12px;color:#2e7d32;margin:4px 0">管理员回复：'+r.admin_reply+'</div>':'')+'<div style="font-size:11px;color:var(--text3)">'+fmtDate(r.created_at)+(r.processed_at?' · 处理于'+fmtDate(r.processed_at):'')+'</div></div>';
+    html+='<div class="admin-item"><div style="font-size:13px;font-weight:600">'+(r.type==='photo'?'📷':'💬')+' '+escapeHtml(r.nickname||r.username||'匿名')+(r.report_category?' · '+escapeHtml(r.report_category):'')+' <span style="font-size:11px;color:'+(r.status==='resolved'?'#2e7d32':'#ff9800')+'">['+r.status+']</span></div><div style="font-size:12px;margin:4px 0">原因：'+escapeHtml(r.reason||'无')+'</div>'+(r.admin_reply?'<div style="font-size:12px;color:#2e7d32;margin:4px 0">管理员回复：'+escapeHtml(r.admin_reply)+'</div>':'')+'<div style="font-size:11px;color:var(--text3)">'+fmtDate(r.created_at)+(r.processed_at?' · 处理于'+fmtDate(r.processed_at):'')+'</div></div>';
   });
   c.innerHTML=html;
 };
@@ -1871,7 +1917,7 @@ function renderPlaylist(){
   const pl=$('playlist');pl.innerHTML='';
   playlist.forEach((s,i)=>{
     const item=document.createElement('div');item.className='pl-item'+(i===curSong?' active':'');
-    item.innerHTML='<span class="pl-idx">'+(i+1)+'</span><div class="pl-info"><div class="pl-name">'+s.title+'</div><div class="pl-artist">'+s.artist+'</div></div><span class="pl-del" data-idx="'+i+'">×</span>';
+    item.innerHTML='<span class="pl-idx">'+(i+1)+'</span><div class="pl-info"><div class="pl-name">'+escapeHtml(s.title)+'</div><div class="pl-artist">'+escapeHtml(s.artist)+'</div></div><span class="pl-del" data-idx="'+i+'">×</span>';
     item.onclick=e=>{if(e.target.classList.contains('pl-del'))return;playSong(i);};
     item.querySelector('.pl-del').onclick=e=>{e.stopPropagation();playlist.splice(i,1);if(curSong>=playlist.length)curSong=0;saveAll();renderPlaylist();toast('已删除');};
     pl.appendChild(item);
@@ -2046,7 +2092,7 @@ function renderHomeItem(p,type){
   const av=genAvatar(name);
   item.innerHTML='<div class="home-item-avatar" style="background:'+av.color+'">'+av.letter+'</div>'+
     '<div class="home-item-content"><div class="home-item-title">'+p.content.slice(0,30).replace(/</g,'&lt;')+'</div>'+
-    '<div class="home-item-meta">'+name+' · '+p.tag+' · '+fmtDate(p.created_at)+'</div></div>'+
+    '<div class="home-item-meta">'+escapeHtml(name)+' · '+escapeHtml(p.tag||'')+' · '+fmtDate(p.created_at)+'</div></div>'+
     '<div class="home-item-like">❤'+p.like_count+'</div>';
   item.onclick=()=>{switchView('mailbox');};
   return item;
@@ -2095,8 +2141,8 @@ function renderPost(p){
   const av=genAvatar(authorName);
   item.innerHTML='<div class="post-header">'+
     '<div class="avatar" onclick="openUserProfile('+p.user_id+')" style="width:32px;height:32px;font-size:13px;background:'+av.color+';cursor:pointer">'+av.letter+'</div>'+
-    '<div><div class="post-author" onclick="openUserProfile('+p.user_id+')" style="cursor:pointer">'+authorName+'</div></div>'+
-    '<span class="post-tag">'+p.tag+'</span>'+
+    '<div><div class="post-author" onclick="openUserProfile('+p.user_id+')" style="cursor:pointer">'+escapeHtml(authorName)+'</div></div>'+
+    '<span class="post-tag">'+escapeHtml(p.tag||'')+'</span>'+
     '<span class="post-time">'+fmtDate(p.created_at)+'</span></div>'+
     '<div class="post-content">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
     (p.image_url?'<img class="post-image" src="'+p.image_url+'">':'')+
@@ -2143,9 +2189,9 @@ async function openPostDetail(id){
   const html='<div class="post-detail">'+
     '<div class="post-header" style="margin-bottom:12px">'+
     '<div class="avatar" style="width:40px;height:40px;font-size:16px;background:'+av.color+'">'+av.letter+'</div>'+
-    '<div><div class="post-author" style="font-size:15px">'+authorName+'</div>'+
+    '<div><div class="post-author" style="font-size:15px">'+escapeHtml(authorName)+'</div>'+
     '<div style="font-size:11px;color:var(--text3)">'+fmtDate(p.created_at)+'</div></div>'+
-    '<span class="post-tag">'+(p.tag||'日常分享')+'</span></div>'+
+    '<span class="post-tag">'+escapeHtml(p.tag||'日常分享')+'</span></div>'+
     '<div class="post-content" style="font-size:15px;line-height:1.7;margin-bottom:12px">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
     (p.image_url?'<img class="post-image" src="'+p.image_url+'" style="width:100%;border-radius:12px;margin-bottom:12px">':'')+
     '<div class="post-actions" style="border-top:1px solid var(--border);padding-top:12px;margin-bottom:12px">'+
@@ -2168,7 +2214,7 @@ async function loadPostDetailReplies(id){
   box.innerHTML=res.replies.map(r=>{
     const name=(r.nickname||r.username);
     const av=genAvatar(name);
-    return '<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span><div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
+    return '<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+escapeHtml(name)+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span><div class="reply-text">'+escapeHtml(r.content)+'</div></div></div>';
   }).join('');
 }
 async function submitPostDetailReply(id){
@@ -2202,7 +2248,7 @@ async function loadUserProfile(userId){
   if(!res.success){c.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">'+(res.error||'加载失败')+'</div>';return;}
   const u=res.user,s=res.stats;
   const av=genAvatar(u.nickname||u.username);
-  const tags=u.tags?u.tags.split(',').filter(t=>t.trim()).map(t=>'<span style="display:inline-block;padding:3px 10px;background:rgba(245,166,35,.12);color:var(--accent);border-radius:12px;font-size:11px;margin:2px">'+t.trim()+'</span>').join(''):'';
+  const tags=u.tags?u.tags.split(',').filter(t=>t.trim()).map(t=>'<span style="display:inline-block;padding:3px 10px;background:rgba(245,166,35,.12);color:var(--accent);border-radius:12px;font-size:11px;margin:2px">'+escapeHtml(t.trim())+'</span>').join(''):'';
   let actionBtns='';
   if(res.is_own){
     actionBtns='<button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="closeModal(\'profileModal\');switchView(\'profile\')">✏️ 编辑资料</button>';
@@ -2212,7 +2258,7 @@ async function loadUserProfile(userId){
   }
   let postsHtml='';
   if(res.posts&&res.posts.length>0){
-    postsHtml=res.posts.slice(0,5).map(p=>'<div style="padding:10px;border-bottom:1px solid var(--border);font-size:13px"><div style="color:var(--text);margin-bottom:4px">'+p.content.slice(0,50)+'</div><div style="font-size:11px;color:var(--text3)">'+p.tag+' · ❤'+p.like_count+' · '+fmtDate(p.created_at)+'</div></div>').join('');
+    postsHtml=res.posts.slice(0,5).map(p=>'<div style="padding:10px;border-bottom:1px solid var(--border);font-size:13px"><div style="color:var(--text);margin-bottom:4px">'+escapeHtml(p.content.slice(0,50))+'</div><div style="font-size:11px;color:var(--text3)">'+escapeHtml(p.tag||'')+' · ❤'+p.like_count+' · '+fmtDate(p.created_at)+'</div></div>').join('');
   }else{
     postsHtml='<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px">暂无留言</div>';
   }
@@ -2224,8 +2270,8 @@ async function loadUserProfile(userId){
   }
   c.innerHTML='<div style="text-align:center;margin-bottom:16px">'+
     '<div style="width:72px;height:72px;border-radius:50%;background:'+av.color+';color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin-bottom:10px">'+av.letter+'</div>'+
-    '<div style="font-size:18px;font-weight:700;margin-bottom:4px">'+(u.nickname||u.username)+'</div>'+
-    (u.bio?'<div style="font-size:13px;color:var(--text2);margin-bottom:8px">'+u.bio+'</div>':'')+
+    '<div style="font-size:18px;font-weight:700;margin-bottom:4px">'+escapeHtml(u.nickname||u.username)+'</div>'+
+    (u.bio?'<div style="font-size:13px;color:var(--text2);margin-bottom:8px">'+escapeHtml(u.bio)+'</div>':'')+
     '<div style="margin-bottom:12px">'+actionBtns+'</div>'+
     '</div>'+
     '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center;margin-bottom:16px;padding:12px;background:var(--bg);border-radius:12px">'+
@@ -2236,10 +2282,10 @@ async function loadUserProfile(userId){
     '<div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+s.followers+'</div><div style="font-size:11px;color:var(--text3)">粉丝</div></div>'+
     '</div>'+
     '<div style="margin-bottom:16px;padding:12px;background:var(--bg);border-radius:12px;font-size:12px;color:var(--text2);line-height:1.8">'+
-    (u.constellation?'<div>✨ 星座：'+u.constellation+'</div>':'')+
-    (u.resident_map?'<div>🗺️ 常驻地图：'+u.resident_map+'</div>':'')+
-    (u.instrument?'<div>🎵 乐器：'+u.instrument+'</div>':'')+
-    (u.online_time?'<div>⏰ 在线时间：'+u.online_time+'</div>':'')+
+    (u.constellation?'<div>✨ 星座：'+escapeHtml(u.constellation)+'</div>':'')+
+    (u.resident_map?'<div>🗺️ 常驻地图：'+escapeHtml(u.resident_map)+'</div>':'')+
+    (u.instrument?'<div>🎵 乐器：'+escapeHtml(u.instrument)+'</div>':'')+
+    (u.online_time?'<div>⏰ 在线时间：'+escapeHtml(u.online_time)+'</div>':'')+
     (tags?'<div style="margin-top:6px">'+tags+'</div>':'')+
     '</div>'+
     '<div style="margin-bottom:12px"><div style="font-size:14px;font-weight:600;margin-bottom:8px">💬 最近留言</div>'+postsHtml+'</div>'+
@@ -2450,7 +2496,7 @@ async function loadGalleryFull(){
   res.photos.forEach((p,i)=>{
     const name=p.nickname||p.username||'匿名';const a=genAvatar(name);
     const item=document.createElement('div');item.className='gallery-item';
-    item.innerHTML=(p.title?'<div class="photo-title">'+p.title+'</div>':'')+
+    item.innerHTML=(p.title?'<div class="photo-title">'+escapeHtml(p.title)+'</div>':'')+
       '<img src="'+p.data_url+'" loading="lazy">'+
       '<div class="meta"><span>'+name+'</span><span>❤'+(p.likes||0)+'</span></div>';
     item.onclick=()=>{lightboxPhotos=res.photos;openLightbox(i);};g.appendChild(item);
@@ -2466,7 +2512,7 @@ async function loadMyProfile(){
   // 显示标签和常驻地图
   const cardTags=$('cardTags');if(cardTags){
     const tags=(currentUser.tags||'').split(',').filter(Boolean);
-    cardTags.innerHTML=tags.map(t=>'<span class="tag-chip active" style="font-size:11px;padding:3px 10px">'+t+'</span>').join('');
+    cardTags.innerHTML=tags.map(t=>'<span class="tag-chip active" style="font-size:11px;padding:3px 10px">'+escapeHtml(t)+'</span>').join('');
   }
   const cardRes=$('cardResident');if(cardRes&&currentUser.resident_map)cardRes.textContent='📍 常驻：'+currentUser.resident_map;
   $('fConstellation').value=currentUser.constellation||'';
@@ -2497,7 +2543,7 @@ const saveBtn=$('saveProfileBtn');if(saveBtn)saveBtn.onclick=async()=>{
 // 账号绑定功能已移除，即将上线
 
 // ========== 暗色主题 + 星光粒子 ==========
-const themeBtn=document.createElement('button');themeBtn.className='theme-toggle';themeBtn.innerHTML='🌙';themeBtn.onclick=toggleTheme;document.body.appendChild(themeBtn);
+const themeBtn=document.createElement('button');themeBtn.className='theme-toggle';themeBtn.innerHTML='🌙';themeBtn.setAttribute('aria-label','切换深色/浅色模式');themeBtn.onclick=toggleTheme;document.body.appendChild(themeBtn);
 const starCanvas=document.createElement('canvas');starCanvas.id='starCanvas';document.body.insertBefore(starCanvas,document.body.firstChild);
 let stars=[],starAnimId=null;
 function toggleTheme(){
@@ -2620,7 +2666,7 @@ async function loadMessages(){
   if(!res.success||!res.messages||res.messages.length===0){list.innerHTML='<div class="admin-empty">暂无私信</div>';return;}
   list.innerHTML=res.messages.map(m=>{
     const name=m.from_nickname||m.from_username||'光之子';
-    return '<div class="msg-item'+(m.is_read?'':' unread')+'"><div class="msg-avatar">'+name.charAt(0)+'</div><div class="msg-body"><div class="msg-user">'+name+'</div><div class="msg-text">'+m.content.replace(/</g,'&lt;')+'</div><div class="msg-time">'+fmtDate(m.created_at)+'</div></div></div>';
+    return '<div class="msg-item'+(m.is_read?'':' unread')+'"><div class="msg-avatar">'+escapeHtml(name.charAt(0))+'</div><div class="msg-body"><div class="msg-user">'+escapeHtml(name)+'</div><div class="msg-text">'+escapeHtml(m.content)+'</div><div class="msg-time">'+fmtDate(m.created_at)+'</div></div></div>';
   }).join('');
 }
 
@@ -2714,9 +2760,9 @@ async function loadExchangeList(){
     const name=p.nickname||p.username||'匿名';
     const typeText=p.type==='heart'?'互心':'互火';
     const typeClass=p.type==='heart'?'type-heart':'type-fire';
-    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="font-size:11px;color:var(--text3)">'+(p.server||'国服')+'</span></div>'+
-      (p.content?'<div class="content">'+p.content+'</div>':'')+
-      '<div class="meta">'+name+' · '+formatTime(p.created_at)+'</div></div>';
+    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="font-size:11px;color:var(--text3)">'+escapeHtml(p.server||'国服')+'</span></div>'+
+      (p.content?'<div class="content">'+escapeHtml(p.content)+'</div>':'')+
+      '<div class="meta">'+escapeHtml(name)+' · '+formatTime(p.created_at)+'</div></div>';
   }).join('');
 }
 function openExchangePost(){if(!requireLogin('发布'))return;closeModal('exchangeModal');openModal('exchangePostModal');}
