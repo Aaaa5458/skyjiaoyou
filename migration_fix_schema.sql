@@ -1,0 +1,32 @@
+-- 修复缺失的数据库列
+-- users 表扩展（v5 + v8）
+ALTER TABLE users ADD COLUMN constellation TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN resident_map TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN instrument TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN online_time TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN bio TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN theme TEXT DEFAULT 'light';
+ALTER TABLE users ADD COLUMN play_style TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN wing_count INTEGER DEFAULT 0;
+ALTER TABLE users ADD COLUMN replica_preference TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN watermark_text TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN run_status TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN run_status_expire TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN highlights TEXT DEFAULT '[]';
+ALTER TABLE users ADD COLUMN achievements TEXT DEFAULT '[]';
+ALTER TABLE users ADD COLUMN is_new INTEGER DEFAULT 1;
+ALTER TABLE users ADD COLUMN avatar_style TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN game_duration TEXT DEFAULT '';
+
+-- posts 表扩展（v7 + v8）
+ALTER TABLE posts ADD COLUMN hide_contact INTEGER DEFAULT 0;
+ALTER TABLE posts ADD COLUMN game_duration TEXT DEFAULT '';
+ALTER TABLE posts ADD COLUMN online_time_filter TEXT DEFAULT '';
+ALTER TABLE posts ADD COLUMN report_count INTEGER DEFAULT 0;
+
+-- photos 表扩展（v7 + v8）
+ALTER TABLE photos ADD COLUMN report_count INTEGER DEFAULT 0;
+ALTER TABLE photos ADD COLUMN location TEXT DEFAULT '';
+ALTER TABLE photos ADD COLUMN high_five_count INTEGER DEFAULT 0;
+ALTER TABLE photos ADD COLUMN heart_count INTEGER DEFAULT 0;
+ALTER TABLE photos ADD COLUMN is_highlight INTEGER DEFAULT 0;
