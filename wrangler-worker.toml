@@ -1,0 +1,8 @@
+name = "guangyu-friends-api"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "guangyu-friends-db"
+database_id = "f1c4616a-e887-46d0-9394-bb221df80080"
