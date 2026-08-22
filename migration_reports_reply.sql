@@ -1,0 +1,3 @@
+ALTER TABLE reports ADD COLUMN admin_reply TEXT DEFAULT '';
+ALTER TABLE reports ADD COLUMN admin_note TEXT DEFAULT '';
+ALTER TABLE reports ADD COLUMN processed_at TIMESTAMP;
