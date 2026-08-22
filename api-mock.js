@@ -455,7 +455,8 @@
       // ===== 管理后台 =====
       if(path==='/admin/stats'&&method==='GET'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
-        return json({success:true,users:db.users.length,photos:{total:db.photos.length,pending:db.photos.filter(p=>p.status==='pending').length,approved:db.photos.filter(p=>p.status==='approved').length,removed:db.photos.filter(p=>p.status==='removed').length},posts:db.posts.length,comments:db.comments.length});
+        const today=new Date().toISOString().slice(0,10);
+        return json({success:true,users:db.users.length,photos:{total:db.photos.length,pending:db.photos.filter(p=>p.status==='pending').length,approved:db.photos.filter(p=>p.status==='approved').length,removed:db.photos.filter(p=>p.status==='removed').length},posts:db.posts.length,comments:db.comments.length,today:{users:db.users.filter(u=>u.created_at&&u.created_at.startsWith(today)).length,photos:db.photos.filter(p=>p.created_at&&p.created_at.startsWith(today)).length}});
       }
       
       if(path==='/admin/users'&&method==='GET'){
