@@ -1,0 +1,15 @@
+ALTER TABLE users ADD COLUMN constellation TEXT;
+ALTER TABLE users ADD COLUMN resident_map TEXT;
+ALTER TABLE users ADD COLUMN instrument TEXT;
+ALTER TABLE users ADD COLUMN online_time TEXT;
+ALTER TABLE users ADD COLUMN bio TEXT;
+ALTER TABLE users ADD COLUMN theme TEXT DEFAULT 'light';
+ALTER TABLE users ADD COLUMN play_style TEXT;
+ALTER TABLE users ADD COLUMN wing_count INTEGER DEFAULT 0;
+ALTER TABLE users ADD COLUMN replica_preference TEXT;
+ALTER TABLE users ADD COLUMN watermark_text TEXT DEFAULT '光遇交友';
+ALTER TABLE users ADD COLUMN highlights TEXT;
+ALTER TABLE users ADD COLUMN achievements TEXT;
+ALTER TABLE users ADD COLUMN is_new INTEGER DEFAULT 1;
+ALTER TABLE users ADD COLUMN avatar_style TEXT;
+ALTER TABLE users ADD COLUMN game_duration TEXT;
