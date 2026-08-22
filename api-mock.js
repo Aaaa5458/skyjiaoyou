@@ -158,7 +158,7 @@
         const newPwd=body.new_password||body.newPassword;
         if(!oldPwd||!newPwd)return json({success:false,error:'请填写完整'});
         if(user.password!==hash(oldPwd))return json({success:false,error:'旧密码错误'});
-        if(newPwd.length<4)return json({success:false,error:'新密码至少4位'});
+        if(newPwd.length<6||!/[a-zA-Z]/.test(newPwd)||!/[0-9]/.test(newPwd))return json({success:false,error:'新密码至少6位，需包含字母和数字'});
         user.password=hash(newPwd);
         const idx=db.users.findIndex(u=>u.id===user.id);
         db.users[idx]=user;saveDB(db);
@@ -527,7 +527,7 @@
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
         const userId=parseInt(path.split('/')[3]);
         const {new_password}=body;
-        if(!new_password||new_password.length<4)return json({success:false,error:'新密码至少4位'});
+        if(!new_password||new_password.length<6||!/[a-zA-Z]/.test(new_password)||!/[0-9]/.test(new_password))return json({success:false,error:'新密码至少6位，需包含字母和数字'});
         const target=db.users.find(u=>u.id===userId);
         if(!target)return json({success:false,error:'用户不存在'});
         target.password=hash(new_password);
