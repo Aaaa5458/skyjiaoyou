@@ -1,0 +1,2859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#f5e6d3">
+<meta name="description" content="光遇交友 - 光遇玩家社交平台，分享游戏截图，加入微信群，结识志同道合的旅人">
+<meta name="keywords" content="光遇,光遇交友,sky光遇,游戏截图,光遇微信群">
+<meta property="og:title" content="光遇交友 - 旅人社交平台">
+<meta property="og:description" content="分享光遇游戏截图，加入微信群，结识志同道合的旅人">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://guangyu-friends.pages.dev">
+<meta property="og:image" content="https://guangyu-friends.pages.dev/favicon.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="光遇交友 - 旅人社交平台">
+<meta name="twitter:description" content="分享光遇游戏截图，加入微信群，结识志同道合的旅人">
+<title>光遇交友 - 旅人社交平台</title>
+<style>
+:root{transition:background-color .3s,color .3s;
+  --bg1:#fdf6ec;--bg2:#f5e6d3;--bg3:#e8d5c4;
+  --card:rgba(255,255,255,.78);
+  --border:rgba(255,255,255,.6);
+  --text:#4a3c2e;--text2:#8a7360;--text3:#b09a85;
+  --accent:#b87333;--accent2:#d4915a;--accent-light:#f0dcc4;
+  --shadow:0 8px 32px rgba(180,140,100,.15);
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 50%,var(--bg3) 100%);
+  background-attachment:fixed;color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden;padding-bottom:100px;
+}
+.container{max-width:640px;margin:0 auto;padding:16px 14px 30px}
+.topbar{display:flex;align-items:center;gap:10px;padding:12px 4px 14px;position:relative;z-index:1000}
+.topbar h1{font-size:22px;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;flex-shrink:0}
+.search-box{flex:1;position:relative}
+.search-box input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--border);border-radius:20px;font-size:13px;background:var(--card);outline:none;color:var(--text);transition:all .2s}
+.search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(184,115,51,.1)}
+.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text3)}
+.user-btn{position:relative;display:flex;align-items:center;gap:6px;cursor:pointer;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:5px 12px 5px 5px;font-size:12px;color:var(--text2);box-shadow:var(--shadow);transition:all .2s;flex-shrink:0}
+.user-btn:hover{transform:translateY(-1px)}
+.avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-sm{width:24px;height:24px;font-size:11px}
+.avatar-lg{width:56px;height:56px;font-size:24px}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;min-width:180px;background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.12);padding:6px;z-index:10001;opacity:0;transform:translateY(-8px);pointer-events:none;transition:all .2s ease}
+.user-dropdown.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;color:var(--text);cursor:pointer;transition:background .15s}
+.dd-item:hover{background:var(--accent-light)}
+.dd-item svg{width:18px;height:18px;color:var(--accent2)}
+.dd-item.danger{color:#c0392b}
+.dd-divider{height:1px;background:#f0e8dd;margin:4px 8px}
+.dd-group-label{font-size:11px;color:var(--text3);padding:6px 14px 2px;font-weight:600;letter-spacing:1px}
+.card{background:var(--card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card-title{font-size:15px;font-weight:600;color:#6b5340;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title::before{content:"";width:4px;height:15px;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:2px}
+.card-more{margin-left:auto;font-size:12px;color:var(--text3);cursor:pointer;font-weight:400}
+.home-list{display:flex;flex-direction:column;gap:10px}
+.home-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#faf7f2;border-radius:12px;cursor:pointer;transition:background .2s}
+.home-item:hover{background:#f5ede0}
+.home-item-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600}
+.home-item-content{flex:1;min-width:0}
+.home-item-title{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.home-item-meta{font-size:11px;color:var(--text3)}
+.home-item-like{font-size:12px;color:var(--text3);flex-shrink:0;display:flex;align-items:center;gap:2px}
+.skeleton{background:linear-gradient(90deg,#f0e8dd 25%,#f8f3eb 50%,#f0e8dd 75%);background-size:200% 100%;animation:skeletonPulse 1.5s ease-in-out infinite;border-radius:8px}
+@keyframes skeletonPulse{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-item{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.skeleton-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0}
+.skeleton-text{flex:1;height:12px;margin-bottom:6px}
+.skeleton-text.short{width:60%;height:10px;margin-bottom:0}
+.qr-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.qr-box{width:180px;height:180px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.qr-box img{width:100%;height:100%;object-fit:contain;display:block}
+.qr-placeholder{text-align:center;color:#ccc;font-size:12px;padding:16px}
+.qr-placeholder svg{width:56px;height:56px;margin-bottom:6px;opacity:.5}
+.qr-tip{font-size:12px;color:var(--text3);text-align:center}
+.qr-tip strong{color:var(--accent)}
+.upload-area{border:2px dashed #d4b896;border-radius:14px;padding:20px 16px;text-align:center;cursor:pointer;transition:all .25s;background:rgba(255,255,255,.4)}
+.upload-area:hover,.upload-area.dragover{border-color:var(--accent);background:rgba(255,255,255,.7)}
+.upload-area svg{width:36px;height:36px;color:var(--accent2);margin-bottom:6px}
+.upload-area p{font-size:13px;color:var(--text2)}
+.upload-area .hint{font-size:11px;color:var(--text3);margin-top:3px}
+.upload-login-tip{font-size:12px;color:var(--accent);margin-top:8px}
+.upload-meta{margin-top:12px;display:none;gap:10px;flex-direction:column}
+.upload-meta.show{display:flex}
+.upload-meta input,.upload-meta textarea{width:100%;padding:8px 10px;border:1px solid #e0d5c5;border-radius:8px;font-size:13px;background:#faf7f2;outline:none;font-family:inherit;resize:none}
+.upload-meta input:focus,.upload-meta textarea:focus{border-color:var(--accent)}
+.upload-preview{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.upload-preview .thumb{width:60px;height:60px;border-radius:8px;object-fit:cover;border:1px solid #eee}
+.upload-confirm-btn{padding:8px 20px;border:none;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;border-radius:10px;font-size:13px;cursor:pointer;align-self:flex-start}
+#fileInput{display:none}
+.gallery{column-count:2;column-gap:8px}
+@media(min-width:600px){.gallery{column-count:3}}
+@media(min-width:900px){.gallery{column-count:4}}
+.gallery-item{position:relative;break-inside:avoid;margin-bottom:8px;border-radius:10px;overflow:hidden;background:#eee;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.gallery-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.gallery-item img{width:100%;height:auto;display:block}
+.gallery-item .meta{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:linear-gradient(transparent,rgba(0,0,0,.5));display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#fff}
+.gallery-item .like-icon{display:flex;align-items:center;gap:2px}
+.gallery-item .photo-title{position:absolute;top:0;left:0;right:0;padding:4px 6px;background:linear-gradient(rgba(0,0,0,.4),transparent);color:#fff;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.empty-state{text-align:center;padding:28px 0;color:var(--text3);font-size:13px}
+.load-more{text-align:center;padding:14px 0}
+.load-more button{padding:8px 24px;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.load-more button:hover{background:var(--accent);color:#fff}
+.player{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);box-shadow:0 -4px 20px rgba(0,0,0,.08);padding:10px 14px}
+.player-bar{display:flex;align-items:center;gap:10px;max-width:640px;margin:0 auto}
+.player-cover{width:42px;height:42px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;animation:spin 8s linear infinite;animation-play-state:paused}
+.player-cover.playing{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+.player-info{flex:1;min-width:0}
+.player-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-artist{font-size:11px;color:var(--text3)}
+.player-controls{display:flex;align-items:center;gap:6px}
+.pctl-btn{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--text);transition:all .2s}
+.pctl-btn:hover{background:var(--accent-light)}
+.pctl-btn.play{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;width:38px;height:38px}
+.pctl-btn svg{width:16px;height:16px}
+.pctl-btn.play svg{width:18px;height:18px}
+.player-expand{cursor:pointer;color:var(--text3);padding:4px}
+.player-panel{max-width:640px;margin:8px auto 0;display:none;border-top:1px solid rgba(0,0,0,.06);padding-top:10px}
+.player-panel.show{display:block}
+.music-search{display:flex;gap:6px;margin:10px 0}
+.music-search input{flex:1;padding:7px 10px;border:1px solid #e8dcc8;border-radius:16px;font-size:12px;background:rgba(255,255,255,.7)}
+.music-search button{padding:7px 14px;border:none;border-radius:16px;background:var(--accent);color:#fff;font-size:12px;cursor:pointer}
+.search-results{max-height:200px;overflow-y:auto;margin-bottom:10px;border-top:1px solid #f0e8dd;padding-top:8px}
+.search-item{display:flex;align-items:center;gap:8px;padding:6px 4px;cursor:pointer;border-radius:8px;transition:background .2s}
+.search-item:hover{background:rgba(212,184,150,.15)}
+.search-cover{width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;background:#f0e8dd}
+.search-info{flex:1;min-width:0}
+.search-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-artist{font-size:10px;color:var(--text3)}
+.search-play{font-size:16px;color:var(--accent);flex-shrink:0}
+.playlist-title{font-size:12px;color:var(--text2);margin:8px 0 4px;font-weight:600}
+.playlist-title span{background:var(--accent);color:#fff;padding:1px 6px;border-radius:8px;font-size:10px}
+.progress-row{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--text3)}
+.progress-bar{flex:1;height:4px;background:#e8dcc8;border-radius:2px;cursor:pointer;position:relative}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;width:0%}
+.volume-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:11px;color:var(--text2)}
+.volume-bar{flex:1;height:4px;background:#e8dcc8;border-radius:2px;cursor:pointer;position:relative}
+.volume-fill{height:100%;background:var(--accent2);border-radius:2px;width:70%}
+.playlist{margin-top:10px;max-height:160px;overflow-y:auto}
+.pl-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:12px;transition:background .15s}
+.pl-item:hover{background:var(--accent-light)}
+.pl-item.active{color:var(--accent);font-weight:600}
+.pl-item .pl-idx{width:18px;text-align:center;color:var(--text3);flex-shrink:0}
+.pl-item .pl-info{flex:1;min-width:0}
+.pl-item .pl-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-item .pl-artist{font-size:10px;color:var(--text3)}
+.pl-item .pl-del{color:var(--text3);padding:2px 6px;cursor:pointer;font-size:14px}
+.add-song{display:flex;gap:6px;margin-top:8px}
+.add-song input{flex:1;padding:7px 10px;border:1px solid #e0d0c0;border-radius:8px;font-size:12px;background:#fff;outline:none}
+.add-song input:focus{border-color:var(--accent)}
+.add-song button{padding:7px 12px;border:none;background:var(--accent);color:#fff;border-radius:8px;font-size:12px;cursor:pointer}
+.footer{text-align:center;padding:14px 0 4px;font-size:12px;color:var(--text3)}
+.donate-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 18px;border-radius:20px;background:linear-gradient(135deg,#f5c896,#e8a870);color:#fff;font-size:13px;font-weight:500;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(232,168,112,.4);transition:all .2s;margin-bottom:10px}
+.donate-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(232,168,112,.5)}
+.modal-mask{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px}
+.modal-mask.active{display:flex}
+.modal{background:#fff;border-radius:20px;padding:24px;max-width:440px;width:100%;max-height:88vh;overflow-y:auto;animation:popIn .3s ease;position:relative;z-index:10000}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.modal h3{font-size:18px;margin-bottom:16px;text-align:center;color:var(--text)}
+.modal-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;border:none;background:#f0e8dd;color:var(--text2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:13px;color:var(--text2);margin-bottom:5px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 12px;border:1px solid #e0d5c5;border-radius:10px;font-size:14px;background:#faf7f2;outline:none;transition:border .2s;font-family:inherit}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:80px}
+.btn-primary{width:100%;padding:12px;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;transition:all .2s}
+.btn-primary:hover{opacity:.9}
+.btn-secondary{width:100%;padding:10px;border:1px solid #e0d5c5;background:transparent;color:var(--text2);border-radius:10px;font-size:13px;cursor:pointer;margin-top:8px}
+.modal-tabs{display:flex;gap:8px;margin-bottom:18px}
+.modal-tab{flex:1;text-align:center;padding:9px;border-radius:10px;font-size:14px;background:#f0e8dd;color:var(--text2);cursor:pointer;transition:all .2s}
+.modal-tab.active{background:var(--accent);color:#fff}
+.divider-or{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--text3);font-size:12px}
+.divider-or::before,.divider-or::after{content:"";flex:1;height:1px;background:#e8dcc8}
+.auth-anim{position:fixed;inset:0;z-index:10002;background:rgba(255,255,255,.95);display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.auth-anim.show{display:flex}
+.auth-anim .auth-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;animation:pulse 1s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.auth-anim p{font-size:15px;color:var(--text2)}
+.photo-detail{max-width:480px}
+.photo-detail img{width:100%;border-radius:12px;margin-bottom:12px;max-height:50vh;object-fit:contain;background:#f5f0e8}
+.photo-detail .photo-title-text{font-size:16px;font-weight:600;margin-bottom:4px;color:var(--text)}
+.photo-detail .photo-desc{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5}
+.detail-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.detail-uploader{display:flex;align-items:center;gap:8px;font-size:13px}
+.detail-time{font-size:11px;color:var(--text3)}
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.action-btn{display:flex;align-items:center;gap:4px;padding:7px 12px;border-radius:20px;font-size:12px;border:1px solid #e0d5c5;background:#fff;cursor:pointer;transition:all .2s;color:var(--text2)}
+.action-btn:hover{border-color:var(--accent);color:var(--accent)}
+.action-btn.active{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.action-btn svg{width:15px;height:15px}
+.comments-section{border-top:1px solid #f0e8dd;padding-top:14px;margin-top:6px}
+.comments-section h4{font-size:14px;color:var(--text);margin-bottom:10px}
+.comment-input-row{display:flex;gap:8px;margin-bottom:12px}
+.comment-input-row input{flex:1;padding:8px 12px;border:1px solid #e0d5c5;border-radius:20px;font-size:13px;background:#faf7f2;outline:none}
+.comment-input-row input:focus{border-color:var(--accent)}
+.comment-input-row button{padding:8px 16px;border:none;background:var(--accent);color:#fff;border-radius:20px;font-size:13px;cursor:pointer}
+.comment-list{max-height:200px;overflow-y:auto}
+.comment-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f5f0e8}
+.comment-item:last-child{border-bottom:none}
+.comment-body{flex:1;min-width:0}
+.comment-user{font-size:12px;font-weight:600;color:var(--text)}
+.comment-text{font-size:13px;color:var(--text2);word-break:break-word}
+.comment-time{font-size:10px;color:var(--text3)}
+.profile-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid #f0e8dd}
+.profile-avatar-wrap{position:relative;cursor:pointer}
+.profile-avatar-wrap .edit-badge{position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #fff}
+.profile-info .p-name{font-size:18px;font-weight:600}
+.profile-info .p-email{font-size:12px;color:var(--text3)}
+.profile-section{margin-bottom:16px}
+.profile-section h4{font-size:14px;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.bind-row{display:flex;gap:8px;flex-wrap:wrap}
+.bind-tag{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;font-size:12px;background:var(--accent-light);color:var(--accent);cursor:pointer;transition:all .2s;border:1px solid transparent}
+.bind-tag.bound{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:13px;color:var(--text2)}
+.switch{position:relative;width:40px;height:22px;border-radius:11px;background:#ddd;cursor:pointer;transition:background .2s}
+.switch.on{background:var(--accent)}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.switch.on::after{transform:translateX(18px)}
+.my-photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.my-photo-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden}
+.my-photo-item img{width:100%;height:100%;object-fit:cover}
+.my-photo-item .del-overlay{position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;cursor:pointer;color:#fff;font-size:12px}
+.my-photo-item:hover .del-overlay{opacity:1}
+.donate-qrs{display:flex;gap:14px;justify-content:center;margin-bottom:14px}
+.donate-qr{text-align:center}
+.donate-qr .qr{width:120px;height:120px;border-radius:10px;background:#f5f0e8;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:11px;margin-bottom:6px}
+.donate-qr .label{font-size:12px;color:var(--text2)}
+.toast{position:fixed;top:30px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(74,60,46,.92);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;opacity:0;transition:all .3s;z-index:10003;pointer-events:none;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.confirm-mask{position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:20px}
+.confirm-mask.show{display:flex}
+.confirm-box{background:#fff;border-radius:16px;padding:24px;max-width:320px;width:100%;text-align:center;animation:popIn .3s ease}
+.confirm-box h4{font-size:16px;margin-bottom:8px}
+.confirm-box p{font-size:13px;color:var(--text2);margin-bottom:18px}
+.confirm-actions{display:flex;gap:10px}
+.confirm-actions button{flex:1;padding:10px;border-radius:10px;font-size:14px;cursor:pointer;border:none}
+.confirm-cancel{background:#f0e8dd;color:var(--text2)}
+.confirm-ok{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+@media(max-width:380px){.topbar h1{font-size:18px}.qr-box{width:160px;height:160px}.gallery{gap:5px}.player-title{font-size:12px}.search-box input{font-size:12px;padding:7px 10px 7px 30px}}
+.admin-modal{max-width:900px!important;width:95vw!important;max-height:92vh!important}
+.admin-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;border-bottom:2px solid #f0e8dd;padding-bottom:8px}
+.admin-tab{padding:6px 14px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .2s;white-space:nowrap}
+.admin-tab.active{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+.admin-tab:hover:not(.active){background:#f5ede0}
+.admin-content{min-height:300px;max-height:65vh;overflow-y:auto}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.stat-card{background:#faf7f2;border-radius:12px;padding:14px;text-align:center;border:1px solid #f0e8dd}
+.stat-card .num{font-size:24px;font-weight:700;color:var(--accent)}
+.stat-card .label{font-size:12px;color:var(--text2);margin-top:4px}
+.admin-list{display:flex;flex-direction:column;gap:8px}
+.admin-item{display:flex;gap:10px;padding:10px;background:#faf7f2;border-radius:10px;border:1px solid #f0e8dd;align-items:center}
+.admin-item .thumb{width:50px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#eee}
+.admin-item .info{flex:1;min-width:0}
+.admin-item .info .title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-item .info .meta{font-size:11px;color:var(--text2);margin-top:2px}
+.admin-item .actions{display:flex;gap:4px;flex-shrink:0}
+.admin-btn{padding:5px 10px;border:none;border-radius:6px;font-size:11px;cursor:pointer;white-space:nowrap}
+.admin-btn.approve{background:#4caf50;color:#fff}
+.admin-btn.remove{background:#ff9800;color:#fff}
+.admin-btn.delete{background:#f44336;color:#fff}
+.admin-btn.view{background:#2196f3;color:#fff}
+.status-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.status-pending{background:#fff3e0;color:#e65100}
+.status-approved{background:#e8f5e9;color:#2e7d32}
+.status-removed{background:#ffebee;color:#c62828}
+.admin-empty{text-align:center;padding:40px;color:var(--text3);font-size:13px}
+.qrcode-admin{display:flex;flex-direction:column;gap:14px;align-items:center}
+.qrcode-admin .preview{width:180px;height:180px;border-radius:12px;background:#fff;border:2px dashed #d4b896;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.qrcode-admin .preview img{width:100%;height:100%;object-fit:contain}
+.qrcode-admin input[type=file]{display:none}
+
+/* 导航 Tab */
+.nav-tabs{display:flex;gap:4px;padding:8px 0 12px;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:7px 14px;border-radius:20px;font-size:13px;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .2s;background:rgba(255,255,255,.5)}
+.nav-tab.active{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-weight:600}
+.view{display:none}
+.view.active{display:block;animation:fadeUp .3s ease}
+
+/* 光语信箱 */
+.post-composer textarea{width:100%;border:1px solid #e8dcc8;border-radius:12px;padding:10px;font-size:14px;resize:vertical;font-family:inherit;background:rgba(255,255,255,.7)}
+.post-tools{display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px}
+.post-tags{display:flex;align-items:center;gap:8px}
+.post-tags select{padding:5px 8px;border-radius:8px;border:1px solid #e8dcc8;font-size:12px;background:#fff}
+.anon-toggle{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:4px;cursor:pointer}
+.post-submit{padding:7px 18px;border:none;border-radius:20px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-size:13px;cursor:pointer;font-weight:600}
+.tag-filter{display:flex;gap:6px;padding:0 4px 12px;overflow-x:auto;scrollbar-width:none}
+.tag-filter::-webkit-scrollbar{display:none}
+.tag-chip{padding:4px 12px;border-radius:14px;font-size:12px;background:rgba(255,255,255,.6);color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .2s}
+.tag-chip.active{background:var(--accent);color:#fff}
+.post-list{display:flex;flex-direction:column;gap:10px}
+.post-item{background:rgba(255,255,255,.85);border-radius:14px;padding:12px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid rgba(212,184,150,.2)}
+.post-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.post-header .avatar{width:32px;height:32px;font-size:13px}
+.post-author{font-size:13px;font-weight:600}
+.post-time{font-size:11px;color:var(--text3);margin-left:auto}
+.post-tag{font-size:10px;padding:2px 8px;border-radius:10px;background:#f0e8dd;color:var(--accent2);font-weight:600}
+.post-content{font-size:14px;line-height:1.6;color:var(--text);word-break:break-word}
+.post-image{margin-top:8px;border-radius:10px;max-width:100%;max-height:300px;object-fit:cover}
+.post-actions{display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid #f0e8dd}
+.post-action{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);cursor:pointer;transition:color .2s}
+.post-action:hover{color:var(--accent)}
+.post-action.liked{color:#e74c3c}
+.reply-list{margin-top:8px;padding-top:8px;border-top:1px dashed #e8dcc8;display:none}
+.reply-list.show{display:block}
+.reply-item{display:flex;gap:6px;padding:6px 0;font-size:12px}
+.reply-item .avatar{width:22px;height:22px;font-size:10px;flex-shrink:0}
+.reply-body{flex:1}
+.reply-user{font-weight:600;color:var(--text2)}
+.reply-text{color:var(--text);margin-top:2px}
+.reply-input{display:flex;gap:6px;margin-top:8px}
+.reply-input input{flex:1;padding:6px 10px;border:1px solid #e8dcc8;border-radius:16px;font-size:12px}
+.reply-input button{padding:6px 12px;border:none;border-radius:16px;background:var(--accent);color:#fff;font-size:12px;cursor:pointer}
+
+/* 追光长廊排序 */
+
+/* ===== 图片灯箱 ===== */
+.lightbox{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.92);align-items:center;justify-content:center;flex-direction:column}
+.lightbox.show{display:flex}
+.lightbox-img{max-width:90vw;max-height:70vh;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.5)}
+.lightbox-close{position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lightbox-close:hover{background:rgba(255,255,255,.3)}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lightbox-nav:hover{background:rgba(255,255,255,.3)}
+.lightbox-prev{left:20px}
+.lightbox-next{right:20px}
+.lightbox-info{margin-top:16px;color:#fff;text-align:center;max-width:600px;padding:0 20px}
+.lightbox-info .title{font-size:16px;font-weight:600;margin-bottom:4px}
+.lightbox-info .meta{font-size:13px;opacity:.8;margin-bottom:10px}
+.lightbox-actions{display:flex;gap:12px;justify-content:center;margin-top:10px}
+.lightbox-actions button{padding:8px 16px;border-radius:20px;border:none;cursor:pointer;font-size:13px;transition:all .2s}
+.lightbox-actions .like{background:rgba(255,100,100,.2);color:#ff6b6b}
+.lightbox-actions .like.active{background:#ff6b6b;color:#fff}
+.lightbox-actions .fav{background:rgba(255,200,0,.2);color:#ffc800}
+.lightbox-actions .fav.active{background:#ffc800;color:#fff}
+.lightbox-actions .download{background:rgba(100,200,255,.2);color:#64c8ff}
+.lightbox-actions .report{background:rgba(255,100,100,.15);color:#ff6b6b}
+.lightbox-loading{color:#fff;font-size:14px;opacity:.7}
+
+/* ===== 微交互动画 ===== */
+@keyframes heartPop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+@keyframes starSpin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.3)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes candleGlow{0%{box-shadow:0 0 5px #ffd700}50%{box-shadow:0 0 20px #ffd700,0 0 40px #ff8c00}100%{box-shadow:0 0 5px #ffd700}}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
+.like-btn.liked{animation:heartPop .4s ease}
+.fav-btn.active{animation:starSpin .5s ease}
+.like-btn{transition:transform .2s}
+.like-btn:active{transform:scale(0.9)}
+.success-toast{animation:candleGlow 1s ease infinite}
+.float-particle{position:absolute;pointer-events:none;font-size:16px;animation:floatUp 1s ease forwards}
+.gallery-sort{display:flex;gap:8px;margin-bottom:10px}
+.sort-btn{padding:4px 12px;border-radius:12px;font-size:12px;background:rgba(255,255,255,.6);color:var(--text2);cursor:pointer}
+.sort-btn.active{background:var(--accent);color:#fff}
+
+/* 名片 */
+.profile-card{text-align:center}
+.profile-header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.profile-avatar{flex-shrink:0}
+.profile-info{text-align:left;flex:1}
+.profile-name{font-size:18px;font-weight:700}
+.profile-bio{font-size:12px;color:var(--text2);margin-top:4px}
+.profile-stats{display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #f0e8dd;border-bottom:1px solid #f0e8dd;margin-bottom:14px}
+.pstat{text-align:center}
+.pnum{font-size:20px;font-weight:700;color:var(--accent)}
+.plabel{font-size:11px;color:var(--text2);margin-top:2px}
+.profile-fields{text-align:left}
+.pfield{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pflabel{width:70px;font-size:13px;color:var(--text2);flex-shrink:0}
+.pfield input,.pfield textarea{flex:1;padding:7px 10px;border:1px solid #e8dcc8;border-radius:8px;font-size:13px;font-family:inherit;background:rgba(255,255,255,.7)}
+.profile-save{width:100%;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px}
+
+/* 暗色主题 */
+body.dark{--bg:#0f0c29;--text:#e8e0d0;--text2:#a89f8f;--card-bg:rgba(30,27,50,.85)}
+body.dark{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:var(--text)}
+body.dark .card{background:rgba(30,27,50,.7);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px)}
+body.dark .nav-tab{background:rgba(255,255,255,.08);color:var(--text2)}
+body.dark .post-item{background:rgba(40,37,60,.8);border-color:rgba(255,255,255,.08)}
+body.dark input,body.dark textarea,body.dark select{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:var(--text)}
+body.dark .tag-chip{background:rgba(255,255,255,.08);color:var(--text2)}
+body.dark .modal{background:linear-gradient(160deg,#2a2545,#1e1b32);color:var(--text)}
+body.dark .user-dropdown{background:#2a2545;border:1px solid rgba(255,255,255,.1)}
+body.dark .dd-item:hover{background:rgba(255,255,255,.08)}
+#starCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;display:none}
+body.dark #starCanvas{display:block}
+body.dark .container{position:relative;z-index:1}
+.theme-toggle{position:fixed;bottom:80px;right:12px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.15);font-size:18px;display:flex;align-items:center;justify-content:center}
+
+/* ===== 沉浸式登录界面 ===== */
+.auth-immersive{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);overflow:hidden;}
+.auth-particles{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
+.auth-container{position:relative;z-index:2;width:90%;max-width:400px;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;padding:32px 28px;border:1px solid rgba(255,215,0,0.2);box-shadow:0 8px 32px rgba(0,0,0,0.3),0 0 60px rgba(255,200,100,0.1);max-height:90vh;overflow-y:auto;}
+.auth-close{color:rgba(255,255,255,0.7);font-size:24px;top:12px;right:12px;}
+.auth-close:hover{color:#fff;}
+.auth-logo{text-align:center;font-size:28px;font-weight:bold;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5);margin-bottom:4px;}
+.auth-subtitle{text-align:center;font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:20px;}
+.auth-tabs{display:flex;gap:8px;margin-bottom:16px;background:rgba(255,255,255,0.05);border-radius:12px;padding:4px;}
+.auth-tabs .modal-tab{flex:1;text-align:center;padding:10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.6);font-size:14px;transition:all 0.3s;border:none;}
+.auth-tabs .modal-tab.active{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e;font-weight:bold;box-shadow:0 2px 10px rgba(255,215,0,0.3);}
+.auth-login-methods{display:flex;gap:8px;margin-bottom:16px;}
+.auth-method-tab{flex:1;text-align:center;padding:8px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:12px;transition:all 0.3s;border:1px solid rgba(255,255,255,0.1);}
+.auth-method-tab.active{color:#ffd700;border-color:rgba(255,215,0,0.4);background:rgba(255,215,0,0.08);}
+.glow-input-wrap{position:relative;margin-bottom:16px;}
+.glow-input{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:15px;outline:none;transition:all 0.3s;box-sizing:border-box;}
+.glow-input::placeholder{color:rgba(255,255,255,0.4);}
+.glow-input:focus{background:rgba(255,255,255,0.1);border-color:rgba(255,215,0,0.5);box-shadow:0 0 20px rgba(255,215,0,0.15),0 4px 12px rgba(0,0,0,0.2);transform:translateY(-2px);}
+.glow-line{position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,transparent,#ffd700,transparent);transition:all 0.3s;border-radius:2px;}
+.glow-input:focus ~ .glow-line{width:80%;left:10%;}
+.auth-options{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:13px;}
+.auth-remember{color:rgba(255,255,255,0.6);cursor:pointer;display:flex;align-items:center;gap:6px;}
+.auth-remember input{accent-color:#ffd700;}
+.auth-submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a1a2e;border:none;border-radius:12px;font-size:16px;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(255,215,0,0.3);}
+.auth-submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,215,0,0.4);}
+.auth-submit-btn:active{transform:translateY(0);}
+.divider-or{text-align:center;color:rgba(255,255,255,0.4);font-size:12px;margin:16px 0;position:relative;}
+.divider-or::before,.divider-or::after{content:'';position:absolute;top:50%;width:35%;height:1px;background:rgba(255,255,255,0.15);}
+.divider-or::before{left:0;}
+.divider-or::after{right:0;}
+.tp-icon{font-size:24px;}
+.tp-label{font-size:11px;color:rgba(255,255,255,0.6);}
+.auth-guest{text-align:center;padding:12px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,215,0,0.3);border-radius:12px;cursor:pointer;color:rgba(255,215,0,0.8);font-size:14px;transition:all 0.3s;}
+.auth-guest:hover{background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.5);}
+.auth-form.hidden{display:none;}
+
+/* ===== 光之子形象选择 ===== */
+.avatar-modal{max-width:420px;text-align:center;}
+.avatar-preview{display:flex;justify-content:center;margin:20px 0;}
+.sky-character{position:relative;width:120px;height:160px;}
+.sky-cloak{position:absolute;top:30px;left:50%;transform:translateX(-50%);width:80px;height:100px;background:#f5a623;border-radius:40px 40px 20px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:background 0.3s;}
+.sky-cloak::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:60px;height:80px;background:rgba(255,255,255,0.15);border-radius:30px 30px 15px 15px;}
+.sky-head{position:absolute;top:0;left:50%;transform:translateX(-50%);width:50px;height:50px;background:#f5e6d3;border-radius:50%;box-shadow:0 2px 10px rgba(0,0,0,0.15);z-index:2;}
+.sky-head::before{content:'';position:absolute;top:18px;left:12px;width:6px;height:6px;background:#333;border-radius:50%;}
+.sky-head::after{content:'';position:absolute;top:18px;right:12px;width:6px;height:6px;background:#333;border-radius:50%;}
+.customize-section{margin-bottom:16px;text-align:left;}
+.customize-section label{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;font-weight:bold;}
+.hair-options{display:flex;gap:10px;flex-wrap:wrap;}
+.hair-option{width:44px;height:44px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent;transition:all 0.3s;}
+.hair-option.active{border-color:var(--accent);box-shadow:0 0 10px rgba(245,166,35,0.4);}
+.hair-icon{width:30px;height:30px;border-radius:50%;background:#8b6914;}
+.hair-default{background:linear-gradient(135deg,#8b6914,#a0522d);}
+.hair-mushroom{background:linear-gradient(135deg,#2c2c2c,#4a4a4a);border-radius:50% 50% 30% 30%;}
+.hair-afro{background:radial-gradient(circle,#1a1a1a 30%,#333 70%);}
+.hair-ponytail{background:linear-gradient(135deg,#daa520,#b8860b);border-radius:50% 50% 20% 20%;}
+.cloak-options{display:flex;gap:8px;flex-wrap:wrap;}
+.cloak-option{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.cloak-option.active{border-color:#fff;box-shadow:0 0 0 2px var(--accent),0 2px 8px rgba(0,0,0,0.2);transform:scale(1.1);}
+
+/* ===== 访客模式标识 ===== */
+.guest-badge{display:inline-block;padding:2px 8px;background:rgba(255,215,0,0.15);color:var(--accent);border-radius:10px;font-size:10px;margin-left:4px;}
+
+/* ===== 微交互：卡片hover ===== */
+.card,.stat-card,.zone-card,.hot-card,.qrcode-card{transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
+.card:hover,.stat-card:hover,.zone-card:hover,.hot-card:hover,.qrcode-card:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,0.12);}
+.card:active,.stat-card:active,.zone-card:active,.hot-card:active,.qrcode-card:active{transform:translateY(-1px);}
+
+/* ===== 登录按钮发光效果 ===== */
+#userBtn{transition:all 0.3s;position:relative;}
+#userBtn:hover{box-shadow:0 0 15px rgba(245,166,35,0.5),0 0 30px rgba(245,166,35,0.2);transform:scale(1.05);}
+#userBtn::before{content:'';position:absolute;inset:-2px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff8c00);opacity:0;transition:opacity 0.3s;z-index:-1;filter:blur(4px);}
+#userBtn:hover::before{opacity:0.6;}
+
+/* ===== 悬浮按钮 ===== */
+.fab-btn{position:fixed;right:20px;bottom:90px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 15px rgba(245,166,35,0.4);cursor:pointer;z-index:1000;transition:all 0.3s;border:none;}
+.fab-btn:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(245,166,35,0.5);}
+.fab-btn:active{transform:scale(0.95);}
+.fab-btn.feedback{bottom:160px;background:linear-gradient(135deg,#667eea,#764ba2);box-shadow:0 4px 15px rgba(102,126,234,0.4);}
+.fab-btn.hidden{display:none;}
+
+/* ===== 标签筛选 ===== */
+.tag-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.tag-filter-item{padding:6px 14px;border-radius:20px;background:var(--bg2);color:var(--text2);font-size:13px;cursor:pointer;transition:all 0.3s;border:1px solid transparent;}
+.tag-filter-item:hover{background:var(--bg3);}
+.tag-filter-item.active{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;font-weight:bold;box-shadow:0 2px 8px rgba(245,166,35,0.3);}
+
+/* ===== 页脚链接 ===== */
+.footer-links{display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+.footer-links a{color:var(--text3);font-size:12px;cursor:pointer;text-decoration:none;transition:color 0.3s;}
+.footer-links a:hover{color:var(--accent);}
+
+.password-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;opacity:0.6;transition:opacity 0.3s;user-select:none;}
+.password-toggle:hover{opacity:1;}
+.auth-forgot{color:rgba(255,215,0,0.7);font-size:12px;cursor:pointer;transition:color 0.3s;}
+.auth-forgot:hover{color:#ffd700;}
+.auth-agreement{text-align:center;font-size:11px;color:rgba(255,255,255,0.4);margin-top:10px;line-height:1.5;}
+.auth-agreement a{color:rgba(255,215,0,0.7);cursor:pointer;text-decoration:underline;}
+.auth-agreement a:hover{color:#ffd700;}
+.auth-switch-hint{text-align:center;font-size:13px;color:rgba(255,255,255,0.6);margin-top:14px;padding:10px;border:1px solid rgba(255,215,0,0.3);border-radius:10px;background:rgba(255,215,0,0.05);cursor:pointer;transition:all 0.3s;}
+.auth-switch-hint:hover{background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.5);}
+.auth-switch-hint a{color:#ffd700;cursor:pointer;font-weight:600;}
+.register-only.hidden{display:none;}
+/* 友善提醒 */
+.friendly-reminder{font-size:11px;color:var(--accent);background:var(--accent-light);padding:6px 10px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+/* 举报选项 */
+.report-options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.report-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e8dcc8;border-radius:10px;cursor:pointer;transition:all .2s;font-size:14px;}
+.report-option:hover{border-color:var(--accent);background:var(--accent-light);}
+.report-option.active{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:600;}
+.report-option .icon{font-size:18px;}
+/* 新手引导 */
+.guide-modal{max-width:420px;text-align:center;}
+.guide-steps{display:flex;justify-content:center;gap:6px;margin-bottom:16px;}
+.guide-dot{width:8px;height:8px;border-radius:50%;background:#e0d5c5;transition:all .3s;}
+.guide-dot.active{background:var(--accent);width:24px;border-radius:4px;}
+.guide-content{min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:10px 0;}
+.guide-icon{font-size:48px;}
+.guide-title{font-size:18px;font-weight:700;color:var(--text);}
+.guide-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+.guide-actions{display:flex;gap:10px;margin-top:16px;}
+.guide-actions button{flex:1;}
+/* 成就 */
+.achievement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.achievement-card{text-align:center;padding:12px 8px;border-radius:12px;background:#faf7f2;border:1px solid #f0e8dd;}
+.achievement-card.locked{opacity:.4;filter:grayscale(1);}
+.achievement-card .icon{font-size:28px;margin-bottom:4px;}
+.achievement-card .name{font-size:12px;font-weight:600;color:var(--text);}
+.achievement-card .desc{font-size:10px;color:var(--text3);margin-top:2px;}
+/* 私信 */
+.msg-list{max-height:300px;overflow-y:auto;}
+.msg-item{display:flex;gap:8px;padding:10px;border-bottom:1px solid #f5f0e8;}
+.msg-item.unread{background:var(--accent-light);}
+.msg-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.msg-body{flex:1;min-width:0;}
+.msg-user{font-size:13px;font-weight:600;}
+.msg-text{font-size:13px;color:var(--text2);margin-top:2px;word-break:break-word;}
+.msg-time{font-size:10px;color:var(--text3);margin-top:2px;}
+
+/* ===== 新功能模块 ===== */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.feature-card{background:var(--card-bg);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;border:1px solid var(--border)}
+.feature-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.feature-card .icon{font-size:28px;margin-bottom:6px}
+.feature-card .title{font-size:14px;font-weight:600;color:var(--text)}
+.feature-card .desc{font-size:11px;color:var(--text2);margin-top:3px}
+/* 互心互火 */
+.exchange-list{display:flex;flex-direction:column;gap:8px}
+.exchange-item{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid var(--border)}
+.exchange-item .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.exchange-item .type-tag{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.exchange-item .type-heart{background:rgba(255,100,100,.15);color:#e74c3c}
+.exchange-item .type-fire{background:rgba(255,165,0,.15);color:#f39c12}
+.exchange-item .content{font-size:13px;color:var(--text);line-height:1.5}
+.exchange-item .meta{font-size:11px;color:var(--text3);margin-top:6px}
+/* 复刻先祖 */
+.spirit-card{background:var(--card-bg);border-radius:12px;padding:14px;border:1px solid var(--border);margin-bottom:10px}
+.spirit-card.current{border-color:var(--accent);box-shadow:0 0 12px rgba(212,145,90,.2)}
+.spirit-card .name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.spirit-card .season{font-size:12px;color:var(--accent);margin-bottom:8px}
+.spirit-card .time{font-size:12px;color:var(--text2);margin-bottom:8px}
+.spirit-card .items{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.spirit-card .item-tag{padding:3px 8px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--text2)}
+.spirit-card .cost{display:flex;gap:12px;font-size:12px;color:var(--text2)}
+/* 每日任务 */
+.task-card{background:var(--card-bg);border-radius:12px;padding:14px;border:1px solid var(--border)}
+.task-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.task-item:last-child{border-bottom:none}
+.task-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s}
+.task-check.checked{background:var(--accent);border-color:var(--accent);color:#fff}
+.task-text{flex:1;font-size:13px;color:var(--text)}
+.task-text.done{text-decoration:line-through;color:var(--text3)}
+.task-info{font-size:12px;color:var(--text2);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+/* 排行榜 */
+.rank-list{display:flex;flex-direction:column;gap:6px}
+.rank-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card-bg);border-radius:10px;border:1px solid var(--border)}
+.rank-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.rank-num.top1{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#fff}
+.rank-num.top2{background:linear-gradient(135deg,#c0c0c0,#a0a0a0);color:#fff}
+.rank-num.top3{background:linear-gradient(135deg,#cd7f32,#b87333);color:#fff}
+.rank-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0}
+.rank-name{flex:1;font-size:13px;color:var(--text)}
+.rank-count{font-size:13px;font-weight:600;color:var(--accent)}
+.rank-tabs{display:flex;gap:6px;margin-bottom:12px}
+.rank-tab{padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;background:var(--bg);color:var(--text2);border:1px solid var(--border)}
+.rank-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="topbar">
+    <h1>光遇交友</h1>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="搜索用户或照片描述...">
+    </div>
+    <div class="user-btn" id="userBtn">
+      <div class="avatar" id="topAvatar" style="background:#ccc">?</div>
+      <span id="topName">登录</span>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dd-item" id="ddLoginRegister" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>登录/注册</div>
+        <div class="dd-group-label">账号</div>
+        <div class="dd-item" id="ddProfile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>个人中心</div>
+        <div class="dd-group-label">我的内容</div>
+        <div class="dd-item" id="ddMyPhotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>我的上传</div>
+        <div class="dd-item" id="ddFav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>我的收藏</div>
+        <div class="dd-item admin-only" id="ddAdmin" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>管理后台</div>
+        <div class="dd-group-label">其他</div>
+        <div class="dd-item" id="ddFeedback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>意见反馈</div>
+        <div class="dd-item" id="ddDonate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>资助作者</div>
+        <div class="dd-divider"></div>
+        <div class="dd-item danger" id="ddLogout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>退出登录</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 导航 Tab -->
+  <nav class="nav-tabs" id="navTabs">
+    <div class="nav-tab active" data-view="home">🏠 首页</div>
+    <div class="nav-tab" data-view="mailbox">💌 光语信箱</div>
+    <div class="nav-tab" data-view="gallery">🌅 追光长廊</div>
+  </nav>
+
+  <!-- 首页视图 -->
+  <div id="view-home" class="view active">
+
+  <!-- 公告Banner -->
+  <div class="banner" id="homeBanner">✨ 欢迎来到光遇交友社区，在这里遇见你的光之子伙伴～</div>
+
+  <!-- 网站数据统计 -->
+  <section class="card stats-card">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num" id="statUsers">--</div><div class="stat-label">光之子</div></div>
+      <div class="stat-item"><div class="stat-num" id="statPosts">--</div><div class="stat-label">留言</div></div>
+      <div class="stat-item"><div class="stat-num" id="statPhotos">--</div><div class="stat-label">截图</div></div>
+    </div>
+  </section>
+
+  <!-- 微信群活码 -->
+  <section class="card">
+    <div class="card-title">💬 加入微信群</div>
+    <div class="qr-wrap">
+      <div class="qr-box" id="qrBox" style="cursor:pointer" onclick="openQrLightbox()">
+        <div class="qr-placeholder" id="qrPlaceholder">微信群活码加载中...</div>
+      </div>
+      <div class="qr-tip" id="qrTip">微信扫码加入<strong>光遇交友群</strong></div>
+      <div class="qr-tip" style="font-size:11px;margin-top:2px">点击二维码可放大查看</div>
+    </div>
+  </section>
+
+  <!-- 正在跑图 -->
+  <section class="card" id="runStatusSection" style="display:none">
+    <div class="card-title">🏃 正在跑图 <span class="card-more" onclick="openRunStatusModal()">设置状态 →</span></div>
+    <div id="homeRunStatus" class="home-list"><div class="admin-empty">加载中...</div></div>
+  </section>
+
+  
+    <!-- 功能入口 -->
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">✨ 光遇工具</div>
+      <div class="feature-grid">
+        <div class="feature-card" onclick="openExchangeModal()">
+          <div class="icon">🔥</div>
+          <div class="title">互心互火</div>
+          <div class="desc">找固玩互心互火</div>
+        </div>
+        <div class="feature-card" onclick="openSpiritsModal()">
+          <div class="icon">👑</div>
+          <div class="title">复刻先祖</div>
+          <div class="desc">当前复刻信息</div>
+        </div>
+        <div class="feature-card" onclick="openDailyTasksModal()">
+          <div class="icon">📋</div>
+          <div class="title">每日任务</div>
+          <div class="desc">今日任务打卡</div>
+        </div>
+        <div class="feature-card" onclick="openRankingsModal()">
+          <div class="icon">🏆</div>
+          <div class="title">星光排行</div>
+          <div class="desc">旅人活跃度榜</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 找固玩专区 -->
+  <section class="card">
+    <div class="card-title">🎮 找固玩专区 <span class="card-more" onclick="switchView('mailbox')">更多 →</span></div>
+    <div id="homeGuwan" class="home-list"><div class="admin-empty">加载中...</div></div>
+  </section>
+
+  <!-- 热门推荐 -->
+  <section class="card">
+    <div class="card-title">🔥 热门推荐 <span class="card-more" onclick="switchView('mailbox')">更多 →</span></div>
+    <div id="homeHot" class="home-list"><div class="admin-empty">加载中...</div></div>
+  </section>
+
+  <!-- 最新动态 -->
+  <section class="card">
+    <div class="card-title">🆕 最新动态</div>
+    <div id="homeLatest" class="home-list"><div class="admin-empty">加载中...</div></div>
+  </section>
+
+  <footer class="footer">
+    <button class="donate-btn" id="donateBtn">❤️ 资助作者</button>
+    <div class="footer-links">
+      <a onclick="openModal('aboutModal')">关于我们</a>
+      <a onclick="openModal('termsModal')">用户协议</a>
+      <a onclick="openModal('privacyModal')">隐私政策</a>
+      <a onclick="openModal('feedbackModal')">意见反馈</a>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:8px;">光遇交友 v8.0 · 云端社区 · 非官方玩家社区</div>
+  </footer>
+  </div><!-- end view-home -->
+
+  <!-- 光语信箱视图 -->
+  <div id="view-mailbox" class="view">
+    <section class="card">
+      <div class="card-title">💌 光语信箱 <button class="admin-btn view" id="mailboxPostBtn" style="float:right;font-size:13px;padding:6px 16px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;border:none;border-radius:20px;cursor:pointer">✉️ 发布留言</button></div>
+      <p style="color:var(--text3);font-size:13px;margin:0 0 12px">在这里留下你的故事，遇见同频的旅人～</p>
+    </section>
+    <div class="tag-filter" id="tagFilter">
+      <span class="tag-chip" data-tag="all">全部</span>
+      <span class="tag-chip active" data-tag="找固玩">找固玩</span>
+      <span class="tag-chip" data-tag="找监护人">找监护人</span>
+      <span class="tag-chip" data-tag="找崽">找崽</span>
+      <span class="tag-chip" data-tag="找CP">找CP</span>
+      <span class="tag-chip" data-tag="日常分享">日常分享</span>
+      <span class="tag-chip" data-tag="攻略求助">攻略求助</span>
+      <span class="tag-chip" data-tag="光遇穿搭">光遇穿搭</span>
+    </div>
+    <div id="postList" class="post-list"><div class="admin-empty">加载中...</div></div>
+  </div>
+
+  <!-- 追光长廊视图 -->
+  <div id="view-gallery" class="view">
+    <section class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">🌅 追光长廊 <button id="galleryUploadBtn" style="font-size:14px;padding:8px 20px;background:linear-gradient(135deg,#d4915a,#b87333);color:#fff;border:none;border-radius:20px;cursor:pointer;font-weight:600;box-shadow:0 2px 8px rgba(184,115,51,.3)">📷 上传截图</button></div>
+      <div class="gallery-sort">
+        <span class="sort-btn active" data-sort="new">最新</span>
+        <span class="sort-btn" data-sort="hot">最热</span>
+      </div>
+      <!-- 上传区域 -->
+      <div class="upload-area" id="galleryUploadArea" style="display:none;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>点击或拖拽上传游戏截图</p>
+        <div class="hint">支持 JPG / PNG，单张不超过 5MB</div>
+      </div>
+      <input type="file" id="galleryFileInput" accept="image/*" multiple style="display:none">
+      <div class="upload-meta" id="galleryUploadMeta" style="display:none">
+        <div class="upload-preview" id="galleryUploadPreview"></div>
+        <input type="text" id="galleryUploadTitle" placeholder="给照片起个标题（选填）" maxlength="30">
+        <textarea id="galleryUploadDesc" placeholder="添加描述（选填）" rows="2" maxlength="200"></textarea>
+        <button class="upload-confirm-btn" id="galleryUploadConfirm">确认发布</button>
+      </div>
+      <div id="galleryFull" class="gallery"></div>
+      <div class="empty-state" id="galleryEmpty">还没有截图，快来上传第一张吧～</div>
+    </section>
+  </div>
+
+</div>
+
+<div class="player" id="player" style="display:none">
+  <div class="player-bar">
+    <div class="player-cover" id="playerCover">♪</div>
+    <div class="player-info">
+      <div class="player-title" id="playerTitle">未在播放</div>
+      <div class="player-artist" id="playerArtist">光遇交友 · 背景音乐</div>
+    </div>
+    <div class="player-controls">
+      <button class="pctl-btn" id="prevBtn" title="上一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+      <button class="pctl-btn play" id="playBtn" title="播放/暂停"><svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="pctl-btn" id="nextBtn" title="下一首"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+      <div class="player-expand" id="expandBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></div>
+    </div>
+  </div>
+  <div class="player-panel" id="playerPanel">
+    <div class="progress-row"><span id="curTime">0:00</span><div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div><span id="durTime">0:00</span></div>
+    <div class="volume-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg><div class="volume-bar" id="volumeBar"><div class="volume-fill" id="volumeFill"></div></div></div>
+    <div class="music-search">
+      <input type="text" id="musicSearchInput" placeholder="🔍 搜索QQ音乐歌曲...">
+      <button id="musicSearchBtn">搜索</button>
+    </div>
+    <div class="search-results" id="searchResults" style="display:none"></div>
+    <div class="playlist-title">播放列表 <span id="playlistCount">0</span></div>
+    <div class="playlist" id="playlist"></div>
+    <div class="add-song"><input type="text" id="songName" placeholder="歌曲名"><input type="text" id="songUrl" placeholder="音频直链（可选）"><button id="addSongBtn">添加</button></div>
+  </div>
+</div>
+<audio id="audio" preload="none" crossorigin="anonymous"></audio>
+
+<!-- 登录/注册弹窗 -->
+<div class="modal-mask auth-immersive" id="authModal">
+  <canvas id="authParticles" class="auth-particles"></canvas>
+  <div class="auth-container">
+    <button class="modal-close auth-close" onclick="closeModal('authModal')">×</button>
+    <div class="auth-logo" id="authLogo">✨ 光遇交友</div>
+    <div class="auth-subtitle">旅人社交平台</div>
+    <div class="modal-tabs auth-tabs"><div class="modal-tab active" data-auth="login">登录</div><div class="modal-tab" data-auth="register">注册</div></div>
+    <div class="auth-form" id="authAccountForm">
+      <div class="glow-input-wrap"><input type="text" id="authUser" placeholder="用户名 / 邮箱" class="glow-input" maxlength="20"><div class="glow-line"></div></div>
+      <div class="glow-input-wrap register-only hidden"><input type="email" id="authEmail" placeholder="邮箱（选填，用于找回密码）" class="glow-input"><div class="glow-line"></div></div>
+      <div class="glow-input-wrap">
+        <input type="password" id="authPass" placeholder="密码" class="glow-input" style="padding-right:44px;">
+        <span class="password-toggle" id="authPassToggle">👁️</span>
+        <div class="glow-line"></div>
+      </div>
+      <div class="auth-options">
+        <label class="auth-remember"><input type="checkbox" id="authRemember" checked> 记住我</label>
+        <span class="auth-forgot" onclick="showForgotPassword()">忘记密码？</span>
+      </div>
+      <button class="btn-primary auth-submit-btn" id="authSubmit">进入遇境</button>
+      <div class="auth-agreement">点击「进入遇境」即表示同意<a onclick="openModal('termsModal')">《用户协议》</a>和<a onclick="openModal('privacyModal')">《隐私政策》</a></div>
+      <div class="auth-switch-hint" onclick="switchAuthTab('register')"><span id="authSwitchHint">没有账号？<a>立即注册 →</a></span></div>
+    </div>
+    <div class="auth-guest" onclick="loginAsGuest()" style="margin-top:12px">🕯️ 先逛逛，不注册 →</div>
+  </div>
+</div>
+
+<!-- 光之子形象选择弹窗 -->
+<div class="modal-mask" id="avatarModal">
+  <div class="modal avatar-modal">
+    <button class="modal-close" onclick="closeModal('avatarModal')">×</button>
+    <h3>选择你的光之子形象</h3>
+    <div class="avatar-preview">
+      <div class="sky-character" id="skyCharPreview">
+        <div class="sky-cloak" id="previewCloak"></div>
+        <div class="sky-head" id="previewHead"></div>
+      </div>
+    </div>
+    <div class="avatar-customize">
+      <div class="customize-section">
+        <label>发型</label>
+        <div class="hair-options" id="hairOptions">
+          <div class="hair-option active" data-hair="default"><div class="hair-icon hair-default"></div></div>
+          <div class="hair-option" data-hair="mushroom"><div class="hair-icon hair-mushroom"></div></div>
+          <div class="hair-option" data-hair="afro"><div class="hair-icon hair-afro"></div></div>
+          <div class="hair-option" data-hair="ponytail"><div class="hair-icon hair-ponytail"></div></div>
+        </div>
+      </div>
+      <div class="customize-section">
+        <label>斗篷颜色</label>
+        <div class="cloak-options" id="cloakOptions">
+          <div class="cloak-option active" data-color="#f5a623" style="background:#f5a623"></div>
+          <div class="cloak-option" data-color="#e74c3c" style="background:#e74c3c"></div>
+          <div class="cloak-option" data-color="#3498db" style="background:#3498db"></div>
+          <div class="cloak-option" data-color="#2ecc71" style="background:#2ecc71"></div>
+          <div class="cloak-option" data-color="#9b59b6" style="background:#9b59b6"></div>
+          <div class="cloak-option" data-color="#1abc9c" style="background:#1abc9c"></div>
+          <div class="cloak-option" data-color="#e91e63" style="background:#e91e63"></div>
+          <div class="cloak-option" data-color="#607d8b" style="background:#607d8b"></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="confirmAvatar()">进入遇境 ✨</button>
+  </div>
+</div>
+
+
+<!-- 照片详情弹窗 -->
+<div class="modal-mask" id="photoModal">
+  <div class="modal photo-detail">
+    <button class="modal-close" onclick="closeModal('photoModal')">×</button>
+    <img id="detailImg" src="" alt="截图">
+    <div class="photo-title-text" id="detailTitle"></div>
+    <div class="photo-desc" id="detailDesc"></div>
+    <div class="detail-meta">
+      <div class="detail-uploader"><div class="avatar avatar-sm" id="detailAvatar"></div><span id="detailUploader"></span><span class="detail-time" id="detailTime"></span></div>
+    </div>
+    <div class="detail-actions">
+      <button class="action-btn" id="likeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="likeCount">0</span></button>
+      <button class="action-btn" id="favBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>收藏</button>
+      <button class="action-btn" id="shareBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>分享</button>
+      <button class="action-btn" id="reportBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>举报</button>
+      <button class="action-btn" id="downloadBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>下载</button>
+    </div>
+    <div class="comments-section">
+      <h4>评论 <span id="commentCount" style="color:var(--text3);font-weight:normal"></span></h4>
+      <div class="comment-input-row">
+        <input type="text" id="commentInput" placeholder="说点什么...">
+        <button id="commentSubmit">发送</button>
+      </div>
+      <div class="comment-list" id="commentList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 个人中心弹窗 -->
+<div class="modal-mask" id="profileModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('profileModal')">×</button>
+    <h3>个人中心</h3>
+    <div class="modal-tabs">
+      <div class="modal-tab active" data-ptab="settings">账号设置</div>
+      <div class="modal-tab" data-ptab="myphotos">我的上传</div>
+      <div class="modal-tab" data-ptab="myfav">我的收藏</div>
+      <div class="modal-tab" data-ptab="card">我的名片</div>
+      <div class="modal-tab" data-ptab="achievements">🏆 成就</div>
+      <div class="modal-tab" data-ptab="messages">💌 私信</div>
+    </div>
+    <!-- 账号设置 -->
+    <div id="ptab-settings">
+      <div class="profile-header">
+        <div class="profile-avatar-wrap" id="avatarUploadBtn">
+          <div class="avatar avatar-lg" id="profileAvatar"></div>
+          <div class="edit-badge">✎</div>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none">
+        <div class="profile-info">
+          <div class="p-name" id="profileName"></div>
+          <div class="p-email">光遇旅人 · 欢迎回家</div>
+        </div>
+      </div>
+      <div class="profile-section">
+        <h4>修改昵称</h4>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="nicknameInput" style="flex:1;padding:8px 12px;border:1px solid #e0d5c5;border-radius:10px;font-size:13px;background:#faf7f2;outline:none" placeholder="输入新昵称" maxlength="20">
+          <button id="saveNicknameBtn" style="padding:8px 16px;border:none;background:var(--accent);color:#fff;border-radius:10px;font-size:13px;cursor:pointer">保存</button>
+        </div>
+      </div>
+      <div class="profile-section">
+        <h4>修改密码</h4>
+        <div class="form-group"><label>旧密码</label><input type="password" id="oldPass" placeholder="输入旧密码"></div>
+        <div class="form-group"><label>新密码</label><input type="password" id="newPass" placeholder="输入新密码"></div>
+        <div class="form-group"><label>确认新密码</label><input type="password" id="confirmPass" placeholder="再次输入新密码"></div>
+        <button class="btn-primary" id="changePassBtn">修改密码</button>
+      </div>
+      <div class="profile-section">
+        <h4>账号绑定</h4>
+        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+          <input type="email" id="bindEmail" placeholder="绑定邮箱" style="flex:1;padding:7px 10px;border:1px solid #e0d5c5;border-radius:8px;font-size:12px;background:#faf7f2">
+          <button id="bindEmailBtn" style="padding:7px 12px;border:none;background:var(--accent);color:#fff;border-radius:8px;font-size:12px;cursor:pointer">绑定</button>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <input type="tel" id="bindPhone" placeholder="绑定手机号" style="flex:1;padding:7px 10px;border:1px solid #e0d5c5;border-radius:8px;font-size:12px;background:#faf7f2">
+          <button id="bindPhoneBtn" style="padding:7px 12px;border:none;background:var(--accent);color:#fff;border-radius:8px;font-size:12px;cursor:pointer">绑定</button>
+        </div>
+      </div>
+      <div class="profile-section">
+        <h4>隐私设置</h4>
+        <div class="setting-row"><span>他人下载我的照片时加水印</span><div class="switch" id="watermarkSwitch"></div></div>
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:6px">
+          <span style="font-size:13px;color:var(--text2)">自定义水印文字</span>
+          <input type="text" id="watermarkTextInput" placeholder="光遇交友" maxlength="20" style="width:100%;padding:8px 10px;border:1px solid #e0d5c5;border-radius:8px;font-size:13px;background:#faf7f2;outline:none">
+        </div>
+      </div>
+      <div class="profile-section">
+        <h4>数据管理</h4>
+        <button class="btn-secondary" id="clearCacheBtn">清除本地缓存数据</button>
+      </div>
+    </div>
+    <!-- 我的上传 -->
+    <div id="ptab-myphotos" style="display:none">
+      <div class="my-photos-grid" id="myPhotosGrid"></div>
+      <div class="empty-state" id="myPhotosEmpty" style="display:none">还没有上传任何照片</div>
+    </div>
+    <!-- 我的收藏 -->
+    <div id="ptab-myfav" style="display:none">
+      <div class="my-photos-grid" id="myFavGrid"></div>
+      <div class="empty-state" id="myFavEmpty" style="display:none">还没有收藏任何照片</div>
+    </div>
+    <!-- 我的名片 -->
+    <div id="ptab-card" style="display:none">
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-avatar"><div class="avatar" id="cardAvatar" style="width:60px;height:60px;font-size:24px"></div></div>
+          <div class="profile-info">
+            <div class="profile-name" id="cardName">未登录</div>
+            <div class="profile-bio" id="cardBio">完善你的光之子名片吧~</div>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <div class="pstat"><div class="pnum" id="profileStatPosts">0</div><div class="plabel">留言</div></div>
+          <div class="pstat"><div class="pnum" id="profileStatPhotos">0</div><div class="plabel">截图</div></div>
+          <div class="pstat"><div class="pnum" id="statLikes">0</div><div class="plabel">获赞</div></div>
+          <div class="pstat"><div class="pnum" id="statFollowing">0</div><div class="plabel">关注</div></div>
+          <div class="pstat"><div class="pnum" id="statFollowers">0</div><div class="plabel">粉丝</div></div>
+        </div>
+        <div id="profileFollowBtn" style="display:none;margin:10px 0">
+          <button class="btn-primary" id="followBtn" onclick="toggleFollow()" style="width:100%">关注</button>
+        </div>
+        <div id="cardTags" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0"></div>
+        <div id="cardResident" style="font-size:12px;color:var(--text3);margin-bottom:8px"></div>
+        <div class="profile-fields">
+          <div class="pfield"><span class="pflabel">星座</span><input type="text" id="fConstellation" placeholder="如：天秤座"></div>
+          <div class="pfield"><span class="pflabel">常驻地图</span><select id="fResident" style="flex:1;padding:8px 12px;border:1px solid #e0d5c5;border-radius:10px;font-size:13px;background:#faf7f2;outline:none"><option value="">未设置</option><option value="晨岛">🏝️ 晨岛</option><option value="云野">☁️ 云野</option><option value="雨林">🌧️ 雨林</option><option value="霞谷">🎿 霞谷</option><option value="暮土">🏜️ 暮土</option><option value="禁阁">🏛️ 禁阁</option><option value="伊甸">🔥 伊甸</option></select></div>
+          <div class="pfield"><span class="pflabel">擅长乐器</span><input type="text" id="fInstrument" placeholder="如：钢琴、吉他"></div><div class="pfield" style="flex-direction:column;align-items:flex-start;gap:8px"><span class="pflabel">游戏风格标签</span><div id="tagSelector" style="display:flex;flex-wrap:wrap;gap:6px"></div></div>
+          <div class="pfield"><span class="pflabel">在线时间</span><input type="text" id="fOnline" placeholder="如：每天晚上8-11点"></div>
+          <div class="pfield"><span class="pflabel">个人简介</span><textarea id="fBio" rows="2" placeholder="一句话介绍自己"></textarea></div>
+          <button class="profile-save" id="saveProfileBtn">保存名片</button>
+        </div>
+      </div>
+    </div>
+    <!-- 成就 -->
+    <div id="ptab-achievements" style="display:none">
+      <div class="achievement-grid" id="achievementGrid"><div class="admin-empty">加载中...</div></div>
+    </div>
+    <!-- 私信 -->
+    <div id="ptab-messages" style="display:none">
+      <div class="msg-list" id="messageList"><div class="admin-empty">暂无私信</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 资助弹窗 -->
+<div class="modal-mask" id="donateModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('donateModal')">×</button>
+    <h3>❤️ 资助作者</h3>
+    <p style="text-align:center;font-size:13px;color:var(--text2);margin-bottom:16px">你的支持是我持续更新的动力～</p>
+    <div class="donate-qrs"><div class="donate-qr"><div class="qr">微信收款码</div><div class="label">微信</div></div><div class="donate-qr"><div class="qr">支付宝收款码</div><div class="label">支付宝</div></div></div>
+  </div>
+</div>
+
+<!-- 反馈弹窗 -->
+<div class="modal-mask" id="feedbackModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('feedbackModal')">×</button>
+    <h3>意见反馈</h3>
+    <div class="form-group"><label>反馈类型</label><select id="fbType"><option value="功能建议">功能建议</option><option value="Bug报告">Bug 报告</option><option value="内容举报">内容举报</option><option value="其他">其他</option></select></div>
+    <div class="form-group"><label>反馈内容</label><textarea id="fbContent" placeholder="请详细描述你的建议或遇到的问题..."></textarea></div>
+    <div class="form-group"><label>联系方式（选填）</label><input type="text" id="fbContact" placeholder="邮箱/QQ，方便我们回复"></div>
+    <button class="btn-primary" id="fbSubmit">提交反馈</button>
+  </div>
+</div>
+
+<!-- 管理后台 -->
+<div class="modal-mask" id="adminModal">
+  <div class="modal admin-modal">
+    <button class="modal-close" onclick="closeModal('adminModal')">×</button>
+    <h3>🛠️ 管理后台</h3>
+    <div class="admin-tabs">
+      <div class="admin-tab active" data-atab="stats">数据概览</div>
+      <div class="admin-tab" data-atab="photos">照片审核</div>
+      <div class="admin-tab" data-atab="comments">评论管理</div>
+      <div class="admin-tab" data-atab="users">用户管理</div>
+      <div class="admin-tab" data-atab="posts">留言管理</div>
+      <div class="admin-tab" data-atab="reports">举报处理</div>
+      <div class="admin-tab" data-atab="qrcode">活码管理</div>
+    </div>
+    <div class="admin-content" id="adminContent">加载中...</div>
+  </div>
+</div>
+
+<!-- 确认弹窗 -->
+<div class="confirm-mask" id="confirmModal">
+  <div class="confirm-box">
+    <h4 id="confirmTitle">确认操作</h4>
+    <p id="confirmText">确定要执行此操作吗？</p>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" id="confirmCancel">取消</button>
+      <button class="confirm-ok" id="confirmOk">确定</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="api-mock.js"></script>
+<script>
+(function(){
+'use strict';
+const $=id=>{
+  const el=document.getElementById(id);
+  if(el)return el;
+  // 安全代理：元素不存在时不崩溃
+  const noop=()=>{};
+  return {
+    style:new Proxy({},{get:()=>'',set:()=>true}),
+    classList:{add:noop,remove:noop,toggle:noop,contains:()=>false},
+    onclick:null,onchange:null,oninput:null,onblur:null,onfocus:null,
+    innerHTML:'',textContent:'',value:'',disabled:false,checked:false,
+    addEventListener:noop,removeEventListener:noop,appendChild:noop,removeChild:noop,
+    querySelector:()=>null,querySelectorAll:()=>[],getBoundingClientRect:()=>({left:0,top:0,width:0,height:0}),
+    offsetHeight:0,offsetWidth:0,scrollIntoView:noop,click:noop,focus:noop,blur:noop
+  };
+};
+const avatarColors=['#b87333','#d4915a','#c9a07a','#a67c52','#8b6914','#cd853f','#daa520','#b8860b'];
+function genAvatar(name){const c=avatarColors[name.charCodeAt(0)%avatarColors.length];return{color:c,letter:name.charAt(0).toUpperCase()};}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2200);}
+function fmtTime(s){if(isNaN(s))return'0:00';const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+function fmtDate(ts){const d=new Date(ts);const now=new Date();const diff=now-d;if(diff<60000)return'刚刚';if(diff<3600000)return Math.floor(diff/60000)+'分钟前';if(diff<86400000)return Math.floor(diff/3600000)+'小时前';if(diff<604800000)return Math.floor(diff/86400000)+'天前';return d.toLocaleDateString();}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function closeModal(id){$(id).classList.remove('active');}
+function openModal(id){$(id).classList.add('active');}
+function showConfirm(title,text,cb){$('confirmTitle').textContent=title;$('confirmText').textContent=text;$('confirmModal').classList.add('show');$('confirmOk').onclick=()=>{$('confirmModal').classList.remove('show');cb&&cb();};$('confirmCancel').onclick=()=>$('confirmModal').classList.remove('show');}
+
+const Store={get(k,d){try{const v=localStorage.getItem('gy_'+k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){localStorage.setItem('gy_'+k,JSON.stringify(v));},remove(k){localStorage.removeItem('gy_'+k);}};
+
+function requireLogin(action){
+  if(currentUser && !currentUser.is_guest) return true;
+  toast('请先登录后再' + (action || '操作') + '哦～');
+  openModal('authModal');
+  return false;
+}
+
+const API_BASE='/api';
+function getToken(){return localStorage.getItem('gy_token')||sessionStorage.getItem('gy_token')||'';}
+function setToken(t,days){if(t){const store=days&&days>=7?localStorage:sessionStorage;store.setItem('gy_token',t);if(days)localStorage.setItem('gy_token_days',days);}else{localStorage.removeItem('gy_token');sessionStorage.removeItem('gy_token');localStorage.removeItem('gy_token_days');}}
+async function apiCall(path,options={}){const headers={'Content-Type':'application/json',...(options.headers||{})};const token=getToken();if(token)headers['Authorization']='Bearer '+token;const res=await fetch(API_BASE+path,{...options,headers});const data=await res.json().catch(()=>({success:false,error:'网络错误'}));return data;}
+let currentUser=null;
+let galleryPhotos=[];
+let playlist=Store.get('playlist',null);
+const defaultPlaylist=[];
+if(!playlist||!Array.isArray(playlist)||playlist.length===0){playlist=defaultPlaylist.slice();Store.set('playlist',playlist);}
+else{
+  // 数据迁移：确保每首歌都有必要字段，过滤掉无效URL
+  playlist=playlist.filter(s=>s&&s.url&&s.url.startsWith('http'));
+  playlist=playlist.map(s=>({title:s.title||'未知歌曲',artist:s.artist||'未知艺术家',url:s.url,cover:s.cover||'',songid:s.songid||''}));
+  if(playlist.length===0)playlist=defaultPlaylist.slice();
+  Store.set('playlist',playlist);
+}
+let curSong=0,playing=false,currentPhotoId=null,searchKeyword='',pageSize=12,currentPage=1,pendingFiles=[],adminTab='stats',gallerySort='new';
+
+function saveAll(){Store.set('playlist',playlist);}
+
+function setAvatar(el,userObj){
+  const name=typeof userObj==='string'?userObj:(userObj?(userObj.nickname||userObj.username):'?');
+  const avatar=typeof userObj==='object'&&userObj?userObj.avatar:null;
+  const avatarStyle=typeof userObj==='object'&&userObj?userObj.avatar_style:null;
+  if(avatar){el.innerHTML='<img src="'+avatar+'">';el.style.background='transparent';}
+  else if(avatarStyle&&avatarStyle.cloak){el.innerHTML=name.charAt(0).toUpperCase();el.style.background=avatarStyle.cloak;el.style.color='#fff';}
+  else{const a=genAvatar(name);el.innerHTML=a.letter;el.style.background=a.color;}
+}
+
+function getDisplayName(userObj){return typeof userObj==='string'?userObj:(userObj?(userObj.nickname||userObj.username):'');}
+
+function renderUser(){
+  const av=$('topAvatar'),nm=$('topName');
+  if(currentUser){
+    setAvatar(av,currentUser);
+    let name=getDisplayName(currentUser);
+    if(currentUser.is_guest)name+=' <span class="guest-badge">访客</span>';
+    if(currentUser.run_status&&(!currentUser.run_status_expire||new Date(currentUser.run_status_expire)>new Date()))name+=' <span class="guest-badge" style="background:#e67e22">🏃</span>';
+    nm.innerHTML=name;
+    $('ddAdmin').style.display=currentUser.is_admin?'flex':'none';
+    if($('ddLoginRegister'))$('ddLoginRegister').style.display=currentUser.is_guest?'flex':'none';
+    if($('ddLogout'))$('ddLogout').style.display=currentUser.is_guest?'none':'flex';
+    // 访客模式隐藏需要登录的菜单项
+    if(currentUser.is_guest){
+      if($('ddProfile'))$('ddProfile').style.display='none';
+      if($('ddMyPhotos'))$('ddMyPhotos').style.display='none';
+      if($('ddFav'))$('ddFav').style.display='none';
+    }else{
+      if($('ddProfile'))$('ddProfile').style.display='flex';
+      if($('ddMyPhotos'))$('ddMyPhotos').style.display='flex';
+      if($('ddFav'))$('ddFav').style.display='flex';
+    }
+  }else{av.style.background='#ccc';av.innerHTML='?';nm.textContent='登录';$('ddAdmin').style.display='none';if($('ddLoginRegister'))$('ddLoginRegister').style.display='none';if($('ddLogout'))$('ddLogout').style.display='none';}
+  setTimeout(updateFABVisibility,50);
+}
+
+// 用户下拉菜单
+$('userBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  if(!currentUser){openModal('authModal');return;}
+  $('userDropdown').classList.toggle('show');
+});
+document.addEventListener('click',()=>$('userDropdown').classList.remove('show'));
+$('userDropdown').addEventListener('click',e=>e.stopPropagation());
+
+if($('ddLoginRegister'))$('ddLoginRegister').onclick=()=>{$('userDropdown').classList.remove('show');currentUser=null;Store.remove('guest_user');Store.remove('guest_id');renderUser();openModal('authModal');};
+if($('ddProfile'))$('ddProfile').onclick=()=>{$('userDropdown').classList.remove('show');openProfileModal();};
+if($('ddFav'))$('ddFav').onclick=()=>{$('userDropdown').classList.remove('show');openProfileModal('myfav');};
+if($('ddMyPhotos'))$('ddMyPhotos').onclick=()=>{$('userDropdown').classList.remove('show');openProfileModal('myphotos');};
+if($('ddFeedback'))$('ddFeedback').onclick=()=>{$('userDropdown').classList.remove('show');openModal('feedbackModal');};
+if($('ddDonate'))$('ddDonate').onclick=()=>{$('userDropdown').classList.remove('show');openModal('donateModal');};
+if($('ddLogout'))$('ddLogout').onclick=()=>{$('userDropdown').classList.remove('show');showConfirm('离开遇境','真的要离开遇境吗？蜡烛还在等你回来～',()=>{currentUser=null;setToken(null);Store.remove('guest_user');Store.remove('guest_id');renderUser();loadHome();toast('期待下次相遇');});};
+if($('ddAdmin'))$('ddAdmin').onclick=()=>{$('userDropdown').classList.remove('show');openAdminModal();};
+
+// ===== 沉浸式登录：粒子动画 =====
+let authParticleCanvas,authParticleCtx,authParticles=[],authParticleAnimId;
+function initAuthParticles(){
+  authParticleCanvas=$('authParticles');
+  if(!authParticleCanvas)return;
+  authParticleCtx=authParticleCanvas.getContext('2d');
+  resizeAuthParticles();
+  authParticles=[];
+  const authParticleCount=window.innerWidth<768?30:60;for(let i=0;i<authParticleCount;i++){
+    authParticles.push({x:Math.random()*authParticleCanvas.width,y:Math.random()*authParticleCanvas.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*2+0.5,alpha:Math.random()*0.5+0.3,twinkle:Math.random()*Math.PI*2});
+  }
+  animateAuthParticles();
+}
+function resizeAuthParticles(){
+  if(!authParticleCanvas)return;
+  const rect=authParticleCanvas.parentElement.getBoundingClientRect();
+  authParticleCanvas.width=rect.width;authParticleCanvas.height=rect.height;
+}
+function animateAuthParticles(){
+  if(!authParticleCtx)return;
+  authParticleCtx.clearRect(0,0,authParticleCanvas.width,authParticleCanvas.height);
+  const speedBoost=document.activeElement&&document.activeElement.classList.contains('glow-input')?2:1;
+  authParticles.forEach((p,i)=>{
+    p.x+=p.vx*speedBoost;p.y+=p.vy*speedBoost;p.twinkle+=0.02;
+    if(p.x<0)p.x=authParticleCanvas.width;if(p.x>authParticleCanvas.width)p.x=0;
+    if(p.y<0)p.y=authParticleCanvas.height;if(p.y>authParticleCanvas.height)p.y=0;
+    const a=p.alpha*(0.5+0.5*Math.sin(p.twinkle));
+    authParticleCtx.beginPath();authParticleCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    authParticleCtx.fillStyle='rgba(255,215,0,'+a+')';authParticleCtx.fill();
+    // 连线
+    for(let j=i+1;j<authParticles.length;j++){
+      const p2=authParticles[j];const dx=p.x-p2.x,dy=p.y-p2.y;const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<100){authParticleCtx.beginPath();authParticleCtx.moveTo(p.x,p.y);authParticleCtx.lineTo(p2.x,p2.y);
+        authParticleCtx.strokeStyle='rgba(255,215,0,'+(0.1*(1-dist/100))+')';authParticleCtx.lineWidth=0.5;authParticleCtx.stroke();}
+    }
+  });
+  authParticleAnimId=requestAnimationFrame(animateAuthParticles);
+}
+function stopAuthParticles(){if(authParticleAnimId){cancelAnimationFrame(authParticleAnimId);authParticleAnimId=null;}}
+
+// ===== 密码显示/隐藏 =====
+function togglePassword(inputId,icon){
+  const input=document.getElementById(inputId);
+  if(input.type==='password'){input.type='text';icon.textContent='🙈';}
+  else{input.type='password';icon.textContent='👁️';}
+}
+
+// ===== 忘记密码 =====
+function showForgotPassword(){
+  showConfirm('忘记密码','请联系管理员人工重置密码\n邮箱：3229557782@qq.com',()=>{});
+}
+
+// ===== 切换登录/注册Tab =====
+function switchAuthTab(type){
+  document.querySelectorAll('#authModal .modal-tab').forEach(x=>x.classList.toggle('active',x.dataset.auth===type));
+  $('authSubmit').textContent=type==='login'?'进入遇境':'进入光遇';
+  $('authLogo').textContent=type==='login'?'✨ 光遇交友':'✨ 加入光遇';
+  // 显示/隐藏邮箱输入框
+  document.querySelectorAll('.register-only').forEach(el=>el.classList.toggle('hidden',type!=='register'));
+  // 修改切换提示
+  $('authSwitchHint').innerHTML=type==='login'?'没有账号？<a>立即注册 →</a>':'已有账号？<a>去登录 →</a>';
+  $('authSwitchHint').parentElement.onclick=()=>switchAuthTab(type==='login'?'register':'login');
+  // 修改用户名占位符
+  $('authUser').placeholder=type==='login'?'用户名 / 邮箱':'昵称（4-20字符）';
+}
+document.querySelectorAll('#authModal .modal-tab').forEach(t=>t.onclick=()=>switchAuthTab(t.dataset.auth));
+// 密码显示/隐藏按钮
+const passToggle=document.getElementById('authPassToggle');
+if(passToggle){passToggle.addEventListener('click',()=>togglePassword('authPass',passToggle));}
+
+// ===== 账号登录/注册提交 =====
+$('authSubmit').onclick=async()=>{
+  const u=$('authUser').value.trim(),p=$('authPass').value;
+  if(!u||!p){toast('请输入用户名和密码');return;}
+  const type=document.querySelector('#authModal .modal-tab.active').dataset.auth;
+  const remember=$('authRemember').checked;
+  const email=$('authEmail')?$('authEmail').value.trim():'';
+  $('authSubmit').textContent='传送中...';$('authSubmit').disabled=true;
+  try{
+    const body={username:u,password:p,remember:remember};
+    if(type==='register'&&email)body.email=email;
+    const res=await apiCall(type==='register'?'/auth/register':'/auth/login',{method:'POST',body:JSON.stringify(body)});
+    if(res.success){
+      setToken(res.token,remember?30:1);currentUser=res.user;renderUser();closeModal('authModal');stopAuthParticles();
+      // 新用户显示形象选择和新手引导
+      if(type==='register'||!currentUser.avatar_style){setTimeout(()=>openAvatarModal(),300);setTimeout(()=>{if(!Store.get('guide_shown'))showGuide();},1500);}
+      toast(type==='register'?'欢迎来到光遇！':'欢迎回来，旅人');loadHome();
+    }else{toast(res.error||'操作失败');}
+  }catch(e){toast('网络错误，请稍后重试');}
+  $('authSubmit').textContent='进入遇境';$('authSubmit').disabled=false;
+  $('authUser').value='';$('authPass').value='';
+};
+
+// ===== 访客模式 =====
+function loginAsGuest(){
+  let guestId=Store.get('guest_id',null);
+  if(!guestId){guestId='guest_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);Store.set('guest_id',guestId);}
+  currentUser={id:0,username:guestId,nickname:'访客·光之子',is_guest:true,avatar_style:{hair:'default',cloak:'#f5a623'}};
+  Store.set('guest_user',currentUser);
+  renderUser();closeModal('authModal');stopAuthParticles();toast('已点燃蜡烛，欢迎随便逛逛');loadHome();
+}
+
+// ===== 光之子形象选择 =====
+let selectedHair='default',selectedCloak='#f5a623';
+function openAvatarModal(){
+  openModal('avatarModal');
+  selectedHair=currentUser&&currentUser.avatar_style?currentUser.avatar_style.hair:'default';
+  selectedCloak=currentUser&&currentUser.avatar_style?currentUser.avatar_style.cloak:'#f5a623';
+  updateAvatarPreview();
+  document.querySelectorAll('.hair-option').forEach(o=>o.classList.toggle('active',o.dataset.hair===selectedHair));
+  document.querySelectorAll('.cloak-option').forEach(o=>o.classList.toggle('active',o.dataset.color===selectedCloak));
+}
+document.querySelectorAll('.hair-option').forEach(o=>o.onclick=()=>{
+  document.querySelectorAll('.hair-option').forEach(x=>x.classList.remove('active'));o.classList.add('active');
+  selectedHair=o.dataset.hair;updateAvatarPreview();
+});
+document.querySelectorAll('.cloak-option').forEach(o=>o.onclick=()=>{
+  document.querySelectorAll('.cloak-option').forEach(x=>x.classList.remove('active'));o.classList.add('active');
+  selectedCloak=o.dataset.color;updateAvatarPreview();
+});
+function updateAvatarPreview(){
+  const cloak=$('previewCloak');if(cloak)cloak.style.background=selectedCloak;
+  const head=$('previewHead');if(head){head.className='sky-head hair-'+selectedHair;}
+}
+async function confirmAvatar(){
+  if(currentUser&&!currentUser.is_guest){
+    try{await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({avatar_style:{hair:selectedHair,cloak:selectedCloak}})});}catch(e){}
+    currentUser.avatar_style={hair:selectedHair,cloak:selectedCloak};
+  }
+  closeModal('avatarModal');toast('形象已保存');renderUser();
+}
+
+// ===== 退出登录二次确认 =====
+const origLogout=window.logout;
+window.logout=function(){
+  if(confirm('真的要离开遇境吗？')){
+    if(origLogout)origLogout();
+    else{Store.remove('token');currentUser=null;renderUser();toast('已退出登录');loadHome();}
+  }
+};
+
+// ===== 重写openModal以启动粒子动画 =====
+const origOpenModal=window.openModal;
+window.openModal=function(id){
+  if(origOpenModal)origOpenModal(id);
+  if(id==='authModal'){setTimeout(initAuthParticles,100);}
+};
+
+// 个人中心
+function openProfileModal(tab){
+  if(!currentUser){toast('请先登录');openModal('authModal');return;}
+  openModal('profileModal');
+  setAvatar($('profileAvatar'),currentUser);
+  $('profileName').textContent=getDisplayName(currentUser);
+  $('nicknameInput').value=currentUser.nickname||currentUser.username;
+  $('watermarkSwitch').classList.toggle('on',!!currentUser.watermark);
+  $('watermarkTextInput').value=currentUser.watermark_text||'光遇交友';
+  switchProfileTab(tab||'settings');
+}
+function switchProfileTab(tab){
+  document.querySelectorAll('#profileModal .modal-tab').forEach(x=>x.classList.toggle('active',x.dataset.ptab===tab));
+  $('ptab-settings').style.display=tab==='settings'?'block':'none';
+  $('ptab-myphotos').style.display=tab==='myphotos'?'block':'none';
+  $('ptab-myfav').style.display=tab==='myfav'?'block':'none';
+  $('ptab-card').style.display=tab==='card'?'block':'none';
+  $('ptab-achievements').style.display=tab==='achievements'?'block':'none';
+  $('ptab-messages').style.display=tab==='messages'?'block':'none';
+  if(tab==='card')loadMyProfile();
+  if(tab==='myphotos')renderMyPhotos();
+  if(tab==='myfav')renderMyFav();
+  if(tab==='achievements')loadAchievements();
+  if(tab==='messages')loadMessages();
+}
+document.querySelectorAll('#profileModal .modal-tab').forEach(t=>t.onclick=()=>switchProfileTab(t.dataset.ptab));
+
+$('avatarUploadBtn').onclick=()=>$('avatarInput').click();
+$('avatarInput').onchange=e=>{
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>2*1024*1024){toast('头像不能超过2MB');return;}
+  const reader=new FileReader();
+  reader.onload=async ev=>{compressImage(ev.target.result,200,.9,async data=>{
+    const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({avatar:data})});
+    if(res.success){currentUser.avatar=data;setAvatar($('profileAvatar'),currentUser);renderUser();toast('头像更新成功');}
+    else{toast(res.error||'更新失败');}
+  });};
+  reader.readAsDataURL(file);e.target.value='';
+};
+$('saveNicknameBtn').onclick=async()=>{
+  const v=$('nicknameInput').value.trim();if(!v){toast('昵称不能为空');return;}if(v.length>20){toast('昵称不能超过20个字符');return;}
+  const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({nickname:v})});
+  if(res.success){currentUser.nickname=v;$('profileName').textContent=v;renderUser();toast('昵称修改成功');}
+  else{toast(res.error||'修改失败');}
+};
+$('changePassBtn').onclick=async()=>{
+  const o=$('oldPass').value,n=$('newPass').value,c=$('confirmPass').value;
+  if(!o||!n||!c){toast('请填写完整');return;}
+  if(n!==c){toast('两次新密码不一致');return;}
+  if(n.length<4){toast('新密码至少4位');return;}
+  const res=await apiCall('/user/password',{method:'PUT',body:JSON.stringify({oldPassword:o,newPassword:n})});
+  if(res.success){$('oldPass').value='';$('newPass').value='';$('confirmPass').value='';toast('密码修改成功');}
+  else{toast(res.error||'修改失败');}
+};
+$('watermarkSwitch').onclick=async function(){currentUser.watermark=!currentUser.watermark;const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({watermark:currentUser.watermark})});if(res.success){this.classList.toggle('on',!!currentUser.watermark);toast(currentUser.watermark?'已开启水印保护':'已关闭水印');}else{currentUser.watermark=!currentUser.watermark;toast('操作失败');}};
+$('watermarkTextInput').addEventListener('blur',async function(){const v=this.value.trim()||'光遇交友';const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({watermark_text:v})});if(res.success){currentUser.watermark_text=v;toast('水印文字已保存');}else{toast('保存失败');}});
+$('clearCacheBtn').onclick=()=>{
+  showConfirm('清除缓存','将清除本地登录状态和歌单数据，确定继续吗？',()=>{
+    localStorage.clear();currentUser=null;playlist=null;
+    toast('缓存已清除，页面即将刷新');setTimeout(()=>location.reload(),1000);
+  });
+};
+
+async function renderMyPhotos(){
+  const grid=$('myPhotosGrid'),empty=$('myPhotosEmpty');
+  grid.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);font-size:12px">加载中...</div>';
+  const res=await apiCall('/photos/mine');
+  grid.innerHTML='';
+  if(!res.success||res.photos.length===0){empty.style.display='block';return;}empty.style.display='none';
+  res.photos.forEach((p,i)=>{
+    const item=document.createElement('div');item.className='my-photo-item';
+    const statusClass=p.status==='approved'?'status-approved':p.status==='removed'?'status-removed':'status-pending';
+    const statusText=p.status==='approved'?'已上架':p.status==='removed'?'已下架':'待审核';
+    item.innerHTML='<img src="'+p.data_url+'"><div class="status-badge '+statusClass+'" style="position:absolute;top:4px;left:4px">'+statusText+'</div><div class="del-overlay">删除</div>';
+    item.querySelector('.del-overlay').onclick=e=>{e.stopPropagation();showConfirm('删除照片','确定要删除这张照片吗？',async()=>{await apiCall('/photos/'+p.id,{method:'DELETE'});renderMyPhotos();toast('已删除');});};
+    item.onclick=()=>openPhotoDetail(p.id);
+    grid.appendChild(item);
+  });
+}
+async function renderMyFav(){
+  const grid=$('myFavGrid'),empty=$('myFavEmpty');
+  grid.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);font-size:12px">加载中...</div>';
+  const res=await apiCall('/favorites');
+  grid.innerHTML='';
+  if(!res.success||res.photos.length===0){empty.style.display='block';return;}empty.style.display='none';
+  res.photos.forEach((p,i)=>{
+    const item=document.createElement('div');item.className='my-photo-item';
+    item.innerHTML='<img src="'+p.data_url+'"><div class="del-overlay">取消</div>';
+    item.querySelector('.del-overlay').onclick=e=>{e.stopPropagation();apiCall('/photos/'+p.id+'/favorite',{method:'POST'}).then(()=>{renderMyFav();toast('已取消收藏');});};
+    item.onclick=()=>openPhotoDetail(p.id);
+    grid.appendChild(item);
+  });
+}
+
+// 追光长廊上传
+const gUpBtn=$('galleryUploadBtn');
+if(gUpBtn)gUpBtn.onclick=()=>{
+  if(!requireLogin('上传截图'))return;
+  const area=$('galleryUploadArea');
+  if(area)area.style.display=area.style.display==='none'?'block':'none';
+};
+$('galleryUploadArea').onclick=()=>{$('galleryFileInput').click();};
+$('galleryFileInput').onchange=e=>{if(e.target.files.length)prepareUpload(e.target.files);e.target.value='';};
+
+function prepareUpload(files){
+  if(!currentUser){toast('请先登录');return;}
+  pendingFiles=[];const preview=$('galleryUploadPreview');preview.innerHTML='';
+  Array.from(files).forEach(file=>{
+    if(!file.type.startsWith('image/'))return;
+    if(file.size>5*1024*1024){toast(file.name+' 超过5MB');return;}
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const thumb=document.createElement('img');thumb.className='thumb';thumb.src=e.target.result;preview.appendChild(thumb);
+      pendingFiles.push(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+  $('galleryUploadMeta').style.display='block';
+  $('galleryUploadTitle').value='';$('galleryUploadDesc').value='';
+}
+$('galleryUploadConfirm').onclick=async()=>{
+  if(pendingFiles.length===0){toast('请先选择图片');return;}
+  const title=$('galleryUploadTitle').value.trim(),desc=$('galleryUploadDesc').value.trim();
+  $('galleryUploadConfirm').textContent='上传中...';$('galleryUploadConfirm').disabled=true;
+  let success=0;
+  for(const dataUrl of pendingFiles){
+    await new Promise(resolve=>{
+      compressImage(dataUrl,1280,.82,async data=>{
+        const res=await apiCall('/photos',{method:'POST',body:JSON.stringify({data_url:data,title,description:desc})});
+        if(res.success)success++;
+        resolve();
+      });
+    });
+  }
+  $('galleryUploadConfirm').textContent='确认发布';$('galleryUploadConfirm').disabled=false;
+  pendingFiles=[];$('galleryUploadMeta').style.display='none';$('galleryUploadPreview').innerHTML='';$('galleryUploadArea').style.display='none';
+  toast(success>0?('已提交 '+success+' 张照片，等待管理员审核'):'上传失败');
+  loadGalleryFull();
+};
+
+function compressImage(dataUrl,maxW,q,cb){
+  const img=new Image();img.onload=()=>{
+    let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+    const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+    cb(c.toDataURL('image/jpeg',q));
+  };img.onerror=()=>cb(dataUrl);img.src=dataUrl;
+}
+
+// 搜索
+const searchEl=$('searchInput');
+if(searchEl){searchEl.addEventListener('keydown',e=>{if(e.key==='Enter'){searchKeyword=e.target.value.trim().toLowerCase();currentPage=1;
+  const isMailbox=$('view-mailbox').classList.contains('active');
+  if(isMailbox){loadPosts();}else{loadGallery();}
+}});}
+
+// 照片墙 - 从后端加载
+async function loadGallery(){
+  const g=$('gallery');if(!g)return;
+  const es=$('emptyState'),title=$('galleryTitle'),lm=$('loadMore');
+  if(es)es.style.display='none';
+  g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text3);font-size:13px">加载中...</div>';
+  try{
+    const res=await apiCall('/photos?page='+currentPage+'&limit='+pageSize+(searchKeyword?'&search='+encodeURIComponent(searchKeyword):''));
+    galleryPhotos=res.success?res.photos:[];
+  }catch(e){galleryPhotos=[];}
+  title.textContent=searchKeyword?'搜索结果':'玩家截图墙';
+  g.innerHTML='';
+  if(galleryPhotos.length===0){es.style.display='block';es.textContent=searchKeyword?'没有找到相关照片':'还没有截图，快来上传第一张吧～';lm.style.display='none';return;}
+  es.style.display='none';
+  galleryPhotos.forEach((p,i)=>{
+    const uploaderName=p.nickname||p.username||'匿名';
+    const a=genAvatar(uploaderName);
+    const item=document.createElement('div');item.className='gallery-item';
+    item.innerHTML=(p.title?'<div class="photo-title">'+p.title+'</div>':'')+
+      '<img src="'+p.data_url+'" alt="截图" loading="lazy">'+
+      '<div class="meta"><span style="display:flex;align-items:center;gap:3px"><span style="width:14px;height:14px;border-radius:50%;background:'+a.color+';display:inline-flex;align-items:center;justify-content:center;font-size:8px">'+a.letter+'</span>'+uploaderName+'</span><span class="like-icon">❤'+(p.likes||0)+'</span></div>';
+    item.onclick=()=>{lightboxPhotos=res.photos;openLightbox(i);};g.appendChild(item);
+  });
+  lm.style.display=galleryPhotos.length>=pageSize?'block':'none';
+}
+if($('loadMoreBtn'))$('loadMoreBtn').onclick=()=>{currentPage++;loadGallery();}
+
+// 照片详情
+async function openPhotoDetail(id){
+  currentPhotoId=id;
+  $('detailImg').src='';
+  $('detailImg').style.opacity='0.3';
+  openModal('photoModal');
+  const res=await apiCall('/photos/'+id);
+  if(!res.success){
+    if(res.removed){toast('该照片已被下架');}else{toast(res.error||'照片不存在');}
+    closeModal('photoModal');return;
+  }
+  const p=res.photo;
+  $('detailImg').src=p.data_url;$('detailImg').style.opacity='1';
+  $('detailTitle').textContent=p.title||'';$('detailTitle').style.display=p.title?'block':'none';
+  $('detailDesc').textContent=p.description||'';$('detailDesc').style.display=p.description?'block':'none';
+  setAvatar($('detailAvatar'),p);
+  $('detailUploader').textContent=getDisplayName(p);
+  $('detailTime').textContent=' · '+fmtDate(p.created_at);
+  $('likeCount').textContent=p.likes||0;
+  $('likeBtn').classList.toggle('active',res.liked);
+  $('favBtn').classList.toggle('active',res.favorited);
+  renderComments(id);
+}
+$('likeBtn').onclick=async()=>{
+  if(!currentPhotoId)return;if(!requireLogin('点赞'))return;
+  const res=await apiCall('/photos/'+currentPhotoId+'/like',{method:'POST'});
+  if(res.success){
+    $('likeBtn').classList.toggle('active',res.liked);
+    const cur=parseInt($('likeCount').textContent)||0;
+    $('likeCount').textContent=res.liked?cur+1:Math.max(0,cur-1);
+  }else{toast(res.error||'操作失败');}
+};
+$('favBtn').onclick=async()=>{
+  if(!currentPhotoId)return;if(!requireLogin('收藏'))return;
+  const res=await apiCall('/photos/'+currentPhotoId+'/favorite',{method:'POST'});
+  if(res.success){$('favBtn').classList.toggle('active',res.favorited);toast(res.favorited?'已收藏':'已取消收藏');}
+  else{toast(res.error||'操作失败');}
+};
+$('shareBtn').onclick=()=>{
+  if(!currentPhotoId)return;
+  const url=location.href.split('#')[0]+'#photo='+currentPhotoId;
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>toast('分享链接已复制')).catch(()=>toast('链接：'+url));}
+  else{toast('分享链接：'+url);}
+};
+$('reportBtn').onclick=()=>{
+  if(!currentUser){toast('请先登录');return;}
+  openReportModal('photo',currentPhotoId);
+};
+$('downloadBtn').onclick=()=>{
+  const imgSrc=$('detailImg').src;if(!imgSrc)return;
+  const uploaderName=$('detailUploader').textContent.trim();
+  const wmText=(currentUser&&currentUser.watermark_text?currentUser.watermark_text:'光遇交友')+' · @'+uploaderName;
+  addWatermark(imgSrc,wmText,data=>downloadDataUrl(data,'光遇截图_'+currentPhotoId+'.jpg'));
+  toast('已添加水印后下载');
+};
+function addWatermark(dataUrl,text,cb){
+  const img=new Image();img.onload=()=>{
+    const c=document.createElement('canvas');c.width=img.width;c.height=img.height;const ctx=c.getContext('2d');
+    ctx.drawImage(img,0,0);ctx.font=Math.max(14,img.width/30)+'px sans-serif';ctx.fillStyle='rgba(255,255,255,0.6)';ctx.strokeStyle='rgba(0,0,0,0.3)';ctx.lineWidth=2;
+    const pad=img.width*0.03;const tw=ctx.measureText(text).width;
+    ctx.strokeText(text,img.width-tw-pad,img.height-pad);ctx.fillText(text,img.width-tw-pad,img.height-pad);cb(c.toDataURL('image/jpeg',.9));
+  };img.src=dataUrl;
+}
+function downloadDataUrl(dataUrl,name){const a=document.createElement('a');a.href=dataUrl;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);}
+
+// 评论
+async function renderComments(photoId){
+  const cl=$('commentList');cl.innerHTML='<div style="text-align:center;color:var(--text3);font-size:12px;padding:12px 0">加载中...</div>';
+  const res=await apiCall('/photos/'+photoId+'/comments');
+  cl.innerHTML='';
+  const list=res.success?res.comments:[];
+  $('commentCount').textContent=list.length?'('+list.length+')':'';
+  if(list.length===0){cl.innerHTML='<div style="text-align:center;color:var(--text3);font-size:12px;padding:12px 0">暂无评论，来抢沙发吧～</div>';return;}
+  list.forEach(c=>{
+    const item=document.createElement('div');item.className='comment-item';
+    const av=document.createElement('div');av.className='avatar avatar-sm';setAvatar(av,c);
+    const body=document.createElement('div');body.className='comment-body';
+    body.innerHTML='<div class="comment-user">'+getDisplayName(c)+' <span class="comment-time">'+fmtDate(c.created_at)+'</span></div><div class="comment-text">'+c.content.replace(/</g,'&lt;')+'</div>';
+    item.appendChild(av);item.appendChild(body);cl.appendChild(item);
+  });
+}
+$('commentSubmit').onclick=async()=>{
+  const text=$('commentInput').value.trim();if(!text){toast('请输入评论内容');return;}
+  if(!currentUser){toast('请先登录');return;}
+  const res=await apiCall('/photos/'+currentPhotoId+'/comments',{method:'POST',body:JSON.stringify({content:text})});
+  if(res.success){$('commentInput').value='';renderComments(currentPhotoId);toast('评论成功');}
+  else{toast(res.error||'评论失败');}
+};
+$('commentInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('commentSubmit').click();});
+
+// ========== 管理后台 ==========
+function openAdminModal(){
+  if(!currentUser||!currentUser.is_admin){toast('无管理员权限');return;}
+  openModal('adminModal');
+  switchAdminTab('stats');
+}
+document.querySelectorAll('.admin-tab').forEach(t=>t.onclick=()=>switchAdminTab(t.dataset.atab));
+function switchAdminTab(tab){
+  adminTab=tab;
+  document.querySelectorAll('.admin-tab').forEach(x=>x.classList.toggle('active',x.dataset.atab===tab));
+  if(tab==='stats')loadAdminStats();
+  else if(tab==='photos')loadAdminPhotos();
+  else if(tab==='comments')loadAdminComments();
+  else if(tab==='users')loadAdminUsers();
+  else if(tab==='posts')loadAdminPosts();else if(tab==='reports')loadAdminReports();else if(tab==='qrcode')loadAdminQrcode();
+}
+async function loadAdminStats(){
+  const c=$('adminContent');c.innerHTML='<div class="admin-empty">加载中...</div>';
+  const res=await apiCall('/admin/stats');
+  if(!res.success){c.innerHTML='<div class="admin-empty">加载失败</div>';return;}
+  let pendingAlert='';
+  if(res.photos&&res.photos.pending>0)pendingAlert+='<div style="background:#fff3e0;color:#e65100;padding:10px 14px;border-radius:10px;margin-bottom:12px;font-size:13px;cursor:pointer" onclick="switchAdminTab(\'photos\')">📸 有 <b>'+res.photos.pending+'</b> 张照片待审核，点击处理 →</div>';
+  c.innerHTML='<div class="stat-grid">'+
+    '<div class="stat-card"><div class="num">'+res.users+'</div><div class="label">用户总数</div></div>'+
+    '<div class="stat-card"><div class="num">'+(res.posts||0)+'</div><div class="label">留言总数</div></div>'+
+    '<div class="stat-card"><div class="num">'+res.photos.total+'</div><div class="label">照片总数</div></div>'+
+    '<div class="stat-card"><div class="num">'+res.comments+'</div><div class="label">评论总数</div></div>'+
+    '<div class="stat-card"><div class="num" style="color:#e65100">'+res.photos.pending+'</div><div class="label">待审核</div></div>'+
+    '<div class="stat-card"><div class="num" style="color:#2e7d32">'+res.photos.approved+'</div><div class="label">已上架</div></div>'+
+    '<div class="stat-card"><div class="num" style="color:#2196f3">'+res.today.users+'</div><div class="label">今日新用户</div></div>'+
+    '<div class="stat-card"><div class="num" style="color:#2196f3">'+res.today.photos+'</div><div class="label">今日新照片</div></div>'+
+    '</div>'+pendingAlert;
+}
+async function loadAdminPhotos(){
+  const c=$('adminContent');c.innerHTML='<div class="admin-empty">加载中...</div>';
+  const res=await apiCall('/admin/photos');
+  if(!res.success){c.innerHTML='<div class="admin-empty">加载失败</div>';return;}
+  if(res.photos.length===0){c.innerHTML='<div class="admin-empty">暂无照片</div>';return;}
+  c.innerHTML='<div class="admin-list">'+res.photos.map(p=>{
+    const sc=p.status==='approved'?'status-approved':p.status==='removed'?'status-removed':'status-pending';
+    const st=p.status==='approved'?'已上架':p.status==='removed'?'已下架':'待审核';
+    return '<div class="admin-item">'+
+      '<img class="thumb" src="'+p.data_url+'" onerror="this.onerror=null;this.style.display=&quot;none&quot;;this.nextElementSibling.style.display=&quot;flex&quot;" style="width:60px;height:60px;object-fit:cover;border-radius:8px"><div style="width:60px;height:60px;border-radius:8px;background:#f0e8dd;display:none;align-items:center;justify-content:center;font-size:10px;color:#999">加载失败</div>'+
+      '<div class="info"><div class="title">'+(p.title||'无标题')+'</div>'+
+      '<div class="meta">'+(p.nickname||p.username)+' · '+fmtDate(p.created_at)+' · <span class="status-badge '+sc+'">'+st+'</span></div>'+
+      (p.description?'<div class="meta" style="margin-top:2px">'+p.description.slice(0,50)+'</div>':'')+'</div>'+
+      '<div class="actions">'+
+      (p.status!=='approved'?'<button class="admin-btn approve" onclick="adminPhotoAction(\''+p.id+'\',\'approved\')">上架</button>':'')+
+      (p.status!=='removed'?'<button class="admin-btn remove" onclick="adminPhotoAction(\''+p.id+'\',\'removed\')">下架</button>':'')+
+      '<button class="admin-btn delete" onclick="adminPhotoDelete(\''+p.id+'\')">删除</button>'+
+      '</div></div>';
+  }).join('')+'</div>';
+}
+async function adminPhotoAction(id,status){
+  const res=await apiCall('/admin/photo/'+id,{method:'PUT',body:JSON.stringify({status})});
+  if(res.success){toast('操作成功');loadAdminPhotos();}else{toast(res.error||'操作失败');}
+}
+async function adminPhotoDelete(id){
+  showConfirm('删除照片','确定要彻底删除这张照片吗？',async()=>{
+    const res=await apiCall('/admin/photo/'+id,{method:'DELETE'});
+    if(res.success){toast('已删除');loadAdminPhotos();}else{toast(res.error||'删除失败');}
+  });
+}
+async function loadAdminComments(){
+  const c=$('adminContent');c.innerHTML='<div class="admin-empty">加载中...</div>';
+  const res=await apiCall('/admin/comments');
+  if(!res.success){c.innerHTML='<div class="admin-empty">加载失败</div>';return;}
+  if(res.comments.length===0){c.innerHTML='<div class="admin-empty">暂无评论</div>';return;}
+  c.innerHTML='<div class="admin-list">'+res.comments.map(cm=>'<div class="admin-item">'+
+    '<div class="info" style="flex:1"><div class="title">'+cm.content.replace(/</g,'&lt;')+'</div>'+
+    '<div class="meta">'+(cm.nickname||cm.username)+' · '+fmtDate(cm.created_at)+' · 照片：'+(cm.photo_title||'未知')+'</div></div>'+
+    '<div class="actions"><button class="admin-btn delete" onclick="adminCommentDelete(\''+cm.id+'\')">删除</button></div>'+
+    '</div>').join('')+'</div>';
+}
+async function adminCommentDelete(id){
+  const res=await apiCall('/admin/comment/'+id,{method:'DELETE'});
+  if(res.success){toast('已删除');loadAdminComments();}else{toast(res.error||'删除失败');}
+}
+let _adminUsersCache=[];
+async function loadAdminUsers(){
+  const c=$('adminContent');c.innerHTML='<div class="admin-empty">加载中...</div>';
+  const res=await apiCall('/admin/users');
+  if(!res.success){c.innerHTML='<div class="admin-empty">加载失败</div>';return;}
+  _adminUsersCache=res.users||[];
+  renderAdminUsers('');
+}
+function renderAdminUsers(keyword){
+  const c=$('adminContent');
+  const kw=(keyword||'').toLowerCase().trim();
+  const list=kw?_adminUsersCache.filter(u=>(u.nickname||'').toLowerCase().includes(kw)||(u.username||'').toLowerCase().includes(kw)):_adminUsersCache;
+  const searchBox='<div style="margin-bottom:12px"><input type="text" id="adminUserSearch" placeholder="搜索昵称或用户名..." value="'+(keyword||'')+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--card-bg);color:var(--text)" oninput="renderAdminUsers(this.value)"></div>';
+  if(list.length===0){c.innerHTML=searchBox+'<div class="admin-empty">暂无用户</div>';return;}
+  c.innerHTML=searchBox+'<div style="font-size:12px;color:var(--text3);margin-bottom:8px">共 '+list.length+' 个用户</div><div class="admin-list">'+list.map(u=>'<div class="admin-item">'+
+    '<div class="avatar" style="width:36px;height:36px;font-size:14px" id="admAv'+u.id+'"></div>'+
+    '<div class="info"><div class="title">'+(u.nickname||u.username)+(u.is_admin?' <span class="status-badge status-approved">管理员</span>':'')+(u.is_banned?' <span class="status-badge status-removed">已封禁</span>':'')+'</div>'+
+    '<div class="meta">@'+u.username+' · 注册于 '+fmtDate(u.created_at)+'</div></div>'+
+    '<div class="actions">'+
+    (u.is_admin?'':'<button class="admin-btn '+(u.is_banned?'approve':'remove')+'" onclick="adminUserBan('+u.id+','+!u.is_banned+')">'+(u.is_banned?'解封':'封禁')+'</button>')+
+    (u.is_admin?'':'<button class="admin-btn delete" onclick="adminUserDelete('+u.id+')">删除</button>')+
+    '</div></div>').join('')+'</div>';
+  list.forEach(u=>{const el=$('admAv'+u.id);if(el)setAvatar(el,u);});
+}
+window.renderAdminUsers=renderAdminUsers;
+async function adminUserBan(id,banned){
+  const res=await apiCall('/admin/user/'+id,{method:'PUT',body:JSON.stringify({action:'ban',banned})});
+  if(res.success){toast('操作成功');loadAdminUsers();}else{toast(res.error||'操作失败');}
+}
+async function adminUserDelete(id){
+  showConfirm('删除用户','确定要删除该用户及其所有数据吗？',async()=>{
+    const res=await apiCall('/admin/user/'+id,{method:'DELETE'});
+    if(res.success){toast('已删除');loadAdminUsers();}else{toast(res.error||'删除失败');}
+  });
+}
+async function loadAdminPosts(){
+  const c=$('adminContent');
+  c.innerHTML='<div class="admin-empty">加载中...</div>';
+  const res=await apiCall('/posts?limit=50');
+  if(!res.success||res.posts.length===0){c.innerHTML='<div class="admin-empty">暂无留言</div>';return;}
+  let html='<div style="margin-bottom:10px;font-size:13px;color:var(--text2)">共 '+res.posts.length+' 条留言</div>';
+  res.posts.forEach(p=>{
+    const name=p.is_anonymous?'匿名':(p.nickname||p.username);
+    html+='<div class="admin-item">'+
+      '<div style="font-size:13px;font-weight:600">'+name+' · '+p.tag+' · '+fmtDate(p.created_at)+'</div>'+
+      '<div style="font-size:12px;color:var(--text);margin:4px 0;word-break:break-word">'+p.content.slice(0,100).replace(/</g,'&lt;')+'</div>'+
+      '<div style="display:flex;gap:8px"><span style="font-size:11px;color:var(--text3)">❤'+p.like_count+' 💬'+p.reply_count+'</span>'+
+      '<button class="admin-btn danger" onclick="adminPostDelete(\''+p.id+'\')">删除</button></div></div>';
+  });
+  c.innerHTML=html;
+}
+window.adminPostDelete=async(id)=>{
+  if(!confirm('确定删除这条留言？'))return;
+  const res=await apiCall('/admin/post/'+id,{method:'DELETE'});
+  if(res.success){toast('已删除');loadAdminPosts();}else{toast(res.error||'删除失败');}
+};
+async function loadAdminReports(){
+  const c=$('adminContent');
+  c.innerHTML='<div class="admin-empty">加载中...</div>';
+  const sf='<div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="admin-btn view" onclick="loadAdminReportsByStatus(\'pending\')">待处理</button><button class="admin-btn view" onclick="loadAdminReportsByStatus(\'resolved\')">已处理</button><button class="admin-btn view" onclick="loadAdminReportsByStatus(\'ignored\')">已忽略</button></div>';
+  const res=await apiCall('/admin/reports?status=pending');
+  if(!res.success||res.reports.length===0){c.innerHTML=sf+'<div class="admin-empty">暂无待处理举报</div>';return;}
+  let html=sf+'<div style="margin-bottom:10px;font-size:13px;color:var(--text2)">共 '+res.reports.length+' 条待处理举报</div>';
+  res.reports.forEach(r=>{
+    html+='<div class="admin-item" id="rpt-'+r.id+'"><div style="font-size:13px;font-weight:600">'+(r.type==='photo'?'📷 照片举报':'💬 留言举报')+' · '+(r.nickname||r.username||'匿名')+(r.report_category?' · '+r.report_category:'')+'</div><div style="font-size:12px;margin:4px 0">原因：'+(r.reason||'无')+'</div><div style="font-size:11px;color:var(--text3)">目标ID：'+r.target_id+' · '+fmtDate(r.created_at)+'</div><textarea id="rpl-'+r.id+'" placeholder="回复举报人（可选）" style="width:100%;margin-top:6px;padding:6px;border:1px solid #e0d5c5;border-radius:6px;font-size:12px;resize:vertical;min-height:36px"></textarea><div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap"><button class="admin-btn danger" onclick="adminProcessReport('+r.id+',\'delete\')">删除内容并处理</button><button class="admin-btn view" onclick="adminProcessReport('+r.id+',\'ignore\')">忽略</button><button class="admin-btn" onclick="adminProcessReport('+r.id+',\'resolve\')">标记已处理</button></div></div>';
+  });
+  c.innerHTML=html;
+}
+window.loadAdminReportsByStatus=async(status)=>{
+  const c=$('adminContent');
+  const res=await apiCall('/admin/reports?status='+status);
+  const sf='<div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="admin-btn view" onclick="loadAdminReportsByStatus(\'pending\')">待处理</button><button class="admin-btn view" onclick="loadAdminReportsByStatus(\'resolved\')">已处理</button><button class="admin-btn view" onclick="loadAdminReportsByStatus(\'ignored\')">已忽略</button></div>';
+  if(!res.success||res.reports.length===0){c.innerHTML=sf+'<div class="admin-empty">暂无举报</div>';return;}
+  let html=sf+'<div style="margin-bottom:10px;font-size:13px">共 '+res.reports.length+' 条</div>';
+  res.reports.forEach(r=>{
+    html+='<div class="admin-item"><div style="font-size:13px;font-weight:600">'+(r.type==='photo'?'📷':'💬')+' '+(r.nickname||r.username||'匿名')+(r.report_category?' · '+r.report_category:'')+' <span style="font-size:11px;color:'+(r.status==='resolved'?'#2e7d32':'#ff9800')+'">['+r.status+']</span></div><div style="font-size:12px;margin:4px 0">原因：'+(r.reason||'无')+'</div>'+(r.admin_reply?'<div style="font-size:12px;color:#2e7d32;margin:4px 0">管理员回复：'+r.admin_reply+'</div>':'')+'<div style="font-size:11px;color:var(--text3)">'+fmtDate(r.created_at)+(r.processed_at?' · 处理于'+fmtDate(r.processed_at):'')+'</div></div>';
+  });
+  c.innerHTML=html;
+};
+window.adminProcessReport=async(id,action)=>{
+  const el=$('rpl-'+id);const reply=el?el.value.trim():'';
+  const res=await apiCall('/admin/reports/'+id,{method:'PUT',body:JSON.stringify({action,admin_reply:reply})});
+  if(res.success){toast(action==='ignore'?'已忽略举报':'举报已处理');loadAdminReports();}else{toast(res.error||'操作失败');}
+};
+async function loadAdminQrcode(){
+  const c=$('adminContent');
+  const res=await apiCall('/qrcode');
+  const current=res.success&&res.qrcode?res.qrcode:'';
+  c.innerHTML='<div class="qrcode-admin">'+
+    '<div style="font-size:14px;font-weight:600;margin-bottom:4px">当前微信群活码</div>'+
+    '<div class="preview" id="adminQrPreview" style="width:200px;height:200px">'+(current?'<img src="'+current+'">':'<span style="color:#999;font-size:13px">暂无活码</span>')+'</div>'+
+    '<input type="file" id="adminQrInput" accept="image/*">'+
+    '<button id="adminQrUploadBtn" style="font-size:15px;padding:10px 28px;border-radius:24px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(255,140,0,.3);margin:8px 0;border:none;cursor:pointer">上传新活码</button>'+
+    '<div style="font-size:12px;color:var(--text3);text-align:center;max-width:280px">支持 JPG/PNG 格式，上传后自动更新网站首页显示的微信群活码</div>'+
+    '</div>';
+  $('adminQrUploadBtn').onclick=()=>{$('adminQrInput').click();};
+  $('adminQrInput').onchange=e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=async ev=>{
+      compressImage(ev.target.result,400,.9,async data=>{
+        const res=await apiCall('/admin/qrcode',{method:'PUT',body:JSON.stringify({qrcode:data})});
+        if(res.success){toast('活码更新成功');loadAdminQrcode();loadQrcode();}else{toast(res.error||'更新失败');}
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+}
+async function loadQrcode(){
+  const box=$('qrBox');
+  const tip=$('qrTip');
+  const isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||window.innerWidth<768;
+  if(tip)tip.innerHTML=isMobile?'长按识别二维码加入<strong>光遇交友群</strong>':'微信扫码加入<strong>光遇交友群</strong>';
+  try{
+    const timeoutPromise=new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),3000));
+    const res=await Promise.race([apiCall('/qrcode'),timeoutPromise]);
+    if(res.success&&res.qrcode){
+      let src=res.qrcode;
+      if(src&&!src.startsWith('data:'))src='data:image/png;base64,'+src;
+      if(box)box.innerHTML='<img src="'+src+'" alt="微信群活码" style="width:100%;border-radius:8px" onerror="this.parentElement.innerHTML=\'<div class=\'qr-placeholder\'>活码加载失败</div>\'">';
+      window._currentQrSrc=src;
+    }else{
+      if(box)box.innerHTML='<div class="qr-placeholder">管理员暂未配置群二维码</div>';
+      window._currentQrSrc=null;
+    }
+  }catch(e){if(box)box.innerHTML='<div class="qr-placeholder">活码加载失败，请稍后重试</div>';}
+}
+function openQrLightbox(){
+  if(!window._currentQrSrc){toast('活码尚未配置');return;}
+  const lb=$('qrLightbox'),img=$('qrLightboxImg'),tipEl=$('qrLightboxTip');
+  const isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||window.innerWidth<768;
+  img.src=window._currentQrSrc;img.style.display='block';
+  if(tipEl)tipEl.textContent=isMobile?'长按识别二维码加入光遇交友群':'微信扫码加入光遇交友群';
+  lb.classList.add('show');
+}
+function closeQrLightbox(){$('qrLightbox').classList.remove('show');}
+window.openQrLightbox=openQrLightbox;window.closeQrLightbox=closeQrLightbox;
+
+// 音乐播放器
+const audio=$('audio');
+function renderPlaylist(){
+  updatePlaylistCount();
+  const pl=$('playlist');pl.innerHTML='';
+  playlist.forEach((s,i)=>{
+    const item=document.createElement('div');item.className='pl-item'+(i===curSong?' active':'');
+    item.innerHTML='<span class="pl-idx">'+(i+1)+'</span><div class="pl-info"><div class="pl-name">'+s.title+'</div><div class="pl-artist">'+s.artist+'</div></div><span class="pl-del" data-idx="'+i+'">×</span>';
+    item.onclick=e=>{if(e.target.classList.contains('pl-del'))return;playSong(i);};
+    item.querySelector('.pl-del').onclick=e=>{e.stopPropagation();playlist.splice(i,1);if(curSong>=playlist.length)curSong=0;saveAll();renderPlaylist();toast('已删除');};
+    pl.appendChild(item);
+  });
+}
+function playSong(i){
+  if(i<0||i>=playlist.length)return;curSong=i;const s=playlist[i];
+  audio.src=s.url;
+  $('playerTitle').textContent=s.title;$('playerArtist').textContent=s.artist;
+  if(s.cover){$('playerCover').style.backgroundImage='url('+s.cover+')';$('playerCover').style.backgroundSize='cover';$('playerCover').textContent='';}else{$('playerCover').style.backgroundImage='';$('playerCover').textContent='♪';}
+  renderPlaylist();
+  audio.play().then(()=>{playing=true;updatePlayerUI();}).catch(e=>{
+    playing=false;updatePlayerUI();
+    toast('播放失败：'+(e.message||'链接无效，已切换下一首'));
+    // 自动播放下一首
+    setTimeout(()=>{if(playlist.length>1)playSong((curSong+1)%playlist.length);},1500);
+  });
+}
+function updatePlayerUI(){$('playerCover').classList.toggle('playing',playing);$('playIcon').innerHTML=playing?'<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>':'<path d="M8 5v14l11-7z"/>';}
+$('playBtn').onclick=()=>{
+  if(playlist.length===0){toast('歌单为空，请先添加歌曲');return;}
+  if(playing){audio.pause();playing=false;updatePlayerUI();}
+  else{
+    if(!audio.src){audio.src=playlist[curSong]?.url;}
+    audio.play().then(()=>{playing=true;updatePlayerUI();}).catch(e=>{toast('播放失败：'+(e.message||'链接无效'));playing=false;updatePlayerUI();});
+  }
+};
+$('prevBtn').onclick=()=>playSong(curSong>0?curSong-1:playlist.length-1);
+$('nextBtn').onclick=()=>playSong((curSong+1)%playlist.length);
+audio.ontimeupdate=()=>{$('progressFill').style.width=(audio.currentTime/audio.duration*100||0)+'%';$('curTime').textContent=fmtTime(audio.currentTime);$('durTime').textContent=fmtTime(audio.duration);};
+audio.onended=()=>playSong((curSong+1)%playlist.length);
+$('progressBar').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();audio.currentTime=(e.clientX-r.left)/r.width*audio.duration;};
+$('volumeBar').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();const v=(e.clientX-r.left)/r.width;audio.volume=v;$('volumeFill').style.width=v*100+'%';};
+audio.volume=0.7;
+// 初始化播放器
+if(playlist.length>0){audio.src=playlist[0].url;curSong=0;}
+audio.onerror=()=>{console.warn('音频加载失败');playing=false;if(typeof updatePlayerUI==='function')updatePlayerUI();};
+audio.onloadeddata=()=>{console.log('音频加载成功');};
+$('expandBtn').onclick=()=>$('playerPanel').classList.toggle('show');
+$('addSongBtn').onclick=()=>{
+  const name=$('songName').value.trim(),url=$('songUrl').value.trim();
+  if(!name){toast('请填写歌曲名');return;}
+  playlist.push({title:name,artist:url?'自定义':'QQ音乐',url:url||''});saveAll();renderPlaylist();$('songName').value='';$('songUrl').value='';toast('已添加到歌单');
+};
+renderPlaylist();
+
+// ========== QQ音乐搜索 ==========
+const mSearchBtn=$('musicSearchBtn');if(mSearchBtn)mSearchBtn.onclick=doMusicSearch;
+const mSearchInput=$('musicSearchInput');if(mSearchInput)mSearchInput.addEventListener('keydown',e=>{if(e.key==='Enter')doMusicSearch();});
+async function doMusicSearch(){
+  const kw=$('musicSearchInput').value.trim();
+  if(!kw){toast('请输入搜索关键词');return;}
+  const box=$('searchResults');box.style.display='block';box.innerHTML='<div style="text-align:center;padding:10px;font-size:12px;color:var(--text3)">搜索中...</div>';
+  try{
+    const res=await fetch('/api/music/search?keyword='+encodeURIComponent(kw)+'&limit=15');
+    const data=await res.json();
+    if(!data.success||!data.songs||data.songs.length===0){box.innerHTML='<div style="text-align:center;padding:10px;font-size:12px;color:var(--text3)">未找到相关歌曲</div>';return;}
+    box.innerHTML='';
+    data.songs.forEach(s=>{
+      const item=document.createElement('div');item.className='search-item';
+      item.innerHTML='<img class="search-cover" src="'+(s.cover||'')+'" onerror="this.style.background=\'#f0e8dd\';this.src=\'\'">'+
+        '<div class="search-info"><div class="search-name">'+s.name+'</div><div class="search-artist">'+s.artist+'</div></div>'+
+        '<span class="search-play">▶</span>';
+      item.onclick=()=>playQQSong(s);
+      box.appendChild(item);
+    });
+  }catch(e){box.innerHTML='<div style="text-align:center;padding:10px;font-size:12px;color:var(--text3)">搜索失败，请稍后重试</div>';}
+}
+async function playQQSong(song){
+  toast('正在获取播放链接...');
+  try{
+    const res=await fetch('/api/music/url?id='+song.id);
+    const data=await res.json();
+    if(data.success&&data.url){
+      const exists=playlist.findIndex(p=>p.title===song.name);
+      if(exists>=0){playSong(exists);}
+      else{
+        playlist.push({title:song.name,artist:song.artist,url:data.url,cover:song.cover,songid:song.id});
+        saveAll();renderPlaylist();playSong(playlist.length-1);
+      }
+      toast('开始播放：'+song.name);
+    }else{toast('获取播放链接失败，该歌曲可能需要VIP');}
+  }catch(e){toast('播放失败');}
+}
+// 更新播放列表数量
+function updatePlaylistCount(){$('playlistCount').textContent=playlist.length;}
+
+// 资助 & 反馈
+$('donateBtn').onclick=()=>openModal('donateModal');
+$('fbSubmit').onclick=()=>{
+  const type=$('fbType').value,content=$('fbContent').value.trim(),contact=$('fbContact').value.trim();
+  if(!content){toast('请填写反馈内容');return;}
+  const subject=encodeURIComponent('[光遇交友反馈] '+type);
+  const body=encodeURIComponent('类型：'+type+'\n内容：'+content+'\n联系方式：'+(contact||'未填写')+'\n\n——来自光遇交友网页');
+  window.location.href='mailto:3229557782@qq.com?subject='+subject+'&body='+body;
+  toast('已调起邮箱客户端，感谢反馈！');closeModal('feedbackModal');$('fbContent').value='';$('fbContact').value='';
+};
+
+// 点击遮罩关闭弹窗
+document.querySelectorAll('.modal-mask').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('active');}));
+$('confirmModal').addEventListener('click',e=>{if(e.target===$('confirmModal'))$('confirmModal').classList.remove('show');});
+
+// URL hash 分享照片
+if(location.hash.startsWith('#photo=')){
+  const id=location.hash.slice(7);
+  setTimeout(()=>openPhotoDetail(id),500);
+}
+
+// ========== 导航 Tab 切换 ==========
+let currentView='home';
+document.querySelectorAll('.nav-tab').forEach(t=>t.onclick=()=>switchView(t.dataset.view));
+function switchView(view,push=true){
+  currentView=view;
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.view===view));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));
+  if(view==='home')loadHome();
+  if(view==='mailbox')loadPosts();
+  if(view==='gallery')loadGalleryFull();
+  if(view==='profile')loadMyProfile();
+  window.scrollTo(0,0);
+  if(push)history.pushState({view,modal:null},'','#'+view);
+  setTimeout(updateFABVisibility,50);
+}
+// 安卓返回键兼容
+window.addEventListener('popstate',e=>{
+  const state=e.state;
+  // 先检查是否有弹窗打开
+  const openModal=document.querySelector('.modal-mask.active');
+  if(openModal){closeModal(openModal.id);return;}
+  if(state&&state.view){switchView(state.view,false);}
+  else{switchView('home',false);}
+});
+// 初始状态
+history.replaceState({view:'home',modal:null},'','#home');
+
+// ========== 首页数据加载 ==========
+function skeletonHTML(n){let h='';for(let i=0;i<n;i++){h+='<div class="skeleton-item"><div class="skeleton skeleton-avatar"></div><div style="flex:1"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div></div>';}return h;}
+async function loadHome(){
+  // 骨架屏占位
+  ['homeGuwan','homeHot','homeLatest'].forEach(id=>{const el=$(id);if(el)el.innerHTML=skeletonHTML(3);});
+  // 统计数据（不阻塞）
+  apiCall('/stats').then(res=>{if(res.success){$('statUsers').textContent=res.users||0;$('statPosts').textContent=res.posts||0;$('statPhotos').textContent=res.photos||0;}}).catch(()=>{});
+  // 并行加载三个模块（5秒超时）
+  const timeout=5000;
+  const fetchWithTimeout=(url)=>Promise.race([apiCall(url),new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),timeout))]);
+  try{
+    const [guwanRes,hotRes,latestRes]=await Promise.allSettled([
+      fetchWithTimeout('/posts?tag='+encodeURIComponent('找固玩')+'&limit=3'),
+      fetchWithTimeout('/posts?sort=hot&limit=5'),
+      fetchWithTimeout('/posts?limit=5')
+    ]);
+    const renderBox=(id,res,emptyText)=>{
+      const box=$(id);if(!box)return;
+      if(res.status==='fulfilled'&&res.value.success&&res.value.posts.length>0){box.innerHTML='';res.value.posts.forEach(p=>box.appendChild(renderHomeItem(p,'post')));}
+      else{box.innerHTML='<div class="admin-empty">'+(res.status==='rejected'?'加载失败，点击重试':emptyText)+'</div>';if(res.status==='rejected')box.onclick=()=>loadHome();}
+    };
+    renderBox('homeGuwan',guwanRes,'暂无找固玩留言');
+    renderBox('homeHot',hotRes,'暂无热门内容');
+    renderBox('homeLatest',latestRes,'暂无动态');
+    loadRunStatus();
+  }catch(e){console.warn('loadHome error:',e);}
+}
+function renderHomeItem(p,type){
+  const item=document.createElement('div');item.className='home-item';
+  const name=p.is_anonymous?'匿名光之子':(p.nickname||p.username);
+  const av=genAvatar(name);
+  item.innerHTML='<div class="home-item-avatar" style="background:'+av.color+'">'+av.letter+'</div>'+
+    '<div class="home-item-content"><div class="home-item-title">'+p.content.slice(0,30).replace(/</g,'&lt;')+'</div>'+
+    '<div class="home-item-meta">'+name+' · '+p.tag+' · '+fmtDate(p.created_at)+'</div></div>'+
+    '<div class="home-item-like">❤'+p.like_count+'</div>';
+  item.onclick=()=>{switchView('mailbox');};
+  return item;
+}
+
+// ========== 光语信箱 ==========
+let currentTag='找固玩',postPage=1;
+document.querySelectorAll('.tag-chip').forEach(c=>c.onclick=()=>{currentTag=c.dataset.tag;document.querySelectorAll('.tag-chip').forEach(x=>x.classList.toggle('active',x===c));postPage=1;loadPosts();});
+// 发布留言弹窗
+function openPostModal(){
+  if(!currentUser){toast('请先登录');openModal('authModal');return;}
+  openModal('postModal');
+}
+$('postSubmitModalBtn').onclick=async()=>{
+  if(!currentUser){toast('请先登录');return;}
+  const content=$('postContentModal').value.trim();
+  if(!content){toast('请输入留言内容');return;}
+  const tag=$('postTagModal').value,anon=$('postAnonModal').checked;
+  const res=await apiCall('/posts',{method:'POST',body:JSON.stringify({content,tag,is_anonymous:anon})});
+  if(res.success){$('postContentModal').value='';$('postAnonModal').checked=false;closeModal('postModal');toast('发布成功，等待审核');loadPosts();}
+  else{toast(res.error||'发布失败');}
+};
+// 悬浮按钮显示控制
+function updateFABVisibility(){
+  const isMailbox=document.getElementById('view-mailbox')&&document.getElementById('view-mailbox').classList.contains('active');
+  if($('fabPublish')){
+    $('fabPublish').classList.toggle('hidden',!isMailbox);
+    $('fabPublish').classList.toggle('disabled',!currentUser||currentUser.is_guest);
+    $('fabPublish').style.opacity=(!currentUser||currentUser.is_guest)?'0.5':'1';
+    $('fabPublish').style.cursor=(!currentUser||currentUser.is_guest)?'not-allowed':'pointer';
+  }
+  if($('fabFeedback'))$('fabFeedback').classList.toggle('hidden',isMailbox);
+}
+async function loadPosts(){
+  const list=$('postList');if(!list)return;list.innerHTML='<div class="admin-empty">加载中...</div>';
+  const tagParam=currentTag==='all'?'':'&tag='+encodeURIComponent(currentTag);
+  const searchParam=searchKeyword?'&keyword='+encodeURIComponent(searchKeyword):'';
+  const res=await apiCall('/posts?page='+postPage+'&limit=20'+tagParam+searchParam);
+  list.innerHTML='';
+  if(!res.success||res.posts.length===0){list.innerHTML='<div class="admin-empty">'+(searchKeyword?'没有找到相关留言':'暂无留言，来发布第一条吧～')+'</div>';return;}
+  res.posts.forEach(p=>list.appendChild(renderPost(p)));
+}
+function renderPost(p){
+  const item=document.createElement('div');item.className='post-item';
+  const authorName=p.is_anonymous?'匿名光之子':(p.nickname||p.username);
+  const av=p.is_anonymous?{color:'#999',letter:'匿'}:genAvatar(authorName);
+  item.innerHTML='<div class="post-header">'+
+    '<div class="avatar" style="width:32px;height:32px;font-size:13px;background:'+av.color+'">'+av.letter+'</div>'+
+    '<div><div class="post-author">'+authorName+'</div></div>'+
+    '<span class="post-tag">'+p.tag+'</span>'+
+    '<span class="post-time">'+fmtDate(p.created_at)+'</span></div>'+
+    '<div class="post-content">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
+    (p.image_url?'<img class="post-image" src="'+p.image_url+'">':'')+
+    '<div class="post-actions">'+
+    '<span class="post-action like-btn" data-id="'+p.id+'">❤ <span class="like-num">'+p.like_count+'</span></span>'+
+    '<span class="post-action reply-btn" data-id="'+p.id+'">💬 '+p.reply_count+'</span>'+
+    '<span class="post-action report-btn" data-id="'+p.id+'" style="margin-left:auto">🚩 举报</span>'+
+    (currentUser&&currentUser.is_admin?'<span class="post-action admin-del-btn" data-id="'+p.id+'" style="color:#e74c3c">🗑 删除</span>':'')+
+    '</div>'+
+    '<div class="reply-list" id="replies-'+p.id+'"></div>';
+  item.querySelector('.like-btn').onclick=async e=>{
+    if(!requireLogin('点赞'))return;
+    const res=await apiCall('/posts/'+p.id+'/like',{method:'POST'});
+    if(res.success){e.currentTarget.classList.toggle('liked',res.liked);
+      if(res.liked){e.currentTarget.style.animation='none';e.currentTarget.offsetHeight;e.currentTarget.style.animation='heartPop .4s ease';}
+      const num=e.currentTarget.querySelector('.like-num');num.textContent=parseInt(num.textContent)+(res.liked?1:-1);
+      // 点赞粒子效果
+      if(res.liked){const rect=e.currentTarget.getBoundingClientRect();for(let i=0;i<3;i++){const p=document.createElement('span');p.className='float-particle';p.textContent='❤';p.style.left=(rect.left+rect.width/2+(Math.random()-0.5)*20)+'px';p.style.top=(rect.top+rect.height/2)+'px';p.style.position='fixed';p.style.zIndex='9999';document.body.appendChild(p);setTimeout(()=>p.remove(),1000);}}}
+  };
+  item.querySelector('.reply-btn').onclick=()=>toggleReplies(p.id);
+  const reportBtn=item.querySelector('.report-btn');
+  if(reportBtn)reportBtn.onclick=async()=>{
+    if(!requireLogin('举报'))return;
+    openReportModal('post',p.id);
+  };
+  const delBtn=item.querySelector('.admin-del-btn');
+  if(delBtn)delBtn.onclick=async()=>{
+    if(!confirm('确定删除这条留言？'))return;
+    const res=await apiCall('/admin/post/'+p.id,{method:'DELETE'});
+    if(res.success){toast('已删除');loadPosts();}else{toast(res.error||'删除失败');}
+  };
+  // 点击帖子内容打开详情
+  const postContent=item.querySelector('.post-content');
+  if(postContent)postContent.style.cursor='pointer';
+  item.querySelector('.post-content')?.addEventListener('click',()=>openPostDetail(p.id));
+  return item;
+}
+async function openPostDetail(id){
+  const res=await apiCall('/posts/'+id);
+  if(!res.success){toast(res.error||'加载失败');return;}
+  const p=res.post;
+  const authorName=p.is_anonymous?'匿名光之子':(p.nickname||p.username);
+  const av=p.is_anonymous?{color:'#999',letter:'匿'}:genAvatar(authorName);
+  const html='<div class="post-detail">'+
+    '<div class="post-header" style="margin-bottom:12px">'+
+    '<div class="avatar" style="width:40px;height:40px;font-size:16px;background:'+av.color+'">'+av.letter+'</div>'+
+    '<div><div class="post-author" style="font-size:15px">'+authorName+'</div>'+
+    '<div style="font-size:11px;color:var(--text3)">'+fmtDate(p.created_at)+'</div></div>'+
+    '<span class="post-tag">'+(p.tag||'日常分享')+'</span></div>'+
+    '<div class="post-content" style="font-size:15px;line-height:1.7;margin-bottom:12px">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
+    (p.image_url?'<img class="post-image" src="'+p.image_url+'" style="width:100%;border-radius:12px;margin-bottom:12px">':'')+
+    '<div class="post-actions" style="border-top:1px solid var(--border);padding-top:12px;margin-bottom:12px">'+
+    '<span class="post-action like-btn" onclick="likePost('+p.id+',this)">❤ <span class="like-num">'+p.like_count+'</span></span>'+
+    '<span class="post-action">💬 '+p.reply_count+'</span>'+
+    '<span class="post-action" onclick="openReportModal(&quot;post&quot;,'+p.id+')" style="margin-left:auto">🚩 举报</span>'+
+    '</div>'+
+    '<div style="font-size:13px;font-weight:600;margin-bottom:8px">评论 ('+p.reply_count+')</div>'+
+    '<div id="postDetailReplies"></div>'+
+    '<div class="reply-input" style="margin-top:12px"><input type="text" id="postDetailReplyInput" placeholder="写下评论..."><button onclick="submitPostDetailReply('+p.id+')">发送</button></div>'+
+    '</div>';
+  $('postDetailContent').innerHTML=html;
+  openModal('postDetailModal');
+  loadPostDetailReplies(id);
+}
+async function loadPostDetailReplies(id){
+  const box=$('postDetailReplies');if(!box)return;
+  const res=await apiCall('/posts/'+id+'/replies');
+  if(!res.success||res.replies.length===0){box.innerHTML='<div style="text-align:center;color:var(--text3);font-size:12px;padding:12px">暂无评论，来抢沙发吧~</div>';return;}
+  box.innerHTML=res.replies.map(r=>{
+    const name=r.is_anonymous?'匿名光之子':(r.nickname||r.username);
+    const av=r.is_anonymous?{color:'#999',letter:'匿'}:genAvatar(name);
+    return '<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span><div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
+  }).join('');
+}
+async function submitPostDetailReply(id){
+  if(!requireLogin('评论'))return;
+  const input=$('postDetailReplyInput');const content=input.value.trim();
+  if(!content)return;
+  const res=await apiCall('/posts/'+id+'/replies',{method:'POST',body:JSON.stringify({content})});
+  if(res.success){input.value='';loadPostDetailReplies(id);toast('评论成功');}
+  else{toast(res.error||'评论失败');}
+}
+async function likePost(id,btn){
+  if(!requireLogin('点赞'))return;
+  const res=await apiCall('/posts/'+id+'/like',{method:'POST'});
+  if(res.success){btn.classList.toggle('liked',res.liked);
+    const num=btn.querySelector('.like-num');num.textContent=parseInt(num.textContent)+(res.liked?1:-1);}
+}
+window.openPostDetail=openPostDetail;window.submitPostDetailReply=submitPostDetailReply;
+async function toggleReplies(postId){
+  const box=$('replies-'+postId);
+  if(box.classList.contains('show')){box.classList.remove('show');return;}
+  box.classList.add('show');
+  const res=await apiCall('/posts/'+postId+'/replies');
+  let html='';
+  if(res.success&&res.replies.length>0){
+    res.replies.forEach(r=>{
+      const name=r.is_anonymous?'匿名光之子':(r.nickname||r.username);
+      const av=r.is_anonymous?{color:'#999',letter:'匿'}:genAvatar(name);
+      html+='<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span><div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
+    });
+  }
+  html+='<div class="reply-input"><input type="text" id="replyInput-'+postId+'" placeholder="写下回复..."><button onclick="submitReply(\''+postId+'\')">回复</button></div>';
+  box.innerHTML=html;
+}
+async function submitReply(postId){
+  if(!requireLogin('回复'))return;
+  const input=$('replyInput-'+postId);const content=input.value.trim();
+  if(!content)return;
+  const res=await apiCall('/posts/'+postId+'/replies',{method:'POST',body:JSON.stringify({content})});
+  if(res.success){input.value='';toggleReplies(postId);toggleReplies(postId);toast('回复成功');}
+  else{toast(res.error||'回复失败');}
+}
+window.submitReply=submitReply;
+
+
+// ========== 图片灯箱 ==========
+let lightboxPhotos=[],lightboxIndex=0;
+function openLightbox(index){
+  if(!lightboxPhotos||lightboxPhotos.length===0)return;
+  lightboxIndex=index;
+  const lb=$('lightbox'),img=$('lightboxImg'),loading=$('lightboxLoading'),info=$('lightboxInfo');
+  lb.classList.add('show');
+  img.style.display='none';info.style.display='none';loading.style.display='block';
+  const p=lightboxPhotos[index];
+  img.onload=()=>{loading.style.display='none';img.style.display='block';info.style.display='block';};
+  img.onerror=()=>{loading.textContent='加载失败';};
+  img.src=p.data_url;
+  $('lightboxTitle').textContent=p.title||'无标题';
+  $('lightboxMeta').textContent=(p.nickname||p.username||'匿名')+' · ❤'+(p.likes||0)+' · 💬'+(p.comments||0);
+  // 更新点赞收藏状态
+  $('lightboxLike').classList.toggle('active',!!p.is_liked);
+  $('lightboxFav').classList.toggle('active',!!p.is_favorited);
+}
+function closeLightbox(){$('lightbox').classList.remove('show');}
+function navLightbox(dir){
+  lightboxIndex=(lightboxIndex+dir+lightboxPhotos.length)%lightboxPhotos.length;
+  openLightbox(lightboxIndex);
+}
+async function lightboxLike(){
+  if(!requireLogin('点赞'))return;
+  const p=lightboxPhotos[lightboxIndex];
+  const res=await apiCall('/photos/'+p.id+'/like',{method:'POST'});
+  if(res.success){p.is_liked=res.liked;$('lightboxLike').classList.toggle('active',res.liked);
+    const meta=$('lightboxMeta');meta.textContent=meta.textContent.replace(/❤\d+/,'❤'+(parseInt(meta.textContent.match(/❤(\d+)/)[1])+(res.liked?1:-1)));}
+}
+async function lightboxFav(){
+  if(!requireLogin('收藏'))return;
+  const p=lightboxPhotos[lightboxIndex];
+  const res=await apiCall('/photos/'+p.id+'/favorite',{method:'POST'});
+  if(res.success){p.is_favorited=res.favorited;$('lightboxFav').classList.toggle('active',res.favorited);toast(res.favorited?'已收藏':'已取消收藏');}
+}
+function lightboxDownload(){const p=lightboxPhotos[lightboxIndex];const a=document.createElement('a');a.href=p.data_url;a.download=(p.title||'photo')+'.png';a.click();toast('开始下载');}
+function lightboxReport(){const p=lightboxPhotos[lightboxIndex];openReportModal('photo',p.id);}
+// 键盘事件
+document.addEventListener('keydown',e=>{
+  if(!$('lightbox').classList.contains('show'))return;
+  if(e.key==='Escape')closeLightbox();
+  if(e.key==='ArrowLeft')navLightbox(-1);
+  if(e.key==='ArrowRight')navLightbox(1);
+});
+window.openLightbox=openLightbox;window.closeLightbox=closeLightbox;window.navLightbox=navLightbox;
+window.lightboxLike=lightboxLike;window.lightboxFav=lightboxFav;window.lightboxDownload=lightboxDownload;window.lightboxReport=lightboxReport;
+
+
+// ========== 跑图状态 ==========
+let selectedStatusText='';
+function selectStatus(el,text){
+  document.querySelectorAll('#presetStatus .tag-chip').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  selectedStatusText=text;
+  $('customStatus').value='';
+}
+function openRunStatusModal(){
+  if(!requireLogin('设置状态'))return;
+  selectedStatusText=currentUser.run_status||'';
+  document.querySelectorAll('#presetStatus .tag-chip').forEach(x=>x.classList.toggle('active',x.textContent.includes(selectedStatusText)||selectedStatusText===''));
+  $('customStatus').value=selectedStatusText&&!['现在在霞谷，来人！','雨林跑图求带','等一个崽，萌新勿扰','献祭组队','景点打卡'].includes(selectedStatusText)?selectedStatusText:'';
+  openModal('runStatusModal');
+}
+async function saveRunStatus(){
+  const text=$('customStatus').value.trim()||selectedStatusText;
+  if(!text){toast('请选择或输入状态');return;}
+  const hours=parseInt($('statusExpire').value);
+  const expire=hours>0?new Date(Date.now()+hours*3600*1000).toISOString():null;
+  const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({run_status:text,run_status_expire:expire})});
+  if(res.success){currentUser.run_status=text;currentUser.run_status_expire=expire;closeModal('runStatusModal');toast('状态已设置');loadHome();renderUser();}
+  else{toast(res.error||'设置失败');}
+}
+async function clearRunStatus(){
+  const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({run_status:'',run_status_expire:null})});
+  if(res.success){currentUser.run_status='';currentUser.run_status_expire=null;closeModal('runStatusModal');toast('状态已清除');loadHome();renderUser();}
+}
+async function loadRunStatus(){
+  const section=$('runStatusSection');if(!section)return;
+  const res=await apiCall('/users/run-status');
+  if(res.success&&res.users.length>0){
+    section.style.display='block';
+    const box=$('homeRunStatus');
+    box.innerHTML=res.users.map(u=>{
+      const av=genAvatar(u.nickname||u.username);
+      return '<div class="home-item" onclick="openProfile('+u.id+')"><div class="home-item-avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="home-item-content"><div class="home-item-title">'+(u.nickname||u.username)+'</div><div class="home-item-meta" style="color:#e67e22">🏃 '+u.run_status+'</div></div></div>';
+    }).join('');
+  }else{section.style.display='none';}
+}
+window.selectStatus=selectStatus;window.openRunStatusModal=openRunStatusModal;window.saveRunStatus=saveRunStatus;window.clearRunStatus=clearRunStatus;
+
+
+// ========== 关注系统 ==========
+let viewingUserId=null,isFollowing=false;
+async function toggleFollow(){
+  if(!requireLogin('关注'))return;
+  if(!viewingUserId)return;
+  const res=await apiCall('/users/'+viewingUserId+'/follow',{method:'POST'});
+  if(res.success){
+    isFollowing=res.following;
+    $('followBtn').textContent=isFollowing?'已关注':'关注';
+    $('followBtn').classList.toggle('btn-secondary',isFollowing);
+    $('followBtn').classList.toggle('btn-primary',!isFollowing);
+    toast(isFollowing?'关注成功':'已取消关注');
+    loadFollowStats(viewingUserId);
+  }
+}
+async function loadFollowStats(userId){
+  const res=await apiCall('/users/'+userId+'/follow-stats');
+  if(res.success){
+    $('statFollowing').textContent=res.following;
+    $('statFollowers').textContent=res.followers;
+  }
+}
+window.toggleFollow=toggleFollow;
+
+// ========== 追光长廊（完整视图） ==========
+document.querySelectorAll('.sort-btn').forEach(b=>b.onclick=()=>{gallerySort=b.dataset.sort;document.querySelectorAll('.sort-btn').forEach(x=>x.classList.toggle('active',x===b));loadGalleryFull();});
+async function loadGalleryFull(){
+  const g=$('galleryFull'),empty=$('galleryEmpty');
+  g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text3)">加载中...</div>';
+  const res=await apiCall('/photos?page=1&limit=24&sort='+gallerySort);
+  g.innerHTML='';
+  if(!res.success||res.photos.length===0){empty.style.display='block';return;}empty.style.display='none';
+  res.photos.forEach((p,i)=>{
+    const name=p.nickname||p.username||'匿名';const a=genAvatar(name);
+    const item=document.createElement('div');item.className='gallery-item';
+    item.innerHTML=(p.title?'<div class="photo-title">'+p.title+'</div>':'')+
+      '<img src="'+p.data_url+'" loading="lazy">'+
+      '<div class="meta"><span>'+name+'</span><span>❤'+(p.likes||0)+'</span></div>';
+    item.onclick=()=>{lightboxPhotos=res.photos;openLightbox(i);};g.appendChild(item);
+  });
+}
+
+// ========== 名片系统 ==========
+async function loadMyProfile(){
+  if(!currentUser){$('cardName').textContent='未登录';$('cardBio').textContent='点击登录后完善你的光之子名片';return;}
+  setAvatar($('cardAvatar'),currentUser);
+  $('cardName').textContent=getDisplayName(currentUser);
+  $('cardBio').textContent=currentUser.bio||'这个人很懒，什么都没写~';
+  // 显示标签和常驻地图
+  const cardTags=$('cardTags');if(cardTags){
+    const tags=(currentUser.tags||'').split(',').filter(Boolean);
+    cardTags.innerHTML=tags.map(t=>'<span class="tag-chip active" style="font-size:11px;padding:3px 10px">'+t+'</span>').join('');
+  }
+  const cardRes=$('cardResident');if(cardRes&&currentUser.resident_map)cardRes.textContent='📍 常驻：'+currentUser.resident_map;
+  $('fConstellation').value=currentUser.constellation||'';
+  $('fResident').value=currentUser.resident_map||'';
+  // 渲染游戏风格标签
+  const tagSel=$('tagSelector');if(tagSel){
+    const userTags=(currentUser.tags||'').split(',').filter(Boolean);
+    tagSel.innerHTML=['风景党', '献祭狂人', '跑图机器', '穿搭达人', '弹琴爱好者', '打卡狂魔', '萌新', '老玩家'].map(t=>'<span class="tag-chip'+(userTags.includes(t)?' active':'')+'" data-tag="'+t+'" onclick="this.classList.toggle(\'active\')">'+t+'</span>').join('');
+  }
+  $('fInstrument').value=currentUser.instrument||'';
+  $('fOnline').value=currentUser.online_time||'';
+  $('fBio').value=currentUser.bio||'';
+  viewingUserId=currentUser.id;
+  $('profileFollowBtn').style.display='none';
+  const res=await apiCall('/user/'+currentUser.id);
+  loadFollowStats(currentUser.id);
+  if(res.success){$('profileStatPosts').textContent=res.stats.posts;$('profileStatPhotos').textContent=res.stats.photos;$('statLikes').textContent=res.stats.likes;}
+}
+const saveBtn=$('saveProfileBtn');if(saveBtn)saveBtn.onclick=async()=>{
+  const selectedTags=Array.from(document.querySelectorAll('#tagSelector .tag-chip.active')).map(el=>el.dataset.tag).join(',');
+  const data={constellation:$('fConstellation').value,resident_map:$('fResident').value,instrument:$('fInstrument').value,online_time:$('fOnline').value,bio:$('fBio').value,tags:selectedTags};
+  const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify(data)});
+  if(res.success){currentUser={...currentUser,...res.user,tags:selectedTags};$('cardBio').textContent=data.bio||'这个人很懒，什么都没写~';toast('名片保存成功');}
+  else{toast(res.error||'保存失败');}
+};
+
+// ========== 账号绑定（邮箱/手机） ==========
+$('bindEmailBtn').onclick=()=>{const v=$('bindEmail').value;if(!v||!v.includes('@')){toast('请输入有效邮箱');return;}toast('验证码已发送（模拟），绑定成功');$('bindEmailBtn').textContent='已绑定';};
+$('bindPhoneBtn').onclick=()=>{const v=$('bindPhone').value;if(!v||v.length<11){toast('请输入有效手机号');return;}toast('验证码已发送（模拟），绑定成功');$('bindPhoneBtn').textContent='已绑定';};
+
+// ========== 暗色主题 + 星光粒子 ==========
+const themeBtn=document.createElement('button');themeBtn.className='theme-toggle';themeBtn.innerHTML='🌙';themeBtn.onclick=toggleTheme;document.body.appendChild(themeBtn);
+const starCanvas=document.createElement('canvas');starCanvas.id='starCanvas';document.body.insertBefore(starCanvas,document.body.firstChild);
+let stars=[],starAnimId=null;
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  const dark=document.body.classList.contains('dark');
+  themeBtn.innerHTML=dark?'☀️':'🌙';
+  localStorage.setItem('gy_theme',dark?'dark':'light');
+  if(currentUser)apiCall('/user/profile',{method:'PUT',body:JSON.stringify({theme:dark?'dark':'light'})});
+  if(dark)initStars();else{cancelAnimationFrame(starAnimId);}
+}
+function initStars(){
+  const c=starCanvas;c.width=innerWidth;c.height=innerHeight;
+  const ctx=c.getContext('2d');stars=[];
+  const starCount=window.innerWidth<768?40:80;for(let i=0;i<starCount;i++)stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.5,a:Math.random(),da:Math.random()*.02+.005,dx:(Math.random()-.5)*.15,dy:(Math.random()-.5)*.1});
+  function animate(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      s.a+=s.da;if(s.a>1||s.a<0)s.da*=-1;s.x+=s.dx;s.y+=s.dy;
+      if(s.x<0)s.x=c.width;if(s.x>c.width)s.x=0;if(s.y<0)s.y=c.height;if(s.y>c.height)s.y=0;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+Math.abs(s.a)+')';ctx.fill();
+    });
+    starAnimId=requestAnimationFrame(animate);
+  }
+  animate();
+}
+addEventListener('resize',()=>{if(document.body.classList.contains('dark')){starCanvas.width=innerWidth;starCanvas.height=innerHeight;}});
+// 初始化主题
+if(localStorage.getItem('gy_theme')==='dark'){document.body.classList.add('dark');themeBtn.innerHTML='☀️';setTimeout(initStars,100);}
+
+// 用 token 恢复登录状态
+async function initAuth(){
+  const token=getToken();
+  if(token){
+    try{
+      const res=await apiCall('/auth/me');
+      if(res.success){
+        currentUser=res.user;
+        if(res.user.theme==='dark'&&!document.body.classList.contains('dark')){document.body.classList.add('dark');themeBtn.innerHTML='☀️';setTimeout(initStars,100);}
+      }
+      else{setToken(null);currentUser=null;}
+    }catch(e){setToken(null);currentUser=null;}
+  }
+  // 恢复访客用户
+  if(!currentUser){
+    const guest=Store.get('guest_user',null);
+    if(guest&&guest.is_guest)currentUser=guest;
+  }
+  renderUser();loadHome();loadQrcode();
+  // 首次进入自动弹出新手引导
+  setTimeout(()=>{if(!Store.get('guide_shown')&&currentUser)showGuide();},2000);
+}
+// ===== 社区与安全功能 =====
+// 举报模态框
+let reportTarget={type:'',id:''};
+function openReportModal(type,id){
+  reportTarget={type,id};
+  document.querySelectorAll('.report-option').forEach(o=>o.classList.remove('active'));
+  $('reportReason').value='';
+  $('reportReasonGroup').style.display='none';
+  openModal('reportModal');
+}
+document.querySelectorAll('.report-option').forEach(o=>{
+  o.onclick=()=>{
+    document.querySelectorAll('.report-option').forEach(x=>x.classList.remove('active'));
+    o.classList.add('active');
+    $('reportReasonGroup').style.display='block';
+  };
+});
+async function submitReport(){
+  const active=document.querySelector('.report-option.active');
+  if(!active){toast('请选择举报类型');return;}
+  const category=active.dataset.cat;
+  const reason=$('reportReason').value.trim();
+  const res=await apiCall('/reports',{method:'POST',body:JSON.stringify({type:reportTarget.type,target_id:reportTarget.id,reason:category+(reason?': '+reason:''),report_category:category})});
+  if(res.success){closeModal('reportModal');toast('举报已提交，感谢反馈');}
+  else{toast(res.error||'举报失败');}
+}
+
+// 新手引导
+const guideSteps=[
+  {icon:'✨',title:'欢迎来到光遇交友',desc:'这里是光之子们的温暖聚集地，愿你在云端找到属于自己的羁绊～'},
+  {icon:'💌',title:'光语信箱',desc:'发布留言找固玩、监护人、崽崽，或分享日常、交流攻略。友善发言，温暖相遇。'},
+  {icon:'📷',title:'追光长廊',desc:'上传你在光遇中拍到的绝美截图，与大家分享旅途的美好瞬间。'},
+  {icon:'🤝',title:'友善公约',desc:'温暖相遇，拒绝负能量。保护隐私，建议先通过站内互动建立信任，再交换联系方式。'}
+];
+let guideStep=0;
+function showGuide(){
+  guideStep=0;
+  renderGuide();
+  openModal('guideModal');
+}
+function renderGuide(){
+  const s=guideSteps[guideStep];
+  $('guideContent').innerHTML='<div class="guide-icon">'+s.icon+'</div><div class="guide-title">'+s.title+'</div><div class="guide-desc">'+s.desc+'</div>';
+  $('guideDots').innerHTML=guideSteps.map((_,i)=>'<div class="guide-dot'+(i===guideStep?' active':'')+'"></div>').join('');
+  $('guideNextBtn').textContent=guideStep===guideSteps.length-1?'开始探索':'下一步';
+}
+function guideNext(){
+  if(guideStep<guideSteps.length-1){guideStep++;renderGuide();}
+  else{closeModal('guideModal');Store.set('guide_shown','1');toast('欢迎加入光遇交友！✨');}
+}
+window.guideNext=guideNext;window.showGuide=showGuide;
+
+// 成就系统
+async function loadAchievements(){
+  const res=await apiCall('/achievements');
+  const grid=$('achievementGrid');
+  if(!res.success||!res.achievements){grid.innerHTML='<div class="admin-empty">加载失败</div>';return;}
+  const earned=res.earned||[];
+  grid.innerHTML=res.achievements.map(a=>{
+    const got=earned.includes(a.id);
+    return '<div class="achievement-card'+(got?'':' locked')+'"><div class="icon">'+a.icon+'</div><div class="name">'+a.name+'</div><div class="desc">'+a.description+'</div></div>';
+  }).join('');
+}
+
+// 私信系统
+async function loadMessages(){
+  const res=await apiCall('/messages');
+  const list=$('messageList');
+  if(!res.success||!res.messages||res.messages.length===0){list.innerHTML='<div class="admin-empty">暂无私信</div>';return;}
+  list.innerHTML=res.messages.map(m=>{
+    const name=m.from_nickname||m.from_username||'光之子';
+    return '<div class="msg-item'+(m.is_read?'':' unread')+'"><div class="msg-avatar">'+name.charAt(0)+'</div><div class="msg-body"><div class="msg-user">'+name+'</div><div class="msg-text">'+m.content.replace(/</g,'&lt;')+'</div><div class="msg-time">'+fmtDate(m.created_at)+'</div></div></div>';
+  }).join('');
+}
+
+// 暴露全局函数供内联 onclick 使用（放在最前面，防止后续出错导致按钮失效）
+window.closeModal=closeModal;window.openModal=openModal;window.showConfirm=showConfirm;window.$=$;
+window.adminPhotoAction=adminPhotoAction;window.adminPhotoDelete=adminPhotoDelete;
+window.adminCommentDelete=adminCommentDelete;window.adminUserBan=adminUserBan;window.adminUserDelete=adminUserDelete;
+window.loginAsGuest=loginAsGuest;window.confirmAvatar=confirmAvatar;window.openPostModal=openPostModal;window.updateFABVisibility=updateFABVisibility;window.togglePassword=togglePassword;window.showForgotPassword=showForgotPassword;window.switchAuthTab=switchAuthTab;
+window.openAvatarModal=openAvatarModal;window.switchView=switchView;window.openPhotoDetail=openPhotoDetail;window.renderUser=renderUser;window.loadPosts=loadPosts;window.loadGallery=loadGallery;window.loadHome=loadHome;
+
+initAuth();
+// 立即加载首页数据
+try{loadHome();}catch(e){console.warn('loadHome error:',e);}
+// 初始化示例数据（后台执行，不阻塞）
+fetch(API_BASE+'/init').then(()=>{try{loadHome();}catch(e){}}).catch(()=>{});
+// 初始化悬浮按钮
+setTimeout(()=>{if(typeof updateFABVisibility==='function')updateFABVisibility();},200);
+
+// DOM就绪后绑定新增按钮和修复事件
+document.addEventListener('DOMContentLoaded',function(){
+  // 信箱发帖按钮
+  const postBtn=$('mailboxPostBtn');
+  if(postBtn)postBtn.onclick=()=>{if(!requireLogin('发布留言'))return;openPostModal();};
+  // 画廊上传按钮
+
+  // 悬浮按钮显式绑定（兜底）
+  const fabP=$('fabPublish');if(fabP)fabP.onclick=()=>{if(!requireLogin('发布留言'))return;openPostModal();};
+  const fabF=$('fabFeedback');if(fabF)fabF.onclick=()=>openModal('feedbackModal');
+  // 标签筛选点击事件（兜底绑定）
+  document.querySelectorAll('.tag-chip').forEach(chip=>{
+    chip.onclick=function(){
+      document.querySelectorAll('.tag-chip').forEach(c=>c.classList.remove('active'));
+      this.classList.add('active');
+      currentTag=this.dataset.tag;postPage=1;loadPosts();
+    };
+  });
+  // 导航切换
+  document.querySelectorAll('.nav-tab').forEach(tab=>{
+    tab.onclick=function(){switchView(this.dataset.view);};
+  });
+  console.log('光遇交友初始化完成');
+});
+// 暴露辅助函数给外部社区功能模块
+window.$=$;window.toast=toast;window.openModal=openModal;window.closeModal=closeModal;window.requireLogin=requireLogin;window.getToken=getToken;window.apiCall=apiCall;window.API_BASE=API_BASE;window.switchAdminTab=switchAdminTab;
+// 暴露内联onclick需要的函数（修复未定义bug）
+window.likePost=likePost;window.openProfile=openProfileModal;window.openReportModal=openReportModal;
+})();
+
+
+// 辅助函数
+function formatTime(dateStr){
+  if(!dateStr)return '';
+  const d=new Date(dateStr.replace(' ','T'));
+  const now=new Date();
+  const diff=now-d;
+  if(diff<60000)return '刚刚';
+  if(diff<3600000)return Math.floor(diff/60000)+'分钟前';
+  if(diff<86400000)return Math.floor(diff/3600000)+'小时前';
+  if(diff<604800000)return Math.floor(diff/86400000)+'天前';
+  return dateStr.slice(0,10);
+}
+function genAvatar(name){
+  const colors=['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22','#34495e'];
+  const color=colors[name.charCodeAt(0)%colors.length];
+  const letter=name.charAt(0).toUpperCase();
+  return {color,letter};
+}
+
+// ========== 互心互火专区 ==========
+let exchangeCurrentType='all';
+async function openExchangeModal(){openModal('exchangeModal');await loadExchangeList();}
+function showExchangeTab(type){exchangeCurrentType=type;document.querySelectorAll('#exchangeModal button').forEach((b,i)=>{if(i<3){b.className=i===['all','heart','fire'].indexOf(type)?'btn-primary':'btn-secondary';}});loadExchangeList();}
+async function loadExchangeList(){
+  const list=$('exchangeList');if(!list)return;
+  list.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3)">加载中...</div>';
+  const url='/api/exchange'+(exchangeCurrentType!=='all'?'?type='+exchangeCurrentType:'');
+  const res=await apiCall(url);
+  if(!res.success||!res.posts||res.posts.length===0){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">暂无需求，快来发布第一条吧~</div>';return;}
+  list.innerHTML=res.posts.map(p=>{
+    const name=p.nickname||p.username||'匿名';
+    const typeText=p.type==='heart'?'互心':'互火';
+    const typeClass=p.type==='heart'?'type-heart':'type-fire';
+    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="font-size:11px;color:var(--text3)">'+(p.server||'国服')+'</span></div>'+
+      (p.content?'<div class="content">'+p.content+'</div>':'')+
+      '<div class="meta">'+name+' · '+formatTime(p.created_at)+'</div></div>';
+  }).join('');
+}
+function openExchangePost(){if(!requireLogin('发布'))return;closeModal('exchangeModal');openModal('exchangePostModal');}
+async function submitExchangePost(){
+  const type=$('exchangeType').value;const server=$('exchangeServer').value;const content=$('exchangeContent').value;
+  const res=await apiCall('/exchange',{method:'POST',body:JSON.stringify({type,server,content})});
+  if(res.success){toast('发布成功');closeModal('exchangePostModal');$('exchangeContent').value='';openExchangeModal();}else{toast(res.error||'发布失败');}
+}
+window.openExchangeModal=openExchangeModal;window.showExchangeTab=showExchangeTab;window.openExchangePost=openExchangePost;window.submitExchangePost=submitExchangePost;
+
+// ========== 复刻先祖 ==========
+async function openSpiritsModal(){openModal('spiritsModal');await loadSpirits();}
+async function loadSpirits(){
+  const list=$('spiritsList');if(!list)return;
+  list.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3)">加载中...</div>';
+  try{
+  const res=await apiCall('/spirits');
+  if(!res.success||!res.spirits||res.spirits.length===0){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">暂无复刻先祖信息</div>';return;}
+  if(!res.success){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">加载失败：'+(res.error||'未知错误')+'</div>';return;}
+  list.innerHTML=res.spirits.map(s=>{
+    let items=[];try{items=JSON.parse(s.items||'[]');}catch(e){items=[];}
+    return '<div class="spirit-card'+(s.is_current?' current':'')+'">'+
+      (s.is_current?'<div style="display:inline-block;padding:2px 8px;background:var(--accent);color:#fff;border-radius:8px;font-size:11px;margin-bottom:6px">进行中</div>':'')+
+      '<div class="name">'+s.name+'</div>'+
+      '<div class="season">'+(s.season||'')+'</div>'+
+      '<div class="time">📅 '+s.start_time+' ~ '+s.end_time+'</div>'+
+      (items.length?'<div class="items">'+items.map(i=>'<span class="item-tag">'+i+'</span>').join('')+'</div>':'')+
+      '<div class="cost"><span>🕯️ '+s.candles+' 白蜡</span><span>❤️ '+s.hearts+' 爱心</span><span>✨ '+s.ascended_candles+' 升华</span></div>'+
+      '</div>';
+  }).join('');
+  }catch(e){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">加载异常：'+e.message+'</div>';}
+}
+window.openSpiritsModal=openSpiritsModal;
+
+// ========== 每日任务 ==========
+async function openDailyTasksModal(){openModal('dailyTasksModal');await loadDailyTasks();}
+async function loadDailyTasks(){
+  const today=new Date().toISOString().slice(0,10);
+  $('taskDate').textContent=today;
+  const res=await apiCall('/daily-tasks?date='+today);
+  const card=$('taskCard');
+  if(!res.task){card.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3)">今日任务暂未更新</div>';return;}
+  const t=res.task;const checkins=res.checkins||[];
+  const tasks=[t.task1,t.task2,t.task3,t.task4].filter(Boolean);
+  $('taskList').innerHTML=tasks.map((task,i)=>{
+    const idx=i+1;const checked=checkins.includes(idx);
+    return '<div class="task-item"><div class="task-check'+(checked?' checked':'')+'" onclick="checkinTask('+idx+')">'+(checked?'✓':'')+'</div>'+
+      '<div class="task-text'+(checked?' done':'')+'">'+task+'</div></div>';
+  }).join('');
+  let info='';
+  if(t.season_candles)info+='<div>🕯️ 季节蜡烛：'+t.season_candles+'</div>';
+  if(t.big_candles)info+='<div>🔥 大蜡烛：'+t.big_candles+'</div>';
+  $('taskInfo').innerHTML=info||'<div style="color:var(--text3)">暂无额外信息</div>';
+}
+async function checkinTask(idx){
+  if(!requireLogin('打卡'))return;
+  const today=new Date().toISOString().slice(0,10);
+  const res=await apiCall('/daily-tasks',{method:'POST',body:JSON.stringify({task_index:idx,date:today})});
+  if(res.success){toast('打卡成功 ✓');loadDailyTasks();}else{toast(res.error||'打卡失败');}
+}
+window.openDailyTasksModal=openDailyTasksModal;window.checkinTask=checkinTask;
+
+// ========== 星光排行榜 ==========
+async function openRankingsModal(){openModal('rankingsModal');await loadRankings('likes');}
+async function loadRankings(type,el){
+  if(el){document.querySelectorAll('.rank-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+  const list=$('rankingsList');if(!list)return;
+  list.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3)">加载中...</div>';
+  const res=await apiCall('/rankings?type='+type);
+  if(!res.success||!res.rankings||res.rankings.length===0){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">暂无排行数据</div>';return;}
+  const unit=type==='likes'?'赞':type==='posts'?'帖':'粉';
+  list.innerHTML='<div class="rank-list">'+res.rankings.map((u,i)=>{
+    const name=u.nickname||u.username||'匿名';
+    const rankClass=i<3?'top'+(i+1):'';
+    const avatar=genAvatar(name);
+    return '<div class="rank-item"><div class="rank-num '+rankClass+'">'+(i+1)+'</div>'+
+      '<div class="rank-avatar" style="background:'+avatar.color+'">'+avatar.letter+'</div>'+
+      '<div class="rank-name">'+name+'</div>'+
+      '<div class="rank-count">'+(u.count||0)+' '+unit+'</div></div>';
+  }).join('')+'</div>';
+}
+window.openRankingsModal=openRankingsModal;window.loadRankings=loadRankings;
+
+</script>
+
+<!-- 悬浮发布按钮 -->
+<button class="fab-btn" id="fabPublish" onclick="openPostModal()">✉️</button>
+<!-- 悬浮反馈按钮 -->
+<button class="fab-btn feedback" id="fabFeedback" onclick="openModal('feedbackModal')">💬</button>
+
+<!-- 发布留言弹窗 -->
+<div class="modal-mask" id="postModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('postModal')">×</button>
+    <h3>发布留言</h3>
+    <div class="friendly-reminder">✨ 温暖相遇，拒绝负能量。请友善发言，共同守护这片净土</div>
+    <textarea id="postContentModal" placeholder="写下你想说的话..." maxlength="500" rows="4" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;resize:vertical;font-family:inherit;margin-bottom:12px;"></textarea>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+      <select id="postTagModal" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);">
+        <option value="找固玩">找固玩</option>
+        <option value="找监护人">找监护人</option>
+        <option value="找崽">找崽</option>
+        <option value="找CP">找CP</option>
+        <option value="日常分享">日常分享</option>
+        <option value="攻略求助">攻略求助</option>
+        <option value="光遇穿搭">光遇穿搭</option>
+      </select>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);"><input type="checkbox" id="postAnonModal"> 匿名发布</label>
+    </div>
+    <button class="btn-primary" id="postSubmitModalBtn" style="width:100%;">发布</button>
+  </div>
+</div>
+
+<!-- 举报弹窗 -->
+<div class="modal-mask" id="reportModal">
+  <div class="modal" style="max-width:380px">
+    <button class="modal-close" onclick="closeModal('reportModal')">×</button>
+    <h3>🚩 举报内容</h3>
+    <div class="report-options" id="reportOptions">
+      <div class="report-option" data-cat="广告引流"><span class="icon">📢</span>广告引流</div>
+      <div class="report-option" data-cat="人身攻击"><span class="icon">😠</span>人身攻击</div>
+      <div class="report-option" data-cat="色情低俗"><span class="icon">🔞</span>色情低俗</div>
+      <div class="report-option" data-cat="侵权"><span class="icon">©️</span>侵权</div>
+      <div class="report-option" data-cat="其他"><span class="icon">📝</span>其他</div>
+    </div>
+    <div class="form-group" id="reportReasonGroup" style="display:none">
+      <label>补充说明（选填）</label>
+      <textarea id="reportReason" placeholder="请描述具体问题..." rows="2"></textarea>
+    </div>
+    <button class="btn-primary" id="reportSubmitBtn" onclick="submitReport()">提交举报</button>
+  </div>
+</div>
+
+<!-- 新手引导弹窗 -->
+<div class="modal-mask" id="guideModal">
+  <div class="modal guide-modal">
+    <button class="modal-close" onclick="closeModal('guideModal')">×</button>
+    <div class="guide-steps" id="guideDots"></div>
+    <div class="guide-content" id="guideContent"></div>
+    <div class="guide-actions">
+      <button class="btn-secondary" onclick="closeModal('guideModal')">跳过</button>
+      <button class="btn-primary" id="guideNextBtn" onclick="guideNext()">下一步</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- 跑图状态弹窗 -->
+<div class="modal-mask" id="runStatusModal">
+  <div class="modal" style="max-width:420px">
+    <button class="modal-close" onclick="closeModal('runStatusModal')">×</button>
+    <h3>🏃 设置跑图状态</h3>
+    <div style="margin-bottom:12px">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">选择预设状态</div>
+      <div id="presetStatus" style="display:flex;flex-wrap:wrap;gap:8px">
+        <span class="tag-chip" onclick="selectStatus(this,'现在在霞谷，来人！')">🎿 霞谷来人</span>
+        <span class="tag-chip" onclick="selectStatus(this,'雨林跑图求带')">🌧️ 雨林求带</span>
+        <span class="tag-chip" onclick="selectStatus(this,'等一个崽，萌新勿扰')">👶 等崽</span>
+        <span class="tag-chip" onclick="selectStatus(this,'献祭组队')">🔥 献祭组队</span>
+        <span class="tag-chip" onclick="selectStatus(this,'景点打卡')">📸 景点打卡</span>
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">或自定义状态（最多20字）</div>
+      <input type="text" id="customStatus" maxlength="20" placeholder="输入你的状态..." style="width:100%;padding:10px;border:1px solid #e0d5c5;border-radius:10px;font-size:14px;outline:none">
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">过期时间</div>
+      <select id="statusExpire" style="width:100%;padding:10px;border:1px solid #e0d5c5;border-radius:10px;font-size:14px;outline:none">
+        <option value="1">1小时</option>
+        <option value="2" selected>2小时</option>
+        <option value="8">今天</option>
+        <option value="0">永久</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-secondary" style="flex:1" onclick="clearRunStatus()">清除状态</button>
+      <button class="btn-primary" style="flex:1" onclick="saveRunStatus()">保存</button>
+    </div>
+  </div>
+</div>
+<!-- 关于我们弹窗 -->
+<div class="modal-mask" id="aboutModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('aboutModal')">×</button>
+    <h3>关于我们</h3>
+    <p style="line-height:1.8;color:var(--text2);font-size:14px;">光遇交友是一个非官方的玩家社区平台，致力于为光遇玩家提供一个温暖的交友空间。在这里你可以找固玩、分享日常、交流攻略、展示穿搭。愿每一位旅人都能在云端找到属于自己的羁绊。✨</p>
+  </div>
+</div>
+
+<!-- 用户协议弹窗 -->
+<div class="modal-mask" id="termsModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('termsModal')">×</button>
+    <h3>用户协议</h3>
+    <div style="line-height:1.8;color:var(--text2);font-size:13px;max-height:400px;overflow-y:auto;">
+      <p><strong>一、服务说明</strong></p>
+      <p>本平台为光遇玩家提供社交分享服务，用户可发布留言、上传截图、互动交流。</p>
+      <p><strong>二、用户行为规范</strong></p>
+      <p>1. 不得发布违法违规、低俗色情、暴力恐怖等内容；<br>2. 不得骚扰、辱骂其他用户；<br>3. 不得发布广告、诈骗信息；<br>4. 尊重他人隐私，不得泄露他人个人信息。</p>
+      <p><strong>三、内容审核</strong></p>
+      <p>用户发布的内容需经过审核，违规内容将被删除，严重违规账号将被封禁。</p>
+      <p><strong>四、免责声明</strong></p>
+      <p>本平台为非官方社区，与游戏官方无关。用户间线下交往请自行注意安全。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 隐私政策弹窗 -->
+<div class="modal-mask" id="privacyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('privacyModal')">×</button>
+    <h3>隐私政策</h3>
+    <div style="line-height:1.8;color:var(--text2);font-size:13px;max-height:400px;overflow-y:auto;">
+      <p><strong>信息收集</strong></p>
+      <p>我们仅收集您主动提供的注册信息（用户名、昵称、头像等），用于提供服务。</p>
+      <p><strong>信息使用</strong></p>
+      <p>您的个人信息仅用于平台服务，不会出售或共享给第三方。</p>
+      <p><strong>信息存储</strong></p>
+      <p>用户数据存储于安全的服务器中，密码采用加密存储。</p>
+      <p><strong>您的权利</strong></p>
+      <p>您可以随时修改个人信息、删除账号或联系我们处理数据问题。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 图片灯箱 -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">‹</button>
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">›</button>
+  <div class="lightbox-loading" id="lightboxLoading">加载中...</div>
+  <img class="lightbox-img" id="lightboxImg" style="display:none">
+  <div class="lightbox-info" id="lightboxInfo" style="display:none">
+    <div class="title" id="lightboxTitle"></div>
+    <div class="meta" id="lightboxMeta"></div>
+    <div class="lightbox-actions">
+      <button class="like" id="lightboxLike" onclick="lightboxLike()">❤ 点赞</button>
+      <button class="fav" id="lightboxFav" onclick="lightboxFav()">⭐ 收藏</button>
+      <button class="download" onclick="lightboxDownload()">⬇ 下载</button>
+      <button class="report" onclick="lightboxReport()">🚩 举报</button>
+    </div>
+  </div>
+</div>
+
+<!-- 微信群活码灯箱 -->
+<div class="lightbox" id="qrLightbox" onclick="if(event.target===this)closeQrLightbox()">
+  <button class="lightbox-close" onclick="closeQrLightbox()">×</button>
+  <img class="lightbox-img" id="qrLightboxImg" style="display:none;max-width:85vw;max-height:80vh">
+  <div class="lightbox-info" style="display:block"><div class="title" id="qrLightboxTitle" style="color:#fff">微信群活码</div><div class="meta" id="qrLightboxTip" style="color:#fff;opacity:.8">微信扫码加入光遇交友群</div></div>
+</div>
+
+<!-- 互心互火弹窗 -->
+<div class="modal-mask" id="exchangeModal">
+  <div class="modal" style="max-width:500px;max-height:80vh;display:flex;flex-direction:column">
+    <button class="modal-close" onclick="closeModal('exchangeModal')">×</button>
+    <h3 style="text-align:center;margin-bottom:12px">🔥 互心互火专区</h3>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn-primary" style="flex:1;padding:8px;font-size:13px" onclick="showExchangeTab('all')">全部</button>
+      <button class="btn-secondary" style="flex:1;padding:8px;font-size:13px" onclick="showExchangeTab('heart')">互心</button>
+      <button class="btn-secondary" style="flex:1;padding:8px;font-size:13px" onclick="showExchangeTab('fire')">互火</button>
+      <button class="btn-primary" style="padding:8px 14px;font-size:13px" onclick="openExchangePost()">+ 发布</button>
+    </div>
+    <div id="exchangeList" style="flex:1;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- 发布互心互火 -->
+<div class="modal-mask" id="exchangePostModal">
+  <div class="modal" style="max-width:400px">
+    <button class="modal-close" onclick="closeModal('exchangePostModal')">×</button>
+    <h3 style="text-align:center;margin-bottom:16px">发布互心互火</h3>
+    <div style="margin-bottom:12px">
+      <label style="font-size:13px;color:var(--text2)">类型</label>
+      <select id="exchangeType" style="width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid var(--border)">
+        <option value="heart">互心</option>
+        <option value="fire">互火</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:13px;color:var(--text2)">区服</label>
+      <select id="exchangeServer" style="width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid var(--border)">
+        <option value="国服">国服</option>
+        <option value="国际服">国际服</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="font-size:13px;color:var(--text2)">留言（选填）</label>
+      <textarea id="exchangeContent" rows="3" placeholder="说点什么..." style="width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid var(--border);resize:none"></textarea>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="submitExchangePost()">发布</button>
+  </div>
+</div>
+
+<!-- 复刻先祖弹窗 -->
+<div class="modal-mask" id="spiritsModal">
+  <div class="modal" style="max-width:500px;max-height:80vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('spiritsModal')">×</button>
+    <h3 style="text-align:center;margin-bottom:16px">👑 复刻先祖</h3>
+    <div id="spiritsList"></div>
+  </div>
+</div>
+
+<!-- 每日任务弹窗 -->
+<div class="modal-mask" id="dailyTasksModal">
+  <div class="modal" style="max-width:450px">
+    <button class="modal-close" onclick="closeModal('dailyTasksModal')">×</button>
+    <h3 style="text-align:center;margin-bottom:4px">📋 每日任务</h3>
+    <p style="text-align:center;font-size:12px;color:var(--text3);margin-bottom:16px" id="taskDate"></p>
+    <div class="task-card" id="taskCard">
+      <div id="taskList"></div>
+      <div class="task-info" id="taskInfo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 排行榜弹窗 -->
+<div class="modal-mask" id="rankingsModal">
+  <div class="modal" style="max-width:450px;max-height:80vh;display:flex;flex-direction:column">
+    <button class="modal-close" onclick="closeModal('rankingsModal')">×</button>
+    <h3 style="text-align:center;margin-bottom:12px">🏆 星光排行榜</h3>
+    <div class="rank-tabs">
+      <div class="rank-tab active" onclick="loadRankings('likes',this)">获赞榜</div>
+      <div class="rank-tab" onclick="loadRankings('posts',this)">发帖榜</div>
+      <div class="rank-tab" onclick="loadRankings('followers',this)">粉丝榜</div>
+    </div>
+    <div id="rankingsList" style="flex:1;overflow-y:auto"></div>
+  </div>
+</div>
+
+</body>
+</html>
