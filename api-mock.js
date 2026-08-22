@@ -105,7 +105,7 @@
       return origFetch.apply(this,arguments);
     }
     
-    const path=url.replace('/api','');
+    const path=url.replace('/api','').split('?')[0];
     const method=(opts.method||'GET').toUpperCase();
     const authHeader=opts.headers?.Authorization||opts.headers?.authorization||'';
     const token=authHeader.replace('Bearer ','');
@@ -152,10 +152,12 @@
       
       if(path==='/user/password'&&method==='PUT'){
         if(!user)return json({success:false,error:'未登录'},401);
-        const {old_password,new_password}=body;
-        if(user.password!==hash(old_password))return json({success:false,error:'旧密码错误'});
-        if(new_password.length<8)return json({success:false,error:'新密码至少8位'});
-        user.password=hash(new_password);
+        const oldPwd=body.old_password||body.oldPassword;
+        const newPwd=body.new_password||body.newPassword;
+        if(!oldPwd||!newPwd)return json({success:false,error:'请填写完整'});
+        if(user.password!==hash(oldPwd))return json({success:false,error:'旧密码错误'});
+        if(newPwd.length<4)return json({success:false,error:'新密码至少4位'});
+        user.password=hash(newPwd);
         const idx=db.users.findIndex(u=>u.id===user.id);
         db.users[idx]=user;saveDB(db);
         return json({success:true});
@@ -210,13 +212,15 @@
       if(path==='/posts'&&method==='GET'){
         const urlObj=new URL('http://x'+url);
         const tag=urlObj.searchParams.get('tag')||'';
-        const search=urlObj.searchParams.get('search')||'';
+        const search=urlObj.searchParams.get('search')||urlObj.searchParams.get('keyword')||'';
+        const sort=urlObj.searchParams.get('sort')||'latest';
         const page=parseInt(urlObj.searchParams.get('page')||'1');
-        const pageSize=parseInt(urlObj.searchParams.get('pageSize')||'20');
+        const pageSize=parseInt(urlObj.searchParams.get('pageSize')||urlObj.searchParams.get('limit')||'20');
         let posts=db.posts.filter(p=>p.status==='approved');
         if(tag&&tag!=='全部')posts=posts.filter(p=>p.tag===tag);
         if(search)posts=posts.filter(p=>p.content.includes(search)||(p.title||'').includes(search));
-        posts.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+        if(sort==='hot')posts.sort((a,b)=>b.like_count-a.like_count);
+        else posts.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
         const total=posts.length;
         posts=posts.slice((page-1)*pageSize,page*pageSize);
         posts=posts.map(p=>{const u=db.users.find(x=>x.id===p.user_id);return {...p,nickname:u?.nickname||u?.username||'匿名',username:u?.username||''};});
@@ -269,9 +273,11 @@
       if(path==='/photos'&&method==='GET'){
         const urlObj=new URL('http://x'+url);
         const page=parseInt(urlObj.searchParams.get('page')||'1');
-        const pageSize=parseInt(urlObj.searchParams.get('pageSize')||'20');
+        const pageSize=parseInt(urlObj.searchParams.get('pageSize')||urlObj.searchParams.get('limit')||'20');
         const sort=urlObj.searchParams.get('sort')||'new';
+        const search=urlObj.searchParams.get('search')||urlObj.searchParams.get('keyword')||'';
         let photos=db.photos.filter(p=>p.status==='approved');
+        if(search)photos=photos.filter(p=>(p.title||'').includes(search)||(p.description||'').includes(search));
         if(sort==='hot')photos.sort((a,b)=>b.likes-a.likes);
         else photos.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
         const total=photos.length;
@@ -354,6 +360,12 @@
       }
       
       // ===== 收藏 =====
+      if(path==='/photos/mine'&&method==='GET'){
+        if(!user)return json({success:false,error:'未登录'},401);
+        const photos=db.photos.filter(p=>p.user_id===user.id).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+        return json({success:true,photos});
+      }
+      
       if(path==='/favorites'&&method==='GET'){
         if(!user)return json({success:false,error:'未登录'},401);
         const favIds=db.favorites.filter(f=>f.user_id===user.id).map(f=>f.photo_id);
@@ -484,7 +496,7 @@
         return json({success:true,following:db.follows.filter(f=>f.following_id===userId).length,followers:db.follows.filter(f=>f.follower_id===userId).length});
       }
       
-      if(path.match(/^\/users\/\d+$/)&&method==='GET'){
+      if(path.match(/^\/users?\/\d+$/)&&method==='GET'){
         const userId=parseInt(path.split('/')[2]);
         const u=db.users.find(x=>x.id===userId);
         if(!u)return json({success:false,error:'用户不存在'});
@@ -506,10 +518,31 @@
       
       if(path==='/admin/users'&&method==='GET'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
-        return json({success:true,users:db.users.map(u=>({id:u.id,username:u.username,nickname:u.nickname,email:u.email,created_at:u.created_at,is_admin:u.is_admin}))});
+        return json({success:true,users:db.users.map(u=>({id:u.id,username:u.username,nickname:u.nickname,email:u.email,created_at:u.created_at,is_admin:u.is_admin,is_banned:u.banned||0}))});
       }
       
-      if(path.match(/^\/admin\/users\/\d+$/)&&method==='DELETE'){
+      if(path.match(/^\/admin\/users?\/\d+\/password$/)&&method==='PUT'){
+        if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
+        const userId=parseInt(path.split('/')[3]);
+        const {new_password}=body;
+        if(!new_password||new_password.length<4)return json({success:false,error:'新密码至少4位'});
+        const target=db.users.find(u=>u.id===userId);
+        if(!target)return json({success:false,error:'用户不存在'});
+        target.password=hash(new_password);
+        saveDB(db);
+        return json({success:true,message:'密码重置成功'});
+      }
+      
+      if(path.match(/^\/admin\/users?\/\d+$/)&&method==='PUT'){
+        if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
+        const userId=parseInt(path.split('/')[3]);
+        const {action,banned}=body;
+        const target=db.users.find(u=>u.id===userId);
+        if(target){if(action==='ban')target.banned=banned?1:0;saveDB(db);}
+        return json({success:true});
+      }
+      
+      if(path.match(/^\/admin\/users?\/\d+$/)&&method==='DELETE'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
         const userId=parseInt(path.split('/')[3]);
         db.users=db.users.filter(u=>u.id!==userId);
@@ -524,7 +557,7 @@
         return json({success:true,photos});
       }
       
-      if(path.match(/^\/admin\/photos\/[^/]+$/)&&method==='PUT'){
+      if(path.match(/^\/admin\/photos?\/[^/]+$/)&&method==='PUT'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
         const photoId=path.split('/')[3];
         const {status}=body;
@@ -533,7 +566,7 @@
         return json({success:true});
       }
       
-      if(path.match(/^\/admin\/photos\/[^/]+$/)&&method==='DELETE'){
+      if(path.match(/^\/admin\/photos?\/[^/]+$/)&&method==='DELETE'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
         const photoId=path.split('/')[3];
         db.photos=db.photos.filter(p=>p.id!==photoId);
@@ -548,7 +581,7 @@
         return json({success:true,posts});
       }
       
-      if(path.match(/^\/admin\/posts\/[^/]+$/)&&method==='DELETE'){
+      if(path.match(/^\/admin\/posts?\/[^/]+$/)&&method==='DELETE'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
         const postId=path.split('/')[3];
         db.posts=db.posts.filter(p=>p.id!==postId);
@@ -562,7 +595,7 @@
         return json({success:true,comments});
       }
       
-      if(path.match(/^\/admin\/comments\/\d+$/)&&method==='DELETE'){
+      if(path.match(/^\/admin\/comments?\/\d+$/)&&method==='DELETE'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
         const commentId=parseInt(path.split('/')[3]);
         db.comments=db.comments.filter(c=>c.id!==commentId);

@@ -1690,6 +1690,7 @@ function renderAdminUsers(keyword){
     '<div class="meta">@'+u.username+' · 注册于 '+fmtDate(u.created_at)+'</div></div>'+
     '<div class="actions">'+
     (u.is_admin?'':'<button class="admin-btn '+(u.is_banned?'approve':'remove')+'" onclick="adminUserBan('+u.id+','+!u.is_banned+')">'+(u.is_banned?'解封':'封禁')+'</button>')+
+    '<button class="admin-btn" style="background:#3498db;color:#fff" onclick="adminResetPassword('+u.id+',\''+(u.nickname||u.username)+'\')">重置密码</button>'+
     (u.is_admin?'':'<button class="admin-btn delete" onclick="adminUserDelete('+u.id+')">删除</button>')+
     '</div></div>').join('')+'</div>';
   list.forEach(u=>{const el=$('admAv'+u.id);if(el)setAvatar(el,u);});
@@ -1705,6 +1706,18 @@ async function adminUserDelete(id){
     if(res.success){toast('已删除');loadAdminUsers();}else{toast(res.error||'删除失败');}
   });
 }
+window.adminResetPassword=function(id,name){
+  const random=Math.random().toString(36).slice(2,8)+Math.floor(Math.random()*90+10);
+  const pwd=prompt('为用户「'+name+'」重置密码\n\n请输入新密码（至少4位），或使用自动生成的密码：','Sky@'+random);
+  if(pwd===null)return;
+  if(pwd.length<4){toast('密码至少4位');return;}
+  apiCall('/admin/user/'+id+'/password',{method:'PUT',body:JSON.stringify({new_password:pwd})}).then(res=>{
+    if(res.success){
+      toast('密码重置成功！新密码：'+pwd);
+      setTimeout(()=>alert('用户「'+name+'」的新密码为：\n\n'+pwd+'\n\n请妥善保管，用户可用此密码登录。'),100);
+    }else{toast(res.error||'重置失败');}
+  });
+};
 async function loadAdminPosts(){
   const c=$('adminContent');
   c.innerHTML='<div class="admin-empty">加载中...</div>';
