@@ -1026,9 +1026,7 @@ body.dark .container{position:relative;z-index:1}
     <div class="admin-tabs">
       <div class="admin-tab active" data-atab="stats">数据概览</div>
       <div class="admin-tab" data-atab="photos">照片审核</div>
-      <div class="admin-tab" data-atab="comments">评论管理</div>
       <div class="admin-tab" data-atab="users">用户管理</div>
-      <div class="admin-tab" data-atab="posts">留言管理</div>
       <div class="admin-tab" data-atab="reports">举报处理</div>
       <div class="admin-tab" data-atab="qrcode">活码管理</div>
     </div>
@@ -1569,8 +1567,18 @@ async function renderComments(photoId){
     const item=document.createElement('div');item.className='comment-item';
     const av=document.createElement('div');av.className='avatar avatar-sm';setAvatar(av,c);
     const body=document.createElement('div');body.className='comment-body';
-    body.innerHTML='<div class="comment-user">'+getDisplayName(c)+' <span class="comment-time">'+fmtDate(c.created_at)+'</span></div><div class="comment-text">'+c.content.replace(/</g,'&lt;')+'</div>';
+    const delBtn=(currentUser&&currentUser.is_admin)?'<span class="photo-comment-del" data-cid="'+c.id+'" style="color:#e74c3c;cursor:pointer;font-size:11px;margin-left:6px">🗑删除</span>':'';
+    body.innerHTML='<div class="comment-user">'+getDisplayName(c)+' <span class="comment-time">'+fmtDate(c.created_at)+'</span>'+delBtn+'</div><div class="comment-text">'+c.content.replace(/</g,'&lt;')+'</div>';
     item.appendChild(av);item.appendChild(body);cl.appendChild(item);
+  });
+  // 绑定管理员删除评论按钮
+  cl.querySelectorAll('.photo-comment-del').forEach(btn=>{
+    btn.onclick=async()=>{
+      if(!confirm('确定删除这条评论？'))return;
+      const cid=btn.dataset.cid;
+      const res=await apiCall('/admin/comment/'+cid,{method:'DELETE'});
+      if(res.success){toast('已删除');renderComments(photoId);}else{toast(res.error||'删除失败');}
+    };
   });
 }
 $('commentSubmit').onclick=async()=>{
@@ -1594,9 +1602,8 @@ function switchAdminTab(tab){
   document.querySelectorAll('.admin-tab').forEach(x=>x.classList.toggle('active',x.dataset.atab===tab));
   if(tab==='stats')loadAdminStats();
   else if(tab==='photos')loadAdminPhotos();
-  else if(tab==='comments')loadAdminComments();
   else if(tab==='users')loadAdminUsers();
-  else if(tab==='posts')loadAdminPosts();else if(tab==='reports')loadAdminReports();else if(tab==='qrcode')loadAdminQrcode();
+  else if(tab==='reports')loadAdminReports();else if(tab==='qrcode')loadAdminQrcode();
 }
 async function loadAdminStats(){
   const c=$('adminContent');c.innerHTML='<div class="admin-empty">加载中...</div>';
@@ -2096,8 +2103,18 @@ async function loadPostDetailReplies(id){
   box.innerHTML=res.replies.map(r=>{
     const name=r.is_anonymous?'匿名光之子':(r.nickname||r.username);
     const av=r.is_anonymous?{color:'#999',letter:'匿'}:genAvatar(name);
-    return '<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span><div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
+    const delBtn=(currentUser&&currentUser.is_admin)?'<span class="post-detail-reply-del" data-rid="'+r.id+'" style="color:#e74c3c;cursor:pointer;font-size:11px;margin-left:6px">🗑删除</span>':'';
+    return '<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span>'+delBtn+'<div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
   }).join('');
+  // 绑定管理员删除回复按钮
+  box.querySelectorAll('.post-detail-reply-del').forEach(btn=>{
+    btn.onclick=async()=>{
+      if(!confirm('确定删除这条回复？'))return;
+      const rid=btn.dataset.rid;
+      const res=await apiCall('/admin/post/reply/'+rid,{method:'DELETE'});
+      if(res.success){toast('已删除');loadPostDetailReplies(id);}else{toast(res.error||'删除失败');}
+    };
+  });
 }
 async function submitPostDetailReply(id){
   if(!requireLogin('评论'))return;
@@ -2124,11 +2141,21 @@ async function toggleReplies(postId){
     res.replies.forEach(r=>{
       const name=r.is_anonymous?'匿名光之子':(r.nickname||r.username);
       const av=r.is_anonymous?{color:'#999',letter:'匿'}:genAvatar(name);
-      html+='<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span><div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
+      const delBtn=(currentUser&&currentUser.is_admin)?'<span class="reply-del-btn" data-rid="'+r.id+'" style="color:#e74c3c;cursor:pointer;font-size:11px;margin-left:6px">🗑删除</span>':'';
+      html+='<div class="reply-item"><div class="avatar" style="background:'+av.color+'">'+av.letter+'</div><div class="reply-body"><span class="reply-user">'+name+'</span> <span style="color:var(--text3);font-size:10px">'+fmtDate(r.created_at)+'</span>'+delBtn+'<div class="reply-text">'+r.content.replace(/</g,'&lt;')+'</div></div></div>';
     });
   }
   html+='<div class="reply-input"><input type="text" id="replyInput-'+postId+'" placeholder="写下回复..."><button onclick="submitReply(\''+postId+'\')">回复</button></div>';
   box.innerHTML=html;
+  // 绑定管理员删除回复按钮
+  box.querySelectorAll('.reply-del-btn').forEach(btn=>{
+    btn.onclick=async()=>{
+      if(!confirm('确定删除这条回复？'))return;
+      const rid=btn.dataset.rid;
+      const res=await apiCall('/admin/post/reply/'+rid,{method:'DELETE'});
+      if(res.success){toast('已删除');toggleReplies(postId);toggleReplies(postId);}else{toast(res.error||'删除失败');}
+    };
+  });
 }
 async function submitReply(postId){
   if(!requireLogin('回复'))return;
