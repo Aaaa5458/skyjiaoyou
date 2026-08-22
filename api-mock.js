@@ -180,9 +180,9 @@
       
       if(path==='/posts'&&method==='POST'){
         if(!user)return json({success:false,error:'未登录'},401);
-        const {content,tag='日常分享',title='',is_anonymous=0}=body;
+        const {content,tag='日常分享',title=''}=body;
         if(!content)return json({success:false,error:'内容不能为空'});
-        const post={id:genId('post'),user_id:user.id,title:sanitize(title),content:sanitize(content),tag,is_anonymous:is_anonymous?1:0,like_count:0,reply_count:0,status:'approved',created_at:new Date().toISOString().replace('T',' ').slice(0,19)};
+        const post={id:genId('post'),user_id:user.id,title:sanitize(title),content:sanitize(content),tag,is_anonymous:0,like_count:0,reply_count:0,status:'approved',created_at:new Date().toISOString().replace('T',' ').slice(0,19)};
         db.posts.push(post);saveDB(db);
         return json({success:true,id:post.id});
       }
@@ -210,9 +210,9 @@
       if(path.match(/^\/posts\/[^/]+\/replies$/)&&method==='POST'){
         if(!user)return json({success:false,error:'未登录'},401);
         const postId=path.split('/')[2];
-        const {content,is_anonymous=0}=body;
+        const {content}=body;
         if(!content)return json({success:false,error:'内容不能为空'});
-        const reply={id:db.post_replies.length+1,post_id:postId,user_id:user.id,content:sanitize(content),is_anonymous:is_anonymous?1:0,created_at:new Date().toISOString().replace('T',' ').slice(0,19)};
+        const reply={id:db.post_replies.length+1,post_id:postId,user_id:user.id,content:sanitize(content),is_anonymous:0,created_at:new Date().toISOString().replace('T',' ').slice(0,19)};
         db.post_replies.push(reply);
         const post=db.posts.find(p=>p.id===postId);
         if(post)post.reply_count++;
