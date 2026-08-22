@@ -945,6 +945,7 @@ body.dark .stat-item:hover{background:rgba(255,255,255,.1)}
           <span style="font-size:13px;color:var(--text2)">自定义水印文字</span>
           <input type="text" id="watermarkTextInput" placeholder="光遇交友" maxlength="20" style="width:100%;padding:8px 10px;border:1px solid #e0d5c5;border-radius:8px;font-size:13px;background:#faf7f2;outline:none">
         </div>
+        <button class="btn-secondary" style="margin-top:10px;width:100%" onclick="openPrivacySettings()">🔒 更多隐私设置（主页可见性、内容可见性等）</button>
       </div>
       <div class="profile-section">
         <h4>数据管理</h4>
@@ -2031,8 +2032,8 @@ function renderPost(p){
   const authorName=(p.nickname||p.username);
   const av=genAvatar(authorName);
   item.innerHTML='<div class="post-header">'+
-    '<div class="avatar" style="width:32px;height:32px;font-size:13px;background:'+av.color+'">'+av.letter+'</div>'+
-    '<div><div class="post-author">'+authorName+'</div></div>'+
+    '<div class="avatar" onclick="openUserProfile('+p.user_id+')" style="width:32px;height:32px;font-size:13px;background:'+av.color+';cursor:pointer">'+av.letter+'</div>'+
+    '<div><div class="post-author" onclick="openUserProfile('+p.user_id+')" style="cursor:pointer">'+authorName+'</div></div>'+
     '<span class="post-tag">'+p.tag+'</span>'+
     '<span class="post-time">'+fmtDate(p.created_at)+'</span></div>'+
     '<div class="post-content">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
@@ -2123,6 +2124,114 @@ async function likePost(id,btn){
     const num=btn.querySelector('.like-num');num.textContent=parseInt(num.textContent)+(res.liked?1:-1);}
 }
 window.openPostDetail=openPostDetail;window.submitPostDetailReply=submitPostDetailReply;
+
+// ========== 用户公开主页 ==========
+let currentProfileUserId=null;
+function openUserProfile(userId){
+  if(!userId)return;
+  currentProfileUserId=userId;
+  openModal('profileModal');
+  loadUserProfile(userId);
+}
+async function loadUserProfile(userId){
+  const c=$('profileContent');
+  c.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">加载中...</div>';
+  const res=await apiCall('/users/'+userId+'/public-profile');
+  if(!res.success){c.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">'+(res.error||'加载失败')+'</div>';return;}
+  const u=res.user,s=res.stats;
+  const av=genAvatar(u.nickname||u.username);
+  const tags=u.tags?u.tags.split(',').filter(t=>t.trim()).map(t=>'<span style="display:inline-block;padding:3px 10px;background:rgba(245,166,35,.12);color:var(--accent);border-radius:12px;font-size:11px;margin:2px">'+t.trim()+'</span>').join(''):'';
+  let actionBtns='';
+  if(res.is_own){
+    actionBtns='<button class="btn-primary" style="padding:8px 20px;font-size:13px" onclick="closeModal(\'profileModal\');switchView(\'profile\')">✏️ 编辑资料</button>';
+  }else{
+    actionBtns='<button class="btn-primary" style="padding:8px 16px;font-size:13px;margin-right:8px" onclick="followUserFromProfile('+u.id+')">'+(res.is_following?'✅ 已关注':'+ 关注')+'</button>'+
+      '<button style="padding:8px 16px;font-size:13px;background:var(--bg);border:1px solid var(--border);border-radius:20px;cursor:pointer;color:var(--text)" onclick="openChatWith('+u.id+')">💬 私信</button>';
+  }
+  let postsHtml='';
+  if(res.posts&&res.posts.length>0){
+    postsHtml=res.posts.slice(0,5).map(p=>'<div style="padding:10px;border-bottom:1px solid var(--border);font-size:13px"><div style="color:var(--text);margin-bottom:4px">'+p.content.slice(0,50)+'</div><div style="font-size:11px;color:var(--text3)">'+p.tag+' · ❤'+p.like_count+' · '+fmtDate(p.created_at)+'</div></div>').join('');
+  }else{
+    postsHtml='<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px">暂无留言</div>';
+  }
+  let photosHtml='';
+  if(res.photos&&res.photos.length>0){
+    photosHtml='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">'+res.photos.slice(0,6).map(p=>'<div onclick="openPhotoDetail(\''+p.id+'\')" style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;background:var(--bg)"><img src="'+p.data_url+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'"></div>').join('')+'</div>';
+  }else{
+    photosHtml='<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px">暂无截图</div>';
+  }
+  c.innerHTML='<div style="text-align:center;margin-bottom:16px">'+
+    '<div style="width:72px;height:72px;border-radius:50%;background:'+av.color+';color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin-bottom:10px">'+av.letter+'</div>'+
+    '<div style="font-size:18px;font-weight:700;margin-bottom:4px">'+(u.nickname||u.username)+'</div>'+
+    (u.bio?'<div style="font-size:13px;color:var(--text2);margin-bottom:8px">'+u.bio+'</div>':'')+
+    '<div style="margin-bottom:12px">'+actionBtns+'</div>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center;margin-bottom:16px;padding:12px;background:var(--bg);border-radius:12px">'+
+    '<div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+s.posts+'</div><div style="font-size:11px;color:var(--text3)">留言</div></div>'+
+    '<div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+s.photos+'</div><div style="font-size:11px;color:var(--text3)">截图</div></div>'+
+    '<div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+s.likes+'</div><div style="font-size:11px;color:var(--text3)">获赞</div></div>'+
+    '<div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+s.following+'</div><div style="font-size:11px;color:var(--text3)">关注</div></div>'+
+    '<div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+s.followers+'</div><div style="font-size:11px;color:var(--text3)">粉丝</div></div>'+
+    '</div>'+
+    '<div style="margin-bottom:16px;padding:12px;background:var(--bg);border-radius:12px;font-size:12px;color:var(--text2);line-height:1.8">'+
+    (u.constellation?'<div>✨ 星座：'+u.constellation+'</div>':'')+
+    (u.resident_map?'<div>🗺️ 常驻地图：'+u.resident_map+'</div>':'')+
+    (u.instrument?'<div>🎵 乐器：'+u.instrument+'</div>':'')+
+    (u.online_time?'<div>⏰ 在线时间：'+u.online_time+'</div>':'')+
+    (tags?'<div style="margin-top:6px">'+tags+'</div>':'')+
+    '</div>'+
+    '<div style="margin-bottom:12px"><div style="font-size:14px;font-weight:600;margin-bottom:8px">💬 最近留言</div>'+postsHtml+'</div>'+
+    '<div><div style="font-size:14px;font-weight:600;margin-bottom:8px">📷 最近截图</div>'+photosHtml+'</div>';
+}
+async function followUserFromProfile(userId){
+  if(!requireLogin('关注'))return;
+  const res=await apiCall('/users/'+userId+'/follow',{method:'POST'});
+  if(res.success){
+    toast(res.following?'关注成功':'已取消关注');
+    if(currentProfileUserId)loadUserProfile(currentProfileUserId);
+  }else{toast(res.error||'操作失败');}
+}
+function openChatWith(userId){
+  if(!requireLogin('私信'))return;
+  closeModal('profileModal');
+  if(typeof openMessagesModal==='function')openMessagesModal(userId);
+  else toast('私信功能开发中');
+}
+window.openUserProfile=openUserProfile;window.followUserFromProfile=followUserFromProfile;
+
+// ========== 隐私设置 ==========
+function openPrivacySettings(){
+  if(!requireLogin('隐私设置'))return;
+  openModal('privacyModal');
+  loadPrivacySettings();
+}
+async function loadPrivacySettings(){
+  const res=await apiCall('/user/privacy');
+  if(res.success){
+    const p=res.privacy;
+    $('privProfile').value=p.profile_visible||'all';
+    $('privPosts').value=p.posts_visible||'all';
+    $('privPhotos').value=p.photos_visible||'all';
+    $('privFavorites').value=p.favorites_visible||'self';
+    $('privFollowing').value=p.following_visible||'all';
+    $('privRunlist').checked=p.show_in_runlist!==0;
+  }
+}
+async function savePrivacySettings(){
+  const body={
+    profile_visible:$('privProfile').value,
+    posts_visible:$('privPosts').value,
+    photos_visible:$('privPhotos').value,
+    favorites_visible:$('privFavorites').value,
+    following_visible:$('privFollowing').value,
+    show_in_runlist:$('privRunlist').checked?1:0
+  };
+  const res=await apiCall('/user/privacy',{method:'PUT',body:JSON.stringify(body)});
+  if(res.success){toast('隐私设置已保存');closeModal('privacyModal');}
+  else{toast(res.error||'保存失败');}
+}
+window.openPrivacySettings=openPrivacySettings;window.savePrivacySettings=savePrivacySettings;
+
 async function toggleReplies(postId){
   const box=$('replies-'+postId);
   if(box.classList.contains('show')){box.classList.remove('show');return;}
@@ -2654,6 +2763,70 @@ window.openRankingsModal=openRankingsModal;window.loadRankings=loadRankings;
       </select>
     </div>
     <button class="btn-primary" id="postSubmitModalBtn" style="width:100%;">发布</button>
+  </div>
+</div>
+
+<!-- 用户公开主页弹窗 -->
+<div class="modal-mask" id="profileModal">
+  <div class="modal" style="max-width:520px;max-height:85vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('profileModal')">×</button>
+    <div id="profileContent">
+      <div style="text-align:center;padding:30px;color:var(--text3)">加载中...</div>
+    </div>
+  </div>
+</div>
+
+<!-- 隐私设置弹窗 -->
+<div class="modal-mask" id="privacyModal">
+  <div class="modal" style="max-width:440px;max-height:85vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('privacyModal')">×</button>
+    <h3>🔒 隐私设置</h3>
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">谁可以查看我的主页</label>
+      <select id="privProfile" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+        <option value="all">所有人</option>
+        <option value="login">仅登录用户</option>
+        <option value="self">仅自己</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">谁可以看我的留言</label>
+      <select id="privPosts" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+        <option value="all">所有人</option>
+        <option value="login">仅登录用户</option>
+        <option value="self">仅自己</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">谁可以看我的截图</label>
+      <select id="privPhotos" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+        <option value="all">所有人</option>
+        <option value="login">仅登录用户</option>
+        <option value="self">仅自己</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">谁可以看我的收藏</label>
+      <select id="privFavorites" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+        <option value="all">所有人</option>
+        <option value="login">仅登录用户</option>
+        <option value="self">仅自己</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px">谁可以看我的关注列表</label>
+      <select id="privFollowing" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+        <option value="all">所有人</option>
+        <option value="login">仅登录用户</option>
+        <option value="self">仅自己</option>
+      </select>
+    </div>
+    <div style="margin-bottom:18px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="privRunlist"> 在跑图列表中显示我的状态
+      </label>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="savePrivacySettings()">保存设置</button>
   </div>
 </div>
 

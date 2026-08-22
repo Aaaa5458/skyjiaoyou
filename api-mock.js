@@ -8,9 +8,9 @@
     if(localStorage.getItem(DB_KEY)) return;
     const db = {
       users: [
-        {id:1, username:'admin', password:hash('admin123'), nickname:'管理员', email:'', is_admin:1, created_at:'2026-01-01 00:00:00', avatar_style:{hair:'default',cloak:'#f5a623'}, bio:'光遇交友管理员', constellation:'', resident_map:'', instrument:'', online_time:'', tags:'', run_status:'', run_status_expire:'', watermark:1, watermark_text:'光遇交友', theme:'dark', bindings:{}, highlights:'', achievements:'[]', is_new:0, game_duration:''},
-        {id:2, username:'traveler01', password:hash('test123456'), nickname:'雨林旅人', email:'', is_admin:0, created_at:'2026-06-01 10:00:00', avatar_style:{hair:'mushroom',cloak:'#3498db'}, bio:'喜欢在雨林弹琴', constellation:'天秤座', resident_map:'雨林', instrument:'钢琴', online_time:'每天晚上8-11点', tags:'风景党,弹琴爱好者', run_status:'', run_status_expire:'', watermark:0, watermark_text:'', theme:'light', bindings:{}, highlights:'', achievements:'[]', is_new:0, game_duration:''},
-        {id:3, username:'traveler02', password:hash('test123456'), nickname:'霞谷飞人', email:'', is_admin:0, created_at:'2026-07-15 14:00:00', avatar_style:{hair:'afro',cloak:'#e74c3c'}, bio:'跑图机器一枚', constellation:'白羊座', resident_map:'霞谷', instrument:'鼓', online_time:'周末全天', tags:'跑图机器,献祭狂人', run_status:'霞谷跑图中', run_status_expire:Date.now()+3600000, watermark:0, watermark_text:'', theme:'dark', bindings:{}, highlights:'', achievements:'[]', is_new:0, game_duration:''}
+        {id:1, username:'admin', password:hash('admin123'), nickname:'管理员', email:'', is_admin:1, created_at:'2026-01-01 00:00:00', avatar_style:{hair:'default',cloak:'#f5a623'}, bio:'光遇交友管理员', constellation:'', resident_map:'', instrument:'', online_time:'', tags:'', run_status:'', run_status_expire:'', watermark:1, watermark_text:'光遇交友', theme:'dark', bindings:{}, highlights:'', achievements:'[]', is_new:0, game_duration:'', privacy:{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1}},
+        {id:2, username:'traveler01', password:hash('test123456'), nickname:'雨林旅人', email:'', is_admin:0, created_at:'2026-06-01 10:00:00', avatar_style:{hair:'mushroom',cloak:'#3498db'}, bio:'喜欢在雨林弹琴', constellation:'天秤座', resident_map:'雨林', instrument:'钢琴', online_time:'每天晚上8-11点', tags:'风景党,弹琴爱好者', run_status:'', run_status_expire:'', watermark:0, watermark_text:'', theme:'light', bindings:{}, highlights:'', achievements:'[]', is_new:0, game_duration:'', privacy:{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1}},
+        {id:3, username:'traveler02', password:hash('test123456'), nickname:'霞谷飞人', email:'', is_admin:0, created_at:'2026-07-15 14:00:00', avatar_style:{hair:'afro',cloak:'#e74c3c'}, bio:'跑图机器一枚', constellation:'白羊座', resident_map:'霞谷', instrument:'鼓', online_time:'周末全天', tags:'跑图机器,献祭狂人', run_status:'霞谷跑图中', run_status_expire:Date.now()+3600000, watermark:0, watermark_text:'', theme:'dark', bindings:{}, highlights:'', achievements:'[]', is_new:0, game_duration:'', privacy:{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1}}
       ],
       posts: [
         {id:'post_demo1', user_id:2, content:'雨林跑图求带，萌新一枚，每天晚上在线～', tag:'找固玩', is_anonymous:0, like_count:15, reply_count:3, status:'approved', created_at:'2026-08-20 20:00:00'},
@@ -123,7 +123,7 @@
         if(username.length<2||username.length>20)return json({success:false,error:'用户名长度2-20字符'});
         if(password.length<8||!/[a-zA-Z]/.test(password)||!/[0-9]/.test(password))return json({success:false,error:'密码至少8位，包含字母和数字'});
         if(db.users.find(u=>u.username===username))return json({success:false,error:'用户名已存在'});
-        const newUser={id:db.users.length+1,username,password:hash(password),email:email||'',nickname:nickname||username,is_admin:0,created_at:new Date().toISOString().replace('T',' ').slice(0,19),avatar_style:{hair:'default',cloak:'#f5a623'},bio:'',constellation:'',resident_map:'',instrument:'',online_time:'',tags:'',run_status:'',run_status_expire:'',watermark:0,watermark_text:'',theme:'light',bindings:{},highlights:'',achievements:'[]',is_new:1,game_duration:''};
+        const newUser={id:db.users.length+1,username,password:hash(password),email:email||'',nickname:nickname||username,is_admin:0,created_at:new Date().toISOString().replace('T',' ').slice(0,19),avatar_style:{hair:'default',cloak:'#f5a623'},bio:'',constellation:'',resident_map:'',instrument:'',online_time:'',tags:'',run_status:'',run_status_expire:'',watermark:0,watermark_text:'',theme:'light',bindings:{},highlights:'',achievements:'[]',is_new:1,game_duration:'',privacy:{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1}};
         db.users.push(newUser);saveDB(db);
         return json({success:true,token:makeToken(newUser),user:newUser});
       }
@@ -159,6 +159,51 @@
         const idx=db.users.findIndex(u=>u.id===user.id);
         db.users[idx]=user;saveDB(db);
         return json({success:true});
+      }
+      
+      // ===== 隐私设置 =====
+      if(path==='/user/privacy'&&method==='GET'){
+        if(!user)return json({success:false,error:'未登录'},401);
+        const privacy=user.privacy||{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1};
+        return json({success:true,privacy});
+      }
+      if(path==='/user/privacy'&&method==='PUT'){
+        if(!user)return json({success:false,error:'未登录'},401);
+        const fields=['profile_visible','posts_visible','photos_visible','favorites_visible','following_visible','show_in_runlist'];
+        const privacy=user.privacy||{};
+        fields.forEach(f=>{if(body[f]!==undefined)privacy[f]=body[f];});
+        user.privacy=privacy;
+        const idx=db.users.findIndex(u=>u.id===user.id);
+        db.users[idx]=user;saveDB(db);
+        return json({success:true,privacy});
+      }
+      
+      // ===== 用户公开主页 =====
+      if(path.match(/^\/users\/\d+\/public-profile$/)&&method==='GET'){
+        const userId=parseInt(path.split('/')[2]);
+        const target=db.users.find(u=>u.id===userId);
+        if(!target)return json({success:false,error:'用户不存在'});
+        const privacy=target.privacy||{profile_visible:'all',posts_visible:'all',photos_visible:'all',favorites_visible:'self',following_visible:'all',show_in_runlist:1};
+        // 检查主页是否可见
+        if(privacy.profile_visible==='self'&&(!user||user.id!==target.id))return json({success:false,error:'该用户主页未公开'});
+        if(privacy.profile_visible==='login'&&!user)return json({success:false,error:'请登录后查看'});
+        // 统计数据
+        const posts=db.posts.filter(p=>p.user_id===target.id&&p.status==='approved');
+        const photos=db.photos.filter(p=>p.user_id===target.id&&p.status==='approved');
+        const likes=posts.reduce((s,p)=>s+p.like_count,0)+photos.reduce((s,p)=>s+p.likes,0);
+        const followers=db.follows.filter(f=>f.following_id===target.id).length;
+        const following=db.follows.filter(f=>f.follower_id===target.id).length;
+        // 根据隐私过滤留言
+        let visiblePosts=posts;
+        if(privacy.posts_visible==='self'&&(!user||user.id!==target.id))visiblePosts=[];
+        else if(privacy.posts_visible==='login'&&!user)visiblePosts=[];
+        // 根据隐私过滤截图
+        let visiblePhotos=photos;
+        if(privacy.photos_visible==='self'&&(!user||user.id!==target.id))visiblePhotos=[];
+        else if(privacy.photos_visible==='login'&&!user)visiblePhotos=[];
+        // 当前用户是否已关注
+        const isFollowing=user?!!db.follows.find(f=>f.follower_id===user.id&&f.following_id===target.id):false;
+        return json({success:true,user:{id:target.id,username:target.username,nickname:target.nickname,avatar_style:target.avatar_style,bio:target.bio,constellation:target.constellation,resident_map:target.resident_map,instrument:target.instrument,online_time:target.online_time,tags:target.tags,created_at:target.created_at},stats:{posts:posts.length,photos:photos.length,likes,followers,following},posts:visiblePosts.slice(0,20),photos:visiblePhotos.slice(0,20),is_following:isFollowing,is_own:user?user.id===target.id:false});
       }
       
       // ===== 留言 =====
@@ -527,7 +572,32 @@
       
       if(path==='/admin/reports'&&method==='GET'){
         if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
-        return json({success:true,reports:db.reports});
+        const urlObj=new URL('http://x'+url);
+        const status=urlObj.searchParams.get('status')||'';
+        let reports=db.reports.map(r=>{const u=db.users.find(x=>x.id===r.user_id);return {...r,nickname:u?.nickname||'',username:u?.username||''};});
+        if(status)reports=reports.filter(r=>r.status===status);
+        reports.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+        return json({success:true,reports});
+      }
+      
+      if(path.match(/^\/admin\/reports\/\d+$/)&&method==='PUT'){
+        if(!user||!user.is_admin)return json({success:false,error:'需要管理员权限'},403);
+        const reportId=parseInt(path.split('/')[3]);
+        const {action,admin_reply=''}=body;
+        const report=db.reports.find(r=>r.id===reportId);
+        if(!report)return json({success:false,error:'举报不存在'});
+        if(action==='delete'){
+          // 删除被举报的内容
+          if(report.type==='post'){db.posts=db.posts.filter(p=>p.id!==report.target_id);}
+          else if(report.type==='photo'){db.photos=db.photos.filter(p=>p.id!==report.target_id);}
+          report.status='resolved';report.admin_reply=admin_reply||'内容已删除';report.processed_at=new Date().toISOString().replace('T',' ').slice(0,19);
+        }else if(action==='ignore'){
+          report.status='ignored';report.admin_reply=admin_reply||'';report.processed_at=new Date().toISOString().replace('T',' ').slice(0,19);
+        }else if(action==='resolve'){
+          report.status='resolved';report.admin_reply=admin_reply||'';report.processed_at=new Date().toISOString().replace('T',' ').slice(0,19);
+        }
+        saveDB(db);
+        return json({success:true});
       }
       
       if(path==='/admin/qrcode'&&method==='PUT'){
