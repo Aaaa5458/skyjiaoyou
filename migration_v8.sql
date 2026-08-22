@@ -1,0 +1,3 @@
+ALTER TABLE users ADD COLUMN tags TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN run_status TEXT DEFAULT '';
+ALTER TABLE users ADD COLUMN run_status_expire TIMESTAMP;
