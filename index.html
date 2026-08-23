@@ -607,9 +607,9 @@ button:active,.btn:active,.admin-btn:active{transform:scale(.95)}
 
 /* 弹窗动画增强 */
 .modal-mask{opacity:0;transition:opacity .25s ease;pointer-events:none}
-.modal-mask.show{opacity:1;pointer-events:auto}
+.modal-mask.active,.modal-mask.show{opacity:1;pointer-events:auto}
 .modal-mask .modal{transform:translateY(20px) scale(.95);opacity:0;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s ease}
-.modal-mask.show .modal{transform:translateY(0) scale(1);opacity:1}
+.modal-mask.active .modal,.modal-mask.show .modal{transform:translateY(0) scale(1);opacity:1}
 .lightbox{opacity:0;transition:opacity .3s ease;pointer-events:none}
 .lightbox.show{opacity:1;pointer-events:auto}
 .lightbox .lightbox-img{transform:scale(.9);opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s}
