@@ -2320,14 +2320,22 @@ async function openUserProfile(userId){
     (tags?'<div style="padding:10px 0">'+tags+'</div>':'')+
     (u.is_owner?'':'<div style="padding:15px 0;display:flex;gap:10px;justify-content:center">'+
       '<button id="followBtn" onclick="toggleFollow()" style="padding:8px 24px;border-radius:20px;border:none;cursor:pointer;font-size:14px;font-weight:600;'+(isFollowing?'background:#f0e8dd;color:var(--text2)':'background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff')+'">'+(isFollowing?'已关注':'关注')+'</button>'+
-      '<button onclick="messageToUserId='+u.id+';$(\'messageToUser\').innerHTML=\'发送给：'+(u.nickname||u.username)+'\';openModal(\'messageModal\');closeModal(\'userProfileModal\')" style="padding:8px 24px;border-radius:20px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:14px">发私信</button>'+
-    '</div>':'');
+      '<button onclick="openMessageModal('+u.id+',\''+(u.nickname||u.username).replace(/'/g,"")+'\')" style="padding:8px 24px;border-radius:20px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:14px">发私信</button>'+
+    '</div>');
   }catch(e){content.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">加载失败</div>';}
 }
 window.openUserProfile=openUserProfile;
 
 // ========== 发送私信 ==========
 let messageToUserId=null;
+function openMessageModal(userId, nickname){
+  messageToUserId=userId;
+  $('messageToUser').innerHTML='发送给：'+(nickname||'用户');
+  $('messageContent').value='';
+  openModal('messageModal');
+  closeModal('userProfileModal');
+}
+window.openMessageModal=openMessageModal;
 async function sendMessage(){
   if(!requireLogin('发私信'))return;
   const content=$('messageContent').value.trim();
