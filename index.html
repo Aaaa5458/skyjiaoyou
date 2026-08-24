@@ -780,11 +780,6 @@ html{scroll-behavior:smooth}
     <div class="card" style="margin-top:12px">
       <div class="card-title">✨ 光遇工具</div>
       <div class="feature-grid">
-        <div class="feature-card" onclick="openExchangeModal()">
-          <div class="icon">🔥</div>
-          <div class="title">互心互火</div>
-          <div class="desc">找固玩互心互火</div>
-        </div>
         <div class="feature-card" onclick="openSpiritsModal()">
           <div class="icon">👑</div>
           <div class="title">复刻先祖</div>
@@ -848,6 +843,7 @@ html{scroll-behavior:smooth}
       <span class="tag-chip" data-tag="日常分享">日常分享</span>
       <span class="tag-chip" data-tag="攻略求助">攻略求助</span>
       <span class="tag-chip" data-tag="光遇穿搭">光遇穿搭</span>
+      <span class="tag-chip" data-tag="互心互火">🔥 互心互火</span>
     </div>
     <div id="postList" class="post-list"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
   </div>
@@ -1103,7 +1099,17 @@ html{scroll-behavior:smooth}
         <div id="cardResident" style="font-size:12px;color:var(--text3);margin-bottom:8px"></div>
         <div class="profile-fields">
           <div class="pfield"><span class="pflabel">星座</span><input type="text" id="fConstellation" placeholder="如：天秤座"></div>
-          <div class="pfield"><span class="pflabel">常驻地图</span><select id="fResident" style="flex:1;padding:8px 12px;border:1px solid #e0d5c5;border-radius:10px;font-size:13px;background:#faf7f2;outline:none"><option value="">未设置</option><option value="晨岛">🏝️ 晨岛</option><option value="云野">☁️ 云野</option><option value="雨林">🌧️ 雨林</option><option value="霞谷">🎿 霞谷</option><option value="暮土">🏜️ 暮土</option><option value="禁阁">🏛️ 禁阁</option><option value="伊甸">🔥 伊甸</option></select></div>
+          <div class="pfield"><span class="pflabel">常驻地图</span><select id="fResident" style="flex:1;padding:8px 12px;border:1px solid #e0d5c5;border-radius:10px;font-size:13px;background:#faf7f2;outline:none"><option value="">未设置</option><option value="晨岛">🏝️ 晨岛</option><option value="云野">☁️ 云野</option><option value="雨林">🌧️ 雨林</option><option value="霞谷">🎿 霞谷</option><option value="暮土">🏜️ 暮土</option><option value="禁阁">🏛️ 禁阁</option><option value="伊甸">🔥 伊甸</option></select>
+      <div id="exchangeFields" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="exchangeType" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="heart">互心</option>
+          <option value="fire">互火</option>
+        </select>
+        <select id="exchangeServer" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="国服">国服</option>
+          <option value="国际服">国际服</option>
+        </select>
+      </div></div>
           <div class="pfield"><span class="pflabel">擅长乐器</span><input type="text" id="fInstrument" placeholder="如：钢琴、吉他"></div><div class="pfield" style="flex-direction:column;align-items:flex-start;gap:8px"><span class="pflabel">游戏风格标签</span><div id="tagSelector" style="display:flex;flex-wrap:wrap;gap:6px"></div></div>
           <div class="pfield"><span class="pflabel">在线时间</span><input type="text" id="fOnline" placeholder="如：每天晚上8-11点"></div>
           <div class="pfield"><span class="pflabel">个人简介</span><textarea id="fBio" rows="2" placeholder="一句话介绍自己"></textarea></div>
@@ -1138,7 +1144,17 @@ html{scroll-behavior:smooth}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('feedbackModal')">×</button>
     <h3>意见反馈</h3>
-    <div class="form-group"><label>反馈类型</label><select id="fbType"><option value="功能建议">功能建议</option><option value="Bug报告">Bug 报告</option><option value="内容举报">内容举报</option><option value="其他">其他</option></select></div>
+    <div class="form-group"><label>反馈类型</label><select id="fbType"><option value="功能建议">功能建议</option><option value="Bug报告">Bug 报告</option><option value="内容举报">内容举报</option><option value="其他">其他</option></select>
+      <div id="exchangeFields" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="exchangeType" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="heart">互心</option>
+          <option value="fire">互火</option>
+        </select>
+        <select id="exchangeServer" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="国服">国服</option>
+          <option value="国际服">国际服</option>
+        </select>
+      </div></div>
     <div class="form-group"><label>反馈内容</label><textarea id="fbContent" placeholder="请详细描述你的建议或遇到的问题..."></textarea></div>
     <div class="form-group"><label>联系方式（选填）</label><input type="text" id="fbContact" placeholder="邮箱/QQ，方便我们回复"></div>
     <button class="btn-primary" id="fbSubmit">提交反馈</button>
@@ -1156,6 +1172,8 @@ html{scroll-behavior:smooth}
       <div class="admin-tab" data-atab="users">用户管理</div>
       <div class="admin-tab" data-atab="reports">举报处理</div>
       <div class="admin-tab" data-atab="qrcode">活码管理</div>
+      <div class="admin-tab" data-atab="dailyTasks">每日任务</div>
+      <div class="admin-tab" data-atab="spirits">复刻先祖</div>
     </div>
     <div class="admin-content" id="adminContent">加载中...</div>
   </div>
@@ -1747,7 +1765,10 @@ function switchAdminTab(tab){
   if(tab==='stats')loadAdminStats();
   else if(tab==='photos')loadAdminPhotos();
   else if(tab==='users')loadAdminUsers();
-  else if(tab==='reports')loadAdminReports();else if(tab==='qrcode')loadAdminQrcode();
+  else if(tab==='reports')loadAdminReports();
+  else if(tab==='qrcode')loadAdminQrcode();
+  else if(tab==='dailyTasks')loadAdminDailyTasks();
+  else if(tab==='spirits')loadAdminSpirits();
 }
 async function loadAdminStats(){
   const c=$('adminContent');c.innerHTML='<div class="admin-empty">加载中...</div>';
@@ -1919,6 +1940,98 @@ async function loadAdminQrcode(){
     reader.readAsDataURL(file);
   };
 }
+// ========== 管理后台：每日任务管理 ==========
+async function loadAdminDailyTasks(){
+  const c=$('adminContent');
+  const today=new Date().toISOString().slice(0,10);
+  const res=await apiCall('/admin/daily-tasks?date='+today);
+  const task=res.success&&res.task?res.task:{};
+  c.innerHTML='<div style="max-width:500px">'+
+    '<div style="font-size:16px;font-weight:600;margin-bottom:12px">📋 每日任务管理</div>'+
+    '<div style="margin-bottom:12px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">日期</label>'+
+    '<input type="date" id="adminTaskDate" value="'+today+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div>'+
+    '<div style="margin-bottom:10px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">任务1</label>'+
+    '<input type="text" id="adminTask1" value="'+(task.task1||'').replace(/"/g,'&quot;')+'" placeholder="如：在霞光城上层冥想" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div>'+
+    '<div style="margin-bottom:10px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">任务2</label>'+
+    '<input type="text" id="adminTask2" value="'+(task.task2||'').replace(/"/g,'&quot;')+'" placeholder="如：收集30点烛火" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div>'+
+    '<div style="margin-bottom:10px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">任务3</label>'+
+    '<input type="text" id="adminTask3" value="'+(task.task3||'').replace(/"/g,'&quot;')+'" placeholder="如：净化10株黑暗植物" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div>'+
+    '<div style="margin-bottom:10px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">任务4</label>'+
+    '<input type="text" id="adminTask4" value="'+(task.task4||'').replace(/"/g,'&quot;')+'" placeholder="如：重温先祖回忆" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px">'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">季节蜡烛位置</label>'+
+    '<input type="text" id="adminSeasonCandles" value="'+(task.season_candles||'').replace(/"/g,'&quot;')+'" placeholder="如：霞谷" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div>'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">大蜡烛位置</label>'+
+    '<input type="text" id="adminBigCandles" value="'+(task.big_candles||'').replace(/"/g,'&quot;')+'" placeholder="如：云野" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div></div>'+
+    '<button id="adminSaveTasksBtn" class="btn-primary" style="width:100%;padding:10px">保存每日任务</button>'+
+    '</div>';
+  $('adminSaveTasksBtn').onclick=async()=>{
+    const body={
+      task_date:$('adminTaskDate').value,
+      task1:$('adminTask1').value,
+      task2:$('adminTask2').value,
+      task3:$('adminTask3').value,
+      task4:$('adminTask4').value,
+      season_candles:$('adminSeasonCandles').value,
+      big_candles:$('adminBigCandles').value
+    };
+    const res=await apiCall('/admin/daily-tasks',{method:'PUT',body:JSON.stringify(body)});
+    if(res.success){toast('每日任务已更新');}else{toast(res.error||'更新失败');}
+  };
+}
+
+// ========== 管理后台：复刻先祖管理 ==========
+async function loadAdminSpirits(){
+  const c=$('adminContent');
+  const res=await apiCall('/admin/returning-ancestors');
+  const spirit=res.success&&res.spirit?res.spirit:{};
+  let items=[];
+  try{items=spirit.items?JSON.parse(spirit.items):[];}catch(e){items=[];}
+  c.innerHTML='<div style="max-width:500px">'+
+    '<div style="font-size:16px;font-weight:600;margin-bottom:12px">👑 复刻先祖管理</div>'+
+    '<div style="margin-bottom:10px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">先祖名称</label>'+
+    '<input type="text" id="adminSpiritName" value="'+(spirit.name||'').replace(/"/g,'&quot;')+'" placeholder="如：螺旋舞蹈冠军" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px">'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">所属季节</label>'+
+    '<input type="text" id="adminSpiritSeason" value="'+(spirit.season||'').replace(/"/g,'&quot;')+'" placeholder="如：追光季" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div>'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">所在地图</label>'+
+    '<input type="text" id="adminSpiritMap" value="'+(spirit.map_location||'霞谷').replace(/"/g,'&quot;')+'" placeholder="如：霞谷" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px">'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">开始时间</label>'+
+    '<input type="date" id="adminSpiritStart" value="'+(spirit.start_time||'').slice(0,10)+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div>'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">结束时间</label>'+
+    '<input type="date" id="adminSpiritEnd" value="'+(spirit.end_time||'').slice(0,10)+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px">'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">白蜡烛</label>'+
+    '<input type="number" id="adminSpiritCandles" value="'+(spirit.candles||0)+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div>'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">爱心</label>'+
+    '<input type="number" id="adminSpiritHearts" value="'+(spirit.hearts||0)+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div>'+
+    '<div style="flex:1"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">升华蜡烛</label>'+
+    '<input type="number" id="adminSpiritAscended" value="'+(spirit.ascended_candles||0)+'" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)"></div></div></div>'+
+    '<div style="margin-bottom:10px"><label style="font-size:13px;color:var(--text2);display:block;margin-bottom:4px">先祖描述</label>'+
+    '<textarea id="adminSpiritDesc" rows="2" placeholder="先祖介绍..." style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);resize:vertical">'+(spirit.description||'')+'</textarea></div>'+
+    '<label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:12px"><input type="checkbox" id="adminSpiritCurrent" '+(spirit.is_current?'checked':'')+'> 设为当前复刻先祖</label>'+
+    '<button id="adminSaveSpiritBtn" class="btn-primary" style="width:100%;padding:10px">保存复刻先祖</button>'+
+    '</div>';
+  $('adminSaveSpiritBtn').onclick=async()=>{
+    const body={
+      name:$('adminSpiritName').value,
+      season:$('adminSpiritSeason').value,
+      start_time:$('adminSpiritStart').value,
+      end_time:$('adminSpiritEnd').value,
+      candles:parseInt($('adminSpiritCandles').value)||0,
+      hearts:parseInt($('adminSpiritHearts').value)||0,
+      ascended_candles:parseInt($('adminSpiritAscended').value)||0,
+      description:$('adminSpiritDesc').value,
+      is_current:$('adminSpiritCurrent').checked?1:0,
+      items:'[]'
+    };
+    if(!body.name){toast('请输入先祖名称');return;}
+    const res=await apiCall('/admin/returning-ancestors',{method:'PUT',body:JSON.stringify(body)});
+    if(res.success){toast('复刻先祖已更新');}else{toast(res.error||'更新失败');}
+  };
+}
+
 async function loadQrcode(){
   const box=$('qrBox');
   const tip=$('qrTip');
@@ -2146,14 +2259,31 @@ document.querySelectorAll('.tag-chip').forEach(c=>c.onclick=()=>{currentTag=c.da
 function openPostModal(){
   if(!currentUser){toast('请先登录');openModal('authModal');return;}
   openModal('postModal');
+  // 标签切换显示互心互火额外字段
+  const tagSel=$('postTagModal');
+  if(tagSel){
+    const updateExchangeFields=()=>{
+      const ef=$('exchangeFields');
+      if(ef)ef.style.display=(tagSel.value==='互心互火')?'flex':'none';
+    };
+    tagSel.onchange=updateExchangeFields;
+    updateExchangeFields();
+  }
 }
 $('postSubmitModalBtn').onclick=async()=>{
   if(!currentUser){toast('请先登录');return;}
   const content=$('postContentModal').value.trim();
   if(!content){toast('请输入留言内容');return;}
   const tag=$('postTagModal').value,anon=$('postAnonModal').checked;
-  const res=await apiCall('/posts',{method:'POST',body:JSON.stringify({content,tag,is_anonymous:anon})});
-  if(res.success){$('postContentModal').value='';$('postAnonModal').checked=false;closeModal('postModal');toast('发布成功，等待审核');loadPosts();}
+  let res;
+  if(tag==='互心互火'){
+    const type=$('exchangeType')?.value||'heart';
+    const server=$('exchangeServer')?.value||'国服';
+    res=await apiCall('/exchange',{method:'POST',body:JSON.stringify({content,type,server})});
+  }else{
+    res=await apiCall('/posts',{method:'POST',body:JSON.stringify({content,tag,is_anonymous:anon})});
+  }
+  if(res.success){$('postContentModal').value='';$('postAnonModal').checked=false;closeModal('postModal');toast(tag==='互心互火'?'发布成功':'发布成功，等待审核');loadPosts();}
   else{toast(res.error||'发布失败');}
 };
 // 悬浮按钮显示控制
@@ -2169,12 +2299,41 @@ function updateFABVisibility(){
 }
 async function loadPosts(){
   const list=$('postList');if(!list)return;list.innerHTML='<div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div>';
+  list.innerHTML='';
+  // 互心互火标签从exchange API读取
+  if(currentTag==='互心互火'){
+    const res=await apiCall('/exchange?page='+postPage+'&pageSize=20');
+    if(!res.success||!res.posts||res.posts.length===0){
+      list.innerHTML='<div class="admin-empty"><div style="text-align:center;padding:30px"><div style="font-size:32px;margin-bottom:8px">🔥</div><div style="color:var(--text2);font-size:14px;margin-bottom:4px">还没有互心互火信息</div><div style="color:var(--text3);font-size:12px">发布第一条，找到一起互心互火的伙伴吧～</div></div></div>';
+      return;
+    }
+    res.posts.forEach(p=>list.appendChild(renderExchangePost(p)));
+    return;
+  }
   const tagParam=currentTag==='all'?'':'&tag='+encodeURIComponent(currentTag);
   const searchParam=searchKeyword?'&keyword='+encodeURIComponent(searchKeyword):'';
   const res=await apiCall('/posts?page='+postPage+'&limit=20'+tagParam+searchParam);
-  list.innerHTML='';
   if(!res.success||res.posts.length===0){list.innerHTML='<div class="admin-empty">'+(searchKeyword?'<div style="text-align:center;padding:30px"><div style="font-size:32px;margin-bottom:8px">🔍</div><div style="color:var(--text2);font-size:14px">没有找到相关留言</div><div style="color:var(--text3);font-size:12px;margin-top:4px">换个关键词试试吧～</div></div>':'<div style="text-align:center;padding:30px"><div style="font-size:32px;margin-bottom:8px">💌</div><div style="color:var(--text2);font-size:14px;margin-bottom:4px">还没有留言</div><div style="color:var(--text3);font-size:12px">来发布第一条，遇见同频的旅人吧～</div></div>')+'</div>';return;}
   res.posts.forEach(p=>list.appendChild(renderPost(p)));
+}
+// 渲染互心互火帖子
+function renderExchangePost(p){
+  const item=document.createElement('div');item.className='post-item';
+  const authorName=p.nickname||p.username||'匿名';
+  const av=genAvatar(authorName);
+  const typeLabel=p.type==='heart'?'❤️ 互心':'🔥 互火';
+  const typeColor=p.type==='heart'?'#e74c3c':'#f39c12';
+  item.innerHTML='<div class="post-header">'+
+    '<div class="avatar" style="width:32px;height:32px;font-size:13px;background:'+av.color+'">'+av.letter+'</div>'+
+    '<div><div class="post-author">'+authorName+'</div></div>'+
+    '<span class="post-tag" style="background:'+typeColor+'20;color:'+typeColor+'">'+typeLabel+' · '+(p.server||'国服')+'</span>'+
+    '<span class="post-time">'+fmtDate(p.created_at)+'</span></div>'+
+    '<div class="post-content">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
+    '<div class="post-actions">'+
+    '<span class="post-action" style="color:var(--text3)">💬 私信TA</span>'+
+    (currentUser&&currentUser.is_admin?'<span class="post-action admin-del-btn" data-id="'+p.id+'" style="color:#e74c3c;margin-left:auto">🗑 删除</span>':'')+
+    '</div>';
+  return item;
 }
 function renderPost(p){
   const item=document.createElement('div');item.className='post-item';
@@ -2978,7 +3137,18 @@ window.openRankingsModal=openRankingsModal;window.loadRankings=loadRankings;
         <option value="日常分享">日常分享</option>
         <option value="攻略求助">攻略求助</option>
         <option value="光遇穿搭">光遇穿搭</option>
+        <option value="互心互火">🔥 互心互火</option>
       </select>
+      <div id="exchangeFields" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="exchangeType" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="heart">互心</option>
+          <option value="fire">互火</option>
+        </select>
+        <select id="exchangeServer" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="国服">国服</option>
+          <option value="国际服">国际服</option>
+        </select>
+      </div>
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);"><input type="checkbox" id="postAnonModal"> 匿名发布</label>
     </div>
     <button class="btn-primary" id="postSubmitModalBtn" style="width:100%;">发布</button>
@@ -3046,6 +3216,16 @@ window.openRankingsModal=openRankingsModal;window.loadRankings=loadRankings;
         <option value="8">今天</option>
         <option value="0">永久</option>
       </select>
+      <div id="exchangeFields" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="exchangeType" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="heart">互心</option>
+          <option value="fire">互火</option>
+        </select>
+        <select id="exchangeServer" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="国服">国服</option>
+          <option value="国际服">国际服</option>
+        </select>
+      </div>
     </div>
     <div style="display:flex;gap:10px">
       <button class="btn-secondary" style="flex:1" onclick="clearRunStatus()">清除状态</button>
@@ -3174,6 +3354,16 @@ window.openRankingsModal=openRankingsModal;window.loadRankings=loadRankings;
         <option value="heart">互心</option>
         <option value="fire">互火</option>
       </select>
+      <div id="exchangeFields" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="exchangeType" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="heart">互心</option>
+          <option value="fire">互火</option>
+        </select>
+        <select id="exchangeServer" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="国服">国服</option>
+          <option value="国际服">国际服</option>
+        </select>
+      </div>
     </div>
     <div style="margin-bottom:12px">
       <label style="font-size:13px;color:var(--text2)">区服</label>
@@ -3181,6 +3371,16 @@ window.openRankingsModal=openRankingsModal;window.loadRankings=loadRankings;
         <option value="国服">国服</option>
         <option value="国际服">国际服</option>
       </select>
+      <div id="exchangeFields" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;">
+        <select id="exchangeType" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="heart">互心</option>
+          <option value="fire">互火</option>
+        </select>
+        <select id="exchangeServer" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;">
+          <option value="国服">国服</option>
+          <option value="国际服">国际服</option>
+        </select>
+      </div>
     </div>
     <div style="margin-bottom:16px">
       <label style="font-size:13px;color:var(--text2)">留言（选填）</label>
