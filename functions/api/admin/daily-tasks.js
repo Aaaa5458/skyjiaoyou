@@ -5,7 +5,7 @@ import { getAuthUser, jsonResponse, errorResponse } from '../../_lib/utils.js';
 export async function onRequestGet({ request, env }) {
   const user = await getAuthUser(request, env);
   if (!user) return errorResponse('请先登录', 401);
-  if (user.role !== 'admin') return errorResponse('需要管理员权限', 403);
+  if (!user.is_admin) return errorResponse('需要管理员权限', 403);
 
   const url = new URL(request.url);
   const date = url.searchParams.get('date') || new Date().toISOString().slice(0, 10);
@@ -21,7 +21,7 @@ export async function onRequestGet({ request, env }) {
 export async function onRequestPut({ request, env }) {
   const user = await getAuthUser(request, env);
   if (!user) return errorResponse('请先登录', 401);
-  if (user.role !== 'admin') return errorResponse('需要管理员权限', 403);
+  if (!user.is_admin) return errorResponse('需要管理员权限', 403);
 
   let body;
   try { body = await request.json(); } catch (e) { return errorResponse('请求格式错误', 400); }
