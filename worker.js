@@ -399,6 +399,15 @@ export default {
       return handler(ctx);
     }
   }
+  if (urlParts.length === 3 && urlParts[0] === 'api' && urlParts[1] === 'exchange' && method === 'DELETE') {
+    const params = {};
+    params['id'] = urlParts[2];
+    const handler = mod_api_exchange_index['onRequestDelete'] || mod_api_exchange_index.onRequest;
+    if (handler) {
+      const ctx = { request, env, params, waitUntil: () => {} };
+      return handler(ctx);
+    }
+  }
   if (urlParts.length === 2 && urlParts[0] === 'api' && urlParts[1] === 'rankings' && (method === 'GET')) {
     const params = {};
     

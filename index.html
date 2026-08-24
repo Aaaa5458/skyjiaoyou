@@ -3033,10 +3033,17 @@ async function loadExchangeList(){
     const typeText=p.type==='heart'?'互心':'互火';
     const typeClass=p.type==='heart'?'type-heart':'type-fire';
     const av = genAvatar(name);
-    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="font-size:12px;color:var(--text3);padding:4px 10px;background:var(--bg);border-radius:10px">'+(p.server||'国服')+'</span></div>'+
+    const canDelete=currentUser&&(currentUser.is_admin||currentUser.id===p.user_id);
+    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text3);padding:4px 10px;background:var(--bg);border-radius:10px">'+(p.server||'国服')+'</span>'+(canDelete?'<span onclick="deleteExchangePost(\''+p.id+'\')" style="cursor:pointer;font-size:12px;color:#e74c3c">删除</span>':'')+'</span></div>'+
       (p.content?'<div class="content">'+p.content+'</div>':'<div class="content" style="color:var(--text3);font-style:italic">'+typeText+'找伙伴～</div>')+
       '<div class="meta"><span class="avatar" style="background:'+av.color+'">'+av.letter+'</span>'+name+' · '+formatTime(p.created_at)+'</div></div>';
   }).join('');
+}
+async function deleteExchangePost(id){
+  showConfirm('删除内容','确定要删除这条互心互火信息吗？',async()=>{
+    const res=await apiCall('/exchange/'+id,{method:'DELETE'});
+    if(res.success){toast('已删除');loadExchangeList();}else{toast(res.error||'删除失败');}
+  });
 }
 function openExchangePost(){if(!requireLogin('发布'))return;closeModal('exchangeModal');openModal('exchangePostModal');}
 async function submitExchangePost(){
@@ -3044,7 +3051,7 @@ async function submitExchangePost(){
   const res=await apiCall('/exchange',{method:'POST',body:JSON.stringify({type,server,content})});
   if(res.success){toast('发布成功');closeModal('exchangePostModal');$('exchangeContent').value='';openExchangeModal();}else{toast(res.error||'发布失败');}
 }
-window.openExchangeModal=openExchangeModal;window.showExchangeTab=showExchangeTab;window.openExchangePost=openExchangePost;window.submitExchangePost=submitExchangePost;
+window.openExchangeModal=openExchangeModal;window.showExchangeTab=showExchangeTab;window.openExchangePost=openExchangePost;window.submitExchangePost=submitExchangePost;window.deleteExchangePost=deleteExchangePost;
 
 // ========== 复刻先祖 ==========
 async function openSpiritsModal(){openModal('spiritsModal');await loadSpirits();}
