@@ -20,6 +20,7 @@
 :root{transition:background-color .3s,color .3s;
   --bg1:#fdf6ec;--bg2:#f5e6d3;--bg3:#e8d5c4;
   --card:rgba(255,255,255,.78);
+  --card-bg:rgba(255,255,255,.7);
   --border:rgba(255,255,255,.6);
   --text:#4a3c2e;--text2:#8a7360;--text3:#b09a85;
   --accent:#b87333;--accent2:#d4915a;--accent-light:#f0dcc4;
@@ -538,14 +539,16 @@ body.dark .container{position:relative;z-index:1}
 .feature-card .title{font-size:14px;font-weight:600;color:var(--text)}
 .feature-card .desc{font-size:11px;color:var(--text2);margin-top:3px}
 /* 互心互火 */
-.exchange-list{display:flex;flex-direction:column;gap:8px}
-.exchange-item{background:var(--card-bg);border-radius:10px;padding:12px;border:1px solid var(--border)}
-.exchange-item .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.exchange-item .type-tag{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.exchange-list{display:flex;flex-direction:column;gap:12px}
+.exchange-item{background:var(--card-bg);border-radius:14px;padding:16px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.05);transition:all .2s}
+.exchange-item:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.exchange-item .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.exchange-item .type-tag{padding:5px 14px;border-radius:14px;font-size:13px;font-weight:600}
 .exchange-item .type-heart{background:rgba(255,100,100,.15);color:#e74c3c}
 .exchange-item .type-fire{background:rgba(255,165,0,.15);color:#f39c12}
-.exchange-item .content{font-size:13px;color:var(--text);line-height:1.5}
-.exchange-item .meta{font-size:11px;color:var(--text3);margin-top:6px}
+.exchange-item .content{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:8px}
+.exchange-item .meta{font-size:12px;color:var(--text3);margin-top:8px;display:flex;align-items:center;gap:6px}
+.exchange-item .meta .avatar{width:20px;height:20px;font-size:10px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff}
 /* 复刻先祖 */
 .spirit-card{background:var(--card-bg);border-radius:12px;padding:14px;border:1px solid var(--border);margin-bottom:10px}
 .spirit-card.current{border-color:var(--accent);box-shadow:0 0 12px rgba(212,145,90,.2)}
@@ -707,6 +710,9 @@ html{scroll-behavior:smooth}
   .stagger-item,.scroll-reveal{opacity:1;transform:none}
 }
 
+
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideUp{from{transform:translateY(0);opacity:1}to{transform:translateY(-100%);opacity:0}}
 </style>
 </head>
 <body>
@@ -774,7 +780,7 @@ html{scroll-behavior:smooth}
   <!-- 正在跑图 -->
   <section class="card" id="runStatusSection" style="display:none">
     <div class="card-title">🏃 正在跑图 <span class="card-more" onclick="openRunStatusModal()">设置状态 →</span></div>
-    <div id="homeRunStatus" class="home-list"><div class="admin-empty">加载中...</div></div>
+    <div id="homeRunStatus" class="home-list"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
   </section>
 
   
@@ -808,19 +814,19 @@ html{scroll-behavior:smooth}
     <!-- 找固玩专区 -->
   <section class="card">
     <div class="card-title">🎮 找固玩专区 <span class="card-more" onclick="switchView('mailbox')">更多 →</span></div>
-    <div id="homeGuwan" class="home-list"><div class="admin-empty">加载中...</div></div>
+    <div id="homeGuwan" class="home-list"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
   </section>
 
   <!-- 热门推荐 -->
   <section class="card">
     <div class="card-title">🔥 热门推荐 <span class="card-more" onclick="switchView('mailbox')">更多 →</span></div>
-    <div id="homeHot" class="home-list"><div class="admin-empty">加载中...</div></div>
+    <div id="homeHot" class="home-list"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
   </section>
 
   <!-- 最新动态 -->
   <section class="card">
     <div class="card-title">🆕 最新动态</div>
-    <div id="homeLatest" class="home-list"><div class="admin-empty">加载中...</div></div>
+    <div id="homeLatest" class="home-list"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
   </section>
 
   <footer class="footer">
@@ -851,7 +857,7 @@ html{scroll-behavior:smooth}
       <span class="tag-chip" data-tag="攻略求助">攻略求助</span>
       <span class="tag-chip" data-tag="光遇穿搭">光遇穿搭</span>
     </div>
-    <div id="postList" class="post-list"><div class="admin-empty">加载中...</div></div>
+    <div id="postList" class="post-list"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
   </div>
 
   <!-- 追光长廊视图 -->
@@ -1115,11 +1121,11 @@ html{scroll-behavior:smooth}
     </div>
     <!-- 成就 -->
     <div id="ptab-achievements" style="display:none">
-      <div class="achievement-grid" id="achievementGrid"><div class="admin-empty">加载中...</div></div>
+      <div class="achievement-grid" id="achievementGrid"><div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div></div>
     </div>
     <!-- 私信 -->
     <div id="ptab-messages" style="display:none">
-      <div class="msg-list" id="messageList"><div class="admin-empty">暂无私信</div></div>
+      <div class="msg-list" id="messageList"><div class="admin-empty" style="text-align:center;padding:30px"><div style="font-size:28px;margin-bottom:8px">✉️</div><div style="color:var(--text2);font-size:13px">还没有私信</div><div style="color:var(--text3);font-size:11px;margin-top:4px">去用户主页发第一条私信吧～</div></div></div>
     </div>
 
   </div>
@@ -1218,7 +1224,24 @@ function requireLogin(action){
 const API_BASE='/api';
 function getToken(){return localStorage.getItem('gy_token')||sessionStorage.getItem('gy_token')||'';}
 function setToken(t,days){if(t){const store=days&&days>=7?localStorage:sessionStorage;store.setItem('gy_token',t);if(days)localStorage.setItem('gy_token_days',days);}else{localStorage.removeItem('gy_token');sessionStorage.removeItem('gy_token');localStorage.removeItem('gy_token_days');}}
-async function apiCall(path,options={}){const headers={'Content-Type':'application/json',...(options.headers||{})};const token=getToken();if(token)headers['Authorization']='Bearer '+token;const res=await fetch(API_BASE+path,{...options,headers});const data=await res.json().catch(()=>({success:false,error:'网络错误'}));if(data&&data.error&&data.error.indexOf('其他设备登录')>-1){setToken(null);currentUser=null;renderUser();toast('您的账号已在其他设备登录',3000);}return data;}
+async function apiCall(path,options={}){const headers={'Content-Type':'application/json',...(options.headers||{})};const token=getToken();if(token)headers['Authorization']='Bearer '+token;const res=await fetch(API_BASE+path,{...options,headers});const data=await res.json().catch(()=>({success:false,error:'网络错误'}));
+  // 被踢出处理：401且当前有token，或error包含"其他设备登录"
+  if(token && (res.status===401 || (data&&data.error&&data.error.indexOf('其他设备登录')>-1))){
+    setToken(null);currentUser=null;renderUser();
+    showKickedOutNotice();
+  }
+  return data;}
+// 被踢出提示
+function showKickedOutNotice(){
+  const existing=document.getElementById('kickedOutNotice');
+  if(existing)return;
+  const notice=document.createElement('div');
+  notice.id='kickedOutNotice';
+  notice.style.cssText='position:fixed;top:0;left:0;right:0;z-index:100000;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;padding:14px 20px;text-align:center;box-shadow:0 4px 20px rgba(231,76,60,.4);animation:slideDown .3s ease;';
+  notice.innerHTML='<div style="font-size:16px;font-weight:600;margin-bottom:4px">⚠️ 您的账号已在其他设备登录</div><div style="font-size:13px;opacity:.9">当前设备已自动退出，请重新登录以继续使用</div><button onclick="this.parentElement.remove();openModal(\'authModal\')" style="margin-top:8px;padding:6px 20px;border:none;border-radius:16px;background:#fff;color:#e74c3c;font-weight:600;cursor:pointer;font-size:13px">重新登录</button>';
+  document.body.appendChild(notice);
+  setTimeout(()=>{if(notice.parentElement)notice.style.animation='slideUp .3s ease forwards';setTimeout(()=>notice.remove(),300);},15000);
+}
 let currentUser=null;
 let galleryPhotos=[];
 let playlist=Store.get('playlist',null);
@@ -1471,7 +1494,7 @@ $('avatarInput').onchange=e=>{
   const reader=new FileReader();
   reader.onload=async ev=>{compressImage(ev.target.result,200,.9,async data=>{
     const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({avatar:data})});
-    if(res.success){currentUser.avatar=data;setAvatar($('profileAvatar'),currentUser);renderUser();toast('头像更新成功');}
+    if(res.success){currentUser.avatar=data;setAvatar($('profileAvatar'),currentUser);renderUser();toast('头像更新成功，真好看');}
     else{toast(res.error||'更新失败');}
   });};
   reader.readAsDataURL(file);e.target.value='';
@@ -1479,7 +1502,7 @@ $('avatarInput').onchange=e=>{
 $('saveNicknameBtn').onclick=async()=>{
   const v=$('nicknameInput').value.trim();if(!v){toast('昵称不能为空');return;}if(v.length>20){toast('昵称不能超过20个字符');return;}
   const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({nickname:v})});
-  if(res.success){currentUser.nickname=v;$('profileName').textContent=v;renderUser();toast('昵称修改成功');}
+  if(res.success){currentUser.nickname=v;$('profileName').textContent=v;renderUser();toast('昵称修改成功，新名字真好听');}
   else{toast(res.error||'修改失败');}
 };
 $('changePassBtn').onclick=async()=>{
@@ -1488,10 +1511,10 @@ $('changePassBtn').onclick=async()=>{
   if(n!==c){toast('两次新密码不一致');return;}
   if(n.length<4){toast('新密码至少4位');return;}
   const res=await apiCall('/user/password',{method:'PUT',body:JSON.stringify({oldPassword:o,newPassword:n})});
-  if(res.success){$('oldPass').value='';$('newPass').value='';$('confirmPass').value='';toast('密码修改成功');}
+  if(res.success){$('oldPass').value='';$('newPass').value='';$('confirmPass').value='';toast('密码修改成功，账号更安全了');}
   else{toast(res.error||'修改失败');}
 };
-$('watermarkSwitch').onclick=async function(){currentUser.watermark=!currentUser.watermark;const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({watermark:currentUser.watermark})});if(res.success){this.classList.toggle('on',!!currentUser.watermark);toast(currentUser.watermark?'已开启水印保护':'已关闭水印');}else{currentUser.watermark=!currentUser.watermark;toast('操作失败');}};
+$('watermarkSwitch').onclick=async function(){currentUser.watermark=!currentUser.watermark;const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({watermark:currentUser.watermark})});if(res.success){this.classList.toggle('on',!!currentUser.watermark);toast(currentUser.watermark?'已开启水印保护':'已关闭水印');}else{currentUser.watermark=!currentUser.watermark;toast('操作失败，请稍后重试');}};
 $('watermarkTextInput').addEventListener('blur',async function(){const v=this.value.trim()||'光遇交友';const res=await apiCall('/user/profile',{method:'PUT',body:JSON.stringify({watermark_text:v})});if(res.success){currentUser.watermark_text=v;toast('水印文字已保存');}else{toast('保存失败');}});
 $('clearCacheBtn').onclick=()=>{
   showConfirm('清除缓存','将清除本地登录状态和歌单数据，确定继续吗？',()=>{
@@ -1502,7 +1525,7 @@ $('clearCacheBtn').onclick=()=>{
 
 async function renderMyPhotos(){
   const grid=$('myPhotosGrid'),empty=$('myPhotosEmpty');
-  grid.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);font-size:12px">加载中...</div>';
+  grid.innerHTML='<div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div>';
   const res=await apiCall('/photos/mine');
   grid.innerHTML='';
   if(!res.success||res.photos.length===0){empty.style.display='block';return;}empty.style.display='none';
@@ -1518,7 +1541,7 @@ async function renderMyPhotos(){
 }
 async function renderMyFav(){
   const grid=$('myFavGrid'),empty=$('myFavEmpty');
-  grid.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);font-size:12px">加载中...</div>';
+  grid.innerHTML='<div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div>';
   const res=await apiCall('/favorites');
   grid.innerHTML='';
   if(!res.success||res.photos.length===0){empty.style.display='block';return;}empty.style.display='none';
@@ -1597,7 +1620,7 @@ async function loadGallery(){
   const g=$('gallery');if(!g)return;
   const es=$('emptyState'),title=$('galleryTitle'),lm=$('loadMore');
   if(es)es.style.display='none';
-  g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text3);font-size:13px">加载中...</div>';
+  g.innerHTML='<div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:10px;padding:30px"><div class="loading-spinner"></div><span style="color:var(--text3);font-size:13px">加载中...</span></div>';
   try{
     const res=await apiCall('/photos?page='+currentPage+'&limit='+pageSize+(searchKeyword?'&search='+encodeURIComponent(searchKeyword):''));
     galleryPhotos=res.success?res.photos:[];
@@ -1714,7 +1737,7 @@ $('commentSubmit').onclick=async()=>{
   const text=$('commentInput').value.trim();if(!text){toast('请输入评论内容');return;}
   if(!currentUser){toast('请先登录');return;}
   const res=await apiCall('/photos/'+currentPhotoId+'/comments',{method:'POST',body:JSON.stringify({content:text})});
-  if(res.success){$('commentInput').value='';renderComments(currentPhotoId);toast('评论成功');}
+  if(res.success){$('commentInput').value='';renderComments(currentPhotoId);toast('评论成功，你的声音被听见了');}
   else{toast(res.error||'评论失败');}
 };
 $('commentInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('commentSubmit').click();});
@@ -2153,12 +2176,12 @@ function updateFABVisibility(){
   if($('fabFeedback'))$('fabFeedback').classList.toggle('hidden',isMailbox);
 }
 async function loadPosts(){
-  const list=$('postList');if(!list)return;list.innerHTML='<div class="admin-empty">加载中...</div>';
+  const list=$('postList');if(!list)return;list.innerHTML='<div class="admin-empty" style="display:flex;flex-direction:column;align-items:center;gap:10px"><div class="loading-spinner"></div><span>加载中...</span></div>';
   const tagParam=currentTag==='all'?'':'&tag='+encodeURIComponent(currentTag);
   const searchParam=searchKeyword?'&keyword='+encodeURIComponent(searchKeyword):'';
   const res=await apiCall('/posts?page='+postPage+'&limit=20'+tagParam+searchParam);
   list.innerHTML='';
-  if(!res.success||res.posts.length===0){list.innerHTML='<div class="admin-empty">'+(searchKeyword?'没有找到相关留言':'暂无留言，来发布第一条吧～')+'</div>';return;}
+  if(!res.success||res.posts.length===0){list.innerHTML='<div class="admin-empty">'+(searchKeyword?'<div style="text-align:center;padding:30px"><div style="font-size:32px;margin-bottom:8px">🔍</div><div style="color:var(--text2);font-size:14px">没有找到相关留言</div><div style="color:var(--text3);font-size:12px;margin-top:4px">换个关键词试试吧～</div></div>':'<div style="text-align:center;padding:30px"><div style="font-size:32px;margin-bottom:8px">💌</div><div style="color:var(--text2);font-size:14px;margin-bottom:4px">还没有留言</div><div style="color:var(--text3);font-size:12px">来发布第一条，遇见同频的旅人吧～</div></div>')+'</div>';return;}
   res.posts.forEach(p=>list.appendChild(renderPost(p)));
 }
 function renderPost(p){
@@ -2258,7 +2281,7 @@ async function submitPostDetailReply(id){
   const input=$('postDetailReplyInput');const content=input.value.trim();
   if(!content)return;
   const res=await apiCall('/posts/'+id+'/replies',{method:'POST',body:JSON.stringify({content})});
-  if(res.success){input.value='';loadPostDetailReplies(id);toast('评论成功');}
+  if(res.success){input.value='';loadPostDetailReplies(id);toast('评论成功，你的声音被听见了');}
   else{toast(res.error||'评论失败');}
 }
 async function likePost(id,btn){
@@ -2663,7 +2686,7 @@ async function loadAchievements(){
 async function loadMessages(){
   const res=await apiCall('/messages');
   const list=$('messageList');
-  if(!res.success||!res.messages||res.messages.length===0){list.innerHTML='<div class="admin-empty">暂无私信</div>';return;}
+  if(!res.success||!res.messages||res.messages.length===0){list.innerHTML='<div class="admin-empty" style="text-align:center;padding:30px"><div style="font-size:28px;margin-bottom:8px">✉️</div><div style="color:var(--text2);font-size:13px">还没有私信</div><div style="color:var(--text3);font-size:11px;margin-top:4px">去用户主页发第一条私信吧～</div></div>';return;}
   list.innerHTML=res.messages.map(m=>{
     const name=m.from_nickname||m.from_username||'光之子';
     return '<div class="msg-item'+(m.is_read?'':' unread')+'"><div class="msg-avatar">'+name.charAt(0)+'</div><div class="msg-body"><div class="msg-user">'+name+'</div><div class="msg-text">'+m.content.replace(/</g,'&lt;')+'</div><div class="msg-time">'+fmtDate(m.created_at)+'</div></div></div>';
@@ -2852,9 +2875,10 @@ async function loadExchangeList(){
     const name=p.nickname||p.username||'匿名';
     const typeText=p.type==='heart'?'互心':'互火';
     const typeClass=p.type==='heart'?'type-heart':'type-fire';
-    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="font-size:11px;color:var(--text3)">'+(p.server||'国服')+'</span></div>'+
-      (p.content?'<div class="content">'+p.content+'</div>':'')+
-      '<div class="meta">'+name+' · '+formatTime(p.created_at)+'</div></div>';
+    const av = genAvatar(name);
+    return '<div class="exchange-item"><div class="header"><span class="type-tag '+typeClass+'">'+typeText+'</span><span style="font-size:12px;color:var(--text3);padding:4px 10px;background:var(--bg);border-radius:10px">'+(p.server||'国服')+'</span></div>'+
+      (p.content?'<div class="content">'+p.content+'</div>':'<div class="content" style="color:var(--text3);font-style:italic">'+typeText+'找伙伴～</div>')+
+      '<div class="meta"><span class="avatar" style="background:'+av.color+'">'+av.letter+'</span>'+name+' · '+formatTime(p.created_at)+'</div></div>';
   }).join('');
 }
 function openExchangePost(){if(!requireLogin('发布'))return;closeModal('exchangeModal');openModal('exchangePostModal');}
