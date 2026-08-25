@@ -2331,13 +2331,14 @@ function renderExchangePost(p){
     '<div class="post-content">'+p.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>'+
     '<div class="post-actions">'+
     '<span class="post-action" style="color:var(--text3)">💬 私信TA</span>'+
-    (currentUser&&currentUser.is_admin?'<span class="post-action admin-del-btn" data-id="'+p.id+'" style="color:#e74c3c;margin-left:auto">🗑 删除</span>':'')+
+    (currentUser&&(currentUser.is_admin||currentUser.id===p.user_id)?'<span class="post-action admin-del-btn" data-id="'+p.id+'" style="color:#e74c3c;margin-left:auto">🗑 删除</span>':'')+
     '</div>';
   const delBtn=item.querySelector('.admin-del-btn');
-  if(delBtn)delBtn.onclick=async()=>{
-    if(!confirm('确定删除这条互心互火信息？'))return;
-    const res=await apiCall('/exchange/'+p.id,{method:'DELETE'});
-    if(res.success){toast('已删除');loadPosts();}else{toast(res.error||'删除失败');}
+  if(delBtn)delBtn.onclick=()=>{
+    showConfirm('删除内容','确定删除这条互心互火信息？',async()=>{
+      const res=await apiCall('/exchange/'+p.id,{method:'DELETE'});
+      if(res.success){toast('已删除');loadPosts();}else{toast(res.error||'删除失败');}
+    });
   };
   return item;
 }
